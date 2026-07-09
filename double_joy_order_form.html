@@ -373,7 +373,7 @@
     <div class="confirm" id="confirmBox" style="grid-column: 1 / -1;">
       <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg>
       <h2>Your request is on its way!</h2>
-      <p>Thank you for sharing all these sweet details. Double Joy Cookies will follow up within 24–48 hours to confirm pricing and availability. In the meantime, feel free to browse the portfolio for more inspiration.</p>
+      <p>Thank you for sharing all these sweet details. Double Joy Cookies will follow up within 24–48 hours to confirm pricing and availability. In the meantime, feel free to browse the <a href="https://www.instagram.com/doublejoycookies" target="_blank" rel="noopener" style="color:var(--gold); text-decoration:underline;">portfolio</a> for more inspiration.</p>
     </div>
   </div>
 </div>
@@ -698,8 +698,9 @@ document.getElementById('submitBtn').onclick = () => {
   }
   document.getElementById('formArea').classList.add('hidden');
   document.getElementById('side').classList.add('hidden');
-  document.getElementById('confirmBox').classList.add('show');
-  window.scrollTo({top:0, behavior:'smooth'});
+  const confirmBox = document.getElementById('confirmBox');
+  confirmBox.classList.add('show');
+  confirmBox.scrollIntoView({behavior:'smooth', block:'start'});
 };
 
 document.getElementById('emailBtn').onclick = () => {

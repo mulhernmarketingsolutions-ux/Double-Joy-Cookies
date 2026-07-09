@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Order Request — Double Joy Cookies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@500;600&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+<style>
+  :root{
+    --cream:#FBF6EE;
+    --cream-deep:#F3EADC;
+    --blush:#D9ACA7;
+    --sage:#9BAA8E;
+    --taupe:#C2B098;
+    --gold:#C9A24A;
+    --gold-light:#DDBD7E;
+    --blue:#8CA3AE;
+    --chocolate:#463C34;
+    --ink: var(--chocolate);
+    --rose: var(--blush);
+    --line:#E5DDD3;
+    --white:#FFFFFF;
+    --error:#B4534A;
+    --shadow: 0 12px 30px rgba(90,71,58,0.12);
+    --font-head: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Quicksand', Helvetica, Arial, sans-serif;
+    --font-script: 'Dancing Script', cursive;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: var(--font-head);
+    background: var(--cream);
+    background-image: url("images/bg-pattern.svg");
+    background-repeat: repeat;
+    background-size: 240px 240px;
+    color: var(--ink);
+  }
+  .wrap{ max-width: 1180px; margin:0 auto; padding: 48px 24px 80px; }
+  .nav-bar{ background: var(--blue); }
+  .site-nav{ max-width:1180px; margin:0 auto; padding: 16px 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family: var(--font-sans); }
+  .nav-logo{ font-family: var(--font-head); font-size: 18px; color: var(--ink); text-decoration:none; letter-spacing:0.5px; }
+  .brand-lockup{ display:inline-block; font-family:'Baloo 2', var(--font-sans); line-height:0.82; text-align:left; position:relative; }
+  .brand-lockup .bl-double{ display:block; font-size:1em; color: var(--blue); font-weight:700; position:relative; }
+  .brand-lockup .bl-row{ display:flex; align-items:flex-end; gap:0.12em; }
+  .brand-lockup .bl-cookies{ font-family: var(--font-sans); font-size:0.26em; letter-spacing:0.12em; text-transform:uppercase; color: var(--sage); font-weight:700; padding-bottom:0.16em; }
+  .brand-lockup .bl-joy{ font-size:1.05em; color: var(--blue); font-weight:700; margin-left:auto; }
+  .brand-lockup .bl-crumbs{ position:absolute; top:-0.02em; right:-0.08em; display:flex; align-items:flex-end; gap:0.045em; }
+  .brand-lockup .bl-crumbs i{ display:block; border-radius:50%; background: var(--cream); }
+  .brand-lockup .bl-crumbs i:nth-child(1){ width:0.07em; height:0.07em; }
+  .brand-lockup .bl-crumbs i:nth-child(2){ width:0.11em; height:0.11em; }
+  .brand-lockup .bl-crumbs i:nth-child(3){ width:0.05em; height:0.05em; }
+  a.brand-lockup{ text-decoration:none; }
+  .brand-lockup.nav-logo{ font-size:23px; }
+  .brand-lockup.hero-logo{ font-size:60px; margin:0 auto 20px; }
+  .site-nav > a:first-child{ margin-right:auto; }
+  .nav-links{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; order:2; }
+  .nav-links a{ color: var(--white); opacity:0.85; text-decoration:none; font-size:13px; letter-spacing:0.3px; padding-bottom:3px; border-bottom: 1px solid transparent; transition: all .15s ease; }
+  .nav-links a:hover, .nav-links a.current{ opacity:1; border-bottom-color: var(--white); }
+  .nav-right{ display:flex; align-items:center; gap:16px; order:3; }
+  .nav-cta{ display:inline-block; text-decoration:none; font-family: var(--font-sans); font-size:13px; letter-spacing:0.3px; transition: all .15s ease; background: var(--white); color: var(--ink); border-radius:20px; padding:7px 18px; font-weight:700; }
+  .nav-cta:hover{ background: var(--blush); }
+  .nav-toggle{ display:none; flex-direction:column; justify-content:center; gap:5px; width:34px; height:34px; background:none; border:none; cursor:pointer; padding:0; flex-shrink:0; }
+  .nav-toggle span{ display:block; width:24px; height:2px; background: var(--white); border-radius:2px; transition: all .2s ease; }
+  .nav-toggle.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.active span:nth-child(2){ opacity:0; }
+  .nav-toggle.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+  @media (max-width:780px){
+    .nav-toggle{ display:flex; }
+    .nav-links{ display:none; flex-basis:100%; order:4; flex-direction:column; align-items:flex-start; gap:16px; padding:18px 0 6px; }
+    .nav-links.open{ display:flex; }
+  }
+  .page-header{ text-align:center; margin-bottom: 40px; }
+  .logo-badge{ width: 100px; margin: 0 auto 12px; }
+  .script-tag{ font-family: var(--font-script); font-size: 20px; color: var(--chocolate); margin-bottom: 4px; }
+  .kicker{ letter-spacing: 3px; text-transform: uppercase; font-size: 12px; color: var(--gold); font-family: var(--font-sans); margin-bottom: 10px; }
+  h1{ font-size: 38px; margin: 0 0 12px; font-weight: normal; letter-spacing: 0.5px; }
+  .sub{ font-family: var(--font-sans); color:#6b6b6b; font-size:15px; max-width:540px; margin:0 auto; line-height:1.6; }
+
+  .builder{ display:grid; grid-template-columns: 1fr 380px; gap:40px; align-items:start; }
+  @media (max-width: 900px){ .builder{ grid-template-columns: 1fr; } }
+
+  .step{ background: var(--white); border-radius:16px; padding:26px 28px; box-shadow: var(--shadow); margin-bottom: 26px; overflow:hidden; }
+  .step-title{ display:flex; align-items:center; gap:12px; font-size:19px; margin-bottom:6px; }
+  .step-num{ width:26px; height:26px; border-radius:50%; background: var(--gold-light); color: var(--ink); font-family: var(--font-sans); font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .step-help{ font-family: var(--font-sans); font-size:12.5px; color:#9a9a9a; margin: 0 0 16px 38px; line-height:1.5; }
+
+  label{ display:block; font-family: var(--font-sans); font-size:12.5px; color:#8a8a8a; text-transform:uppercase; letter-spacing:0.6px; margin-bottom:6px; }
+  .field{ margin-bottom:18px; min-width:0; }
+  .field:last-child{ margin-bottom:0; }
+  input[type=text], input[type=email], input[type=tel], input[type=number], input[type=date], textarea{
+    width:100%; max-width:100%; min-width:0; border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+    font-family: var(--font-sans); font-size:14.5px; background: var(--cream); color: var(--ink);
+  }
+  input:focus, textarea:focus{ outline:none; border-color: var(--sage); }
+  input[type=date]{ -webkit-appearance:none; appearance:none; box-sizing:border-box; display:block; }
+  textarea{ resize:vertical; min-height:80px; }
+  .field.error input, .field.error textarea{ border-color: var(--error); }
+  .error-msg{ display:none; font-family: var(--font-sans); font-size:11.5px; color: var(--error); margin-top:5px; }
+  .field.error .error-msg{ display:block; }
+
+  .row2{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; min-width:0; }
+  @media (max-width:520px){ .row2{ grid-template-columns:1fr; } }
+
+  .choice-row{ display:flex; flex-wrap:wrap; gap:10px; }
+  .pill-btn{ padding:9px 18px; border-radius:24px; border:1.5px solid var(--line); background: var(--cream); cursor:pointer; font-family: var(--font-sans); font-size:13px; color:#4a4a4a; transition: all .15s ease; }
+  .pill-btn.active, .pill-btn:hover{ border-color: var(--sage); background: var(--sage); color: var(--white); }
+
+  .radio-card{ border:2px solid var(--line); border-radius:12px; padding:16px 18px; cursor:pointer; margin-bottom:10px; transition: all .15s ease; }
+  .radio-card.active{ border-color: var(--sage); background: var(--cream-deep); }
+  .radio-card .rc-title{ font-family: var(--font-sans); font-weight:700; font-size:14px; color: var(--ink); display:flex; align-items:center; gap:10px; }
+  .radio-card .rc-sub{ font-family: var(--font-sans); font-size:12.5px; color:#8a8a8a; margin-top:4px; margin-left:26px; }
+  .radio-dot{ width:16px; height:16px; border-radius:50%; border:2px solid var(--line); flex-shrink:0; position:relative; }
+  .radio-card.active .radio-dot{ border-color: var(--sage); }
+  .radio-card.active .radio-dot::after{ content:''; position:absolute; inset:3px; border-radius:50%; background: var(--sage); }
+
+  .dropzone{ border:2px dashed var(--line); border-radius:14px; padding:26px; text-align:center; font-family: var(--font-sans); color:#8a8a8a; font-size:13px; cursor:pointer; transition: all .15s ease; }
+  .dropzone:hover, .dropzone.dragover{ border-color: var(--sage); background: var(--cream-deep); }
+  .dropzone svg{ width:30px; height:30px; margin-bottom:8px; opacity:0.6; }
+  .thumbs{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+  .thumb{ width:64px; height:64px; border-radius:10px; overflow:hidden; position:relative; box-shadow: var(--shadow); }
+  .thumb img{ width:100%; height:100%; object-fit:cover; }
+  .thumb .rm{ position:absolute; top:2px; right:2px; width:18px; height:18px; border-radius:50%; background:rgba(43,36,32,0.7); color:#fff; font-size:11px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-family: var(--font-sans); }
+
+  /* Sidebar */
+  .side{ position:sticky; top:24px; }
+  .design-recap{ background: var(--white); border-radius:20px; box-shadow: var(--shadow); padding:24px; text-align:center; margin-bottom:22px; display:none; }
+  .design-recap.show{ display:block; }
+  .design-recap .rc-stage{ width:100%; aspect-ratio:1/1; max-width:150px; margin:0 auto 14px; background: radial-gradient(circle at 50% 40%, var(--cream-deep), var(--cream)); border-radius:14px; display:flex; align-items:center; justify-content:center; }
+  .design-recap svg{ width:74%; height:74%; filter: drop-shadow(0 8px 10px rgba(43,36,32,0.15)); }
+  .design-recap h3{ font-size:16px; margin:0 0 10px; }
+  .design-recap .dl{ text-align:left; font-family: var(--font-sans); font-size:12.5px; color:#6b6b6b; }
+  .design-recap .dl div{ display:flex; justify-content:space-between; padding:4px 0; }
+  .design-recap .dl span:last-child{ font-weight:700; color: var(--ink); }
+  .design-recap a{ display:inline-block; margin-top:12px; font-family: var(--font-sans); font-size:12px; color: var(--gold); text-decoration:none; border-bottom:1px solid var(--gold); }
+
+  .summary-card{ background: var(--white); border-radius:20px; box-shadow: var(--shadow); padding:26px; }
+  .summary-card h3{ font-size:18px; margin:0 0 14px; }
+  .summary-list{ font-family: var(--font-sans); font-size:13px; color:#4a4a4a; }
+  .summary-list div{ display:flex; justify-content:space-between; gap:10px; padding:7px 0; border-bottom:1px dashed var(--line); }
+  .summary-list span:first-child{ color:#9a9a9a; flex-shrink:0; }
+  .summary-list span:last-child{ font-weight:700; color: var(--ink); text-align:right; }
+  .summary-list .empty{ color:#c9beae; font-style:italic; font-weight:400; }
+
+  .cta{ width:100%; background: var(--ink); color: var(--cream); border:none; padding:15px 20px; border-radius:30px; font-family: var(--font-sans); font-size:14px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition: background .2s ease, transform .15s ease; margin-top:18px; }
+  .cta:hover{ background: var(--sage); transform: translateY(-1px); }
+  .cta.secondary{ background:transparent; color: var(--ink); border:1.5px solid var(--blush); margin-top:10px; }
+  .cta.secondary:hover{ background: var(--blush); color: var(--ink); }
+
+  .confirm{ display:none; text-align:center; background: var(--white); border-radius:20px; box-shadow: var(--shadow); padding:60px 40px; }
+  .confirm.show{ display:block; }
+  .confirm svg{ width:56px; height:56px; margin-bottom:18px; }
+  .confirm h2{ font-size:28px; margin:0 0 12px; }
+  .confirm p{ font-family: var(--font-sans); color:#6b6b6b; font-size:14.5px; max-width:420px; margin:0 auto; line-height:1.6; }
+
+  .form-area.hidden, .side.hidden{ display:none; }
+
+  .toast{ position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background: var(--ink); color: var(--cream); padding:14px 26px; border-radius:30px; font-family: var(--font-sans); font-size:13.5px; opacity:0; pointer-events:none; transition: all .3s ease; box-shadow: var(--shadow); text-align:center; max-width:90%; }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  footer{ background: var(--chocolate); color: var(--cream); padding: 44px 24px; text-align:center; margin-top:20px; }
+  footer .flinks{ display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; font-family: var(--font-sans); font-size:13px; }
+  footer .flinks a{ color: var(--cream); text-decoration:none; opacity:0.85; }
+  footer .flinks a:hover{ opacity:1; }
+  .fnewsletter{ max-width:380px; margin: 8px auto 26px; }
+  .fn-label{ font-family: var(--font-script); font-size:19px; color: var(--gold-light); margin-bottom:12px; }
+  .fn-form{ display:flex; gap:8px; }
+  .fn-form input{ flex:1; border:none; border-radius:24px; padding:11px 16px; font-family: var(--font-sans); font-size:13px; background: rgba(255,255,255,0.95); color: var(--chocolate); }
+  .fn-form input:focus{ outline:2px solid var(--gold-light); }
+  .fn-form button{ background: var(--gold-light); color: var(--chocolate); border:none; border-radius:24px; padding:11px 20px; font-family: var(--font-sans); font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition: background .2s ease; }
+  .fn-form button:hover{ background: var(--blush); }
+  .fn-note{ font-family: var(--font-sans); font-size:11.5px; opacity:0.85; margin-top:10px; min-height:14px; }
+  .fn-note.show{ font-size:14px; opacity:1; background: rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); border-radius:14px; padding:14px 18px; line-height:1.5; margin-top:4px; }
+  footer .fine{ font-family: var(--font-sans); font-size:11.5px; opacity:0.6; }
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+<nav class="site-nav">
+  <a href="index.html" aria-label="Double Joy Cookies — Home"><img src="images/double-joy-logo-light.png" alt="Double Joy Cookies" style="height:32px; display:block;"></a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="double_joy_about.html">About</a>
+    <a href="double_joy_cookie_menu.html">Dream Up Your Cookies</a>
+    <a href="double_joy_recipe_shop.html">Recipes</a>
+    <a href="double_joy_contact.html">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="double_joy_order_form.html" class="nav-cta current">Custom Order</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" onclick="djcToggleNav()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+</div>
+
+<div class="wrap">
+  <div class="page-header">
+    <div class="script-tag">Let's create something sweet</div>
+    <div class="kicker">Custom Order Request</div>
+    <h1>Tell Us About Your Celebration</h1>
+    <p class="sub">Every box is made to order — the more you share, the more we can make it feel like <em>your</em> celebration. We'll follow up within 24–48 hours to confirm the details and pricing.</p>
+  </div>
+
+  <div class="builder">
+    <div class="form-area" id="formArea">
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">1</span> Your Info</div>
+        <div class="row2">
+          <div class="field" id="f-name">
+            <label>Your Name</label>
+            <input type="text" id="name" placeholder="Jane Smith">
+            <div class="error-msg">Please add your name.</div>
+          </div>
+          <div class="field" id="f-email">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="jane@email.com">
+            <div class="error-msg">Please add a valid email.</div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Phone <span style="text-transform:none; color:#c9beae;">(optional)</span></label>
+          <input type="tel" id="phone" placeholder="(555) 123-4567">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">2</span> The Occasion</div>
+        <div class="step-help">What are we celebrating?</div>
+        <div class="choice-row" id="occasionRow"></div>
+        <div class="field" id="f-occasionOther" style="margin-top:14px; display:none;">
+          <label>Tell us more</label>
+          <input type="text" id="occasionOther" placeholder="e.g. Retirement party">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">3</span> How Many &amp; By When</div>
+        <div class="row2">
+          <div class="field" id="f-qty">
+            <label>Approximate Quantity</label>
+            <input type="number" id="qty" min="6" step="1" placeholder="e.g. 24">
+            <div class="error-msg">Let us know roughly how many cookies.</div>
+          </div>
+          <div class="field" id="f-needBy">
+            <label>Need Them By</label>
+            <input type="date" id="needBy">
+            <div class="error-msg">Please choose a date.</div>
+          </div>
+        </div>
+        <p class="step-help" style="margin-left:0;">Custom orders typically need at least 2–3 weeks' notice — we'll confirm availability when we follow up.</p>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">4</span> Theme &amp; Names</div>
+        <div class="step-help">Colors, characters, invite style — whatever paints the picture.</div>
+        <div class="field">
+          <label>Describe the theme</label>
+          <textarea id="theme" placeholder="e.g. Sage green &amp; cream, wildflowers, dainty and romantic..."></textarea>
+        </div>
+        <div class="field">
+          <label>Names or wording to include <span style="text-transform:none; color:#c9beae;">(please double-check spelling!)</span></label>
+          <input type="text" id="names" placeholder="e.g. &quot;Remi&quot;, &quot;Happy 30th, Sarah&quot;">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">5</span> Design Direction</div>
+        <div class="radio-card" data-value="own" id="rc-own">
+          <div class="rc-title"><span class="radio-dot"></span> I have designs I love</div>
+          <div class="rc-sub">Share inspiration photos or links below and we'll bring them to life.</div>
+        </div>
+        <div class="radio-card" data-value="freedom" id="rc-freedom">
+          <div class="rc-title"><span class="radio-dot"></span> Creative freedom — surprise me!</div>
+          <div class="rc-sub">We'll design something one-of-a-kind based on your theme.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">6</span> Upload Inspiration <span style="font-family: var(--font-sans); font-size:11px; color:#c9beae; font-weight:normal; margin-left:6px;">(optional)</span></div>
+        <div class="dropzone" id="dropzone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4M12 4L7 9M12 4l5 5"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg>
+          <div>Drop photos here, or click to browse</div>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" multiple style="display:none;">
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">7</span> Budget &amp; Delivery</div>
+        <div class="step-help">Budget Range <span style="color:#c9beae;">(optional — just helps us plan)</span></div>
+        <div class="choice-row" id="budgetRow" style="margin-bottom:18px;"></div>
+        <div class="step-help">Pickup or Delivery?</div>
+        <div class="choice-row" id="deliveryRow"></div>
+      </div>
+
+    </div>
+
+    <div class="side" id="side">
+      <div class="design-recap" id="designRecap">
+        <div class="rc-stage"><svg id="recapSvg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"></svg></div>
+        <h3>Your Inspiration</h3>
+        <div class="dl" id="recapList"></div>
+        <a href="double_joy_cookie_menu.html">← Edit my design</a>
+      </div>
+
+      <div class="summary-card">
+        <h3>Your Request So Far</h3>
+        <div class="summary-list">
+          <div><span>Occasion</span><span id="sumOccasion" class="empty">—</span></div>
+          <div><span>Quantity</span><span id="sumQty" class="empty">—</span></div>
+          <div><span>Need By</span><span id="sumNeedBy" class="empty">—</span></div>
+          <div><span>Design</span><span id="sumDesign" class="empty">—</span></div>
+          <div><span>Budget</span><span id="sumBudget" class="empty">—</span></div>
+          <div><span>Delivery</span><span id="sumDelivery" class="empty">—</span></div>
+        </div>
+        <button class="cta" id="submitBtn">Send My Request</button>
+        <button class="cta secondary" id="emailBtn">Email It To Me Instead</button>
+      </div>
+    </div>
+
+    <div class="confirm" id="confirmBox" style="grid-column: 1 / -1;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg>
+      <h2>Your request is on its way!</h2>
+      <p>Thank you for sharing all these sweet details. Double Joy Cookies will follow up within 24–48 hours to confirm pricing and availability. In the meantime, feel free to browse the portfolio for more inspiration.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="flinks">
+    <a href="index.html">Home</a>
+    <a href="double_joy_about.html">About</a>
+    <a href="double_joy_cookie_menu.html">Dream Up Your Cookies</a>
+    <a href="double_joy_recipe_shop.html">Recipes</a>
+    <a href="double_joy_contact.html">Contact</a>
+    <a href="https://www.instagram.com/doublejoycookies" target="_blank" rel="noopener">Instagram</a>
+  </div>
+  <div class="fnewsletter">
+    <div class="fn-label">🍪 Get the occasional sweet note from Emily</div>
+    <form class="fn-form" onsubmit="return djcFooterSignup(this)">
+      <input type="email" placeholder="you@email.com" required>
+      <button type="submit">Join In</button>
+    </form>
+    <div class="fn-note"></div>
+  </div>
+  <div class="fine">© Double Joy Cookies. Made with love (and a little chaos).</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------- Options ---------------- */
+const OCCASIONS = ['Birthday','Bridal Shower','Baby Shower','Wedding','Holiday','Corporate / Event','Other'];
+const BUDGETS = ['Under $50','$50–100','$100–200','$200+','Not sure yet'];
+const DELIVERIES = ['Pickup','Local Delivery','Shipping'];
+
+/* Paste the Apps Script Web App URL here once it's deployed (see Double_Joy_Cookies_Notes.md) */
+const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbyCCvDHXexq5_YRU1ATlpICSoEB4jg9Hkke3ub3KEOmUMLQrCvwJmCcPTt_sOcqMjY/exec";
+
+function djcToggleNav(){
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('navToggle');
+  const isOpen = nav.classList.toggle('open');
+  btn.classList.toggle('active', isOpen);
+  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+
+let form = { occasion:null, design:null, budget:null, delivery:null, photos:[] };
+let handoffDesign = null;
+
+function buildPills(containerId, options, stateKey, otherFieldId){
+  const row = document.getElementById(containerId);
+  options.forEach(opt => {
+    const btn = document.createElement('div');
+    btn.className = 'pill-btn';
+    btn.textContent = opt;
+    btn.onclick = () => {
+      form[stateKey] = opt;
+      row.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if(otherFieldId){
+        document.getElementById(otherFieldId).style.display = (opt === 'Other') ? 'block' : 'none';
+      }
+      updateSummary();
+    };
+    row.appendChild(btn);
+  });
+}
+buildPills('occasionRow', OCCASIONS, 'occasion', 'f-occasionOther');
+buildPills('budgetRow', BUDGETS, 'budget');
+buildPills('deliveryRow', DELIVERIES, 'delivery');
+
+['rc-own','rc-freedom'].forEach(id => {
+  const card = document.getElementById(id);
+  card.onclick = () => {
+    document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    form.design = card.dataset.value === 'own' ? 'Has design references' : 'Creative freedom';
+    updateSummary();
+  };
+});
+
+/* ---------------- Photo upload (client-side preview only) ---------------- */
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const thumbs = document.getElementById('thumbs');
+dropzone.onclick = () => fileInput.click();
+['dragover','dragenter'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.add('dragover'); }));
+['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.remove('dragover'); }));
+dropzone.addEventListener('drop', e => handleFiles(e.dataTransfer.files));
+fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+function handleFiles(files){
+  Array.from(files).forEach(file => {
+    if(!file.type.startsWith('image/')) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const id = 'thumb' + Math.random().toString(36).slice(2,8);
+      const dataUrl = e.target.result;
+      const base64 = dataUrl.split(',')[1] || '';
+      form.photos.push({ id, filename: file.name, mimeType: file.type, data: base64 });
+      const div = document.createElement('div');
+      div.className = 'thumb';
+      div.id = id;
+      div.innerHTML = `<img src="${dataUrl}"><div class="rm">×</div>`;
+      div.querySelector('.rm').onclick = () => { div.remove(); form.photos = form.photos.filter(p=>p.id!==id); };
+      thumbs.appendChild(div);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ---------------- Design handoff from the interactive menu ---------------- */
+const SHAPE_LABELS = { round:'Round', scalloped:'Scalloped', heart:'Heart', flower:'Flower', square:'Plaque' };
+function shapePath(id){
+  switch(id){
+    case 'round': return 'M100,20 a80,80 0 1,0 0.1,0 Z';
+    case 'square': return 'M40,30 h120 a10,10 0 0 1 10,10 v120 a10,10 0 0 1 -10,10 h-120 a10,10 0 0 1 -10,-10 v-120 a10,10 0 0 1 10,-10 Z';
+    case 'heart': return 'M100,175 C40,130 15,95 15,65 C15,35 45,20 65,30 C82,38 95,55 100,68 C105,55 118,38 135,30 C155,20 185,35 185,65 C185,95 160,130 100,175 Z';
+    case 'scalloped': return scallopedPath(100,100,78,16);
+    case 'flower': return flowerPath(100,100,80,7);
+    default: return 'M100,20 a80,80 0 1,0 0.1,0 Z';
+  }
+}
+function scallopedPath(cx,cy,r,bumps){
+  const inner = r - 8; let d = ''; const step = (Math.PI*2)/bumps;
+  for(let i=0;i<bumps;i++){
+    const a1 = i*step - Math.PI/2, a2 = a1 + step, mid = (a1+a2)/2;
+    const x1 = cx+Math.cos(a1)*inner, y1 = cy+Math.sin(a1)*inner;
+    const xm = cx+Math.cos(mid)*r, ym = cy+Math.sin(mid)*r;
+    const x2 = cx+Math.cos(a2)*inner, y2 = cy+Math.sin(a2)*inner;
+    if(i===0) d += `M${x1},${y1} `;
+    d += `Q${xm},${ym} ${x2},${y2} `;
+  }
+  return d + 'Z';
+}
+function flowerPath(cx,cy,r,petals){
+  const inner = r*0.55; let d = ''; const step = (Math.PI*2)/petals;
+  for(let i=0;i<petals;i++){
+    const a0=i*step, aMid=a0+step/2, aNext=a0+step;
+    const x0=cx+Math.cos(a0)*inner, y0=cy+Math.sin(a0)*inner;
+    const cxp=cx+Math.cos(aMid)*r*1.25, cyp=cy+Math.sin(aMid)*r*1.25;
+    const x1=cx+Math.cos(aNext)*inner, y1=cy+Math.sin(aNext)*inner;
+    if(i===0) d += `M${x0},${y0} `;
+    d += `Q${cxp},${cyp} ${x1},${y1} `;
+  }
+  return d + 'Z';
+}
+
+const params = new URLSearchParams(window.location.search);
+if(params.has('shape')){
+  const design = {
+    shape: params.get('shape') || 'round',
+    flavor: params.get('flavor') || '',
+    color: params.get('color') || '',
+    colorHex: params.get('colorHex') || '#F7DADC',
+    style: params.get('style') || '',
+    qty: params.get('qty') || '',
+    notes: params.get('notes') ? decodeURIComponent(params.get('notes')) : '',
+  };
+  handoffDesign = design;
+  document.getElementById('designRecap').classList.add('show');
+  const svg = document.getElementById('recapSvg');
+  const path = shapePath(design.shape);
+  const dough = document.createElementNS('http://www.w3.org/2000/svg','path');
+  dough.setAttribute('d', path);
+  dough.setAttribute('fill', '#E7C79A');
+  dough.setAttribute('transform','translate(100,100) scale(1.06) translate(-100,-100)');
+  svg.appendChild(dough);
+  const icing = document.createElementNS('http://www.w3.org/2000/svg','path');
+  icing.setAttribute('d', path);
+  icing.setAttribute('fill', design.colorHex);
+  svg.appendChild(icing);
+
+  document.getElementById('recapList').innerHTML = `
+    <div><span>Shape</span><span>${SHAPE_LABELS[design.shape]||design.shape}</span></div>
+    <div><span>Flavor</span><span>${design.flavor}</span></div>
+    <div><span>Icing</span><span>${design.color}</span></div>
+    <div><span>Style</span><span>${design.style}</span></div>
+  `;
+  if(design.qty){ document.getElementById('qty').value = design.qty; }
+  if(params.get('notes')){ document.getElementById('theme').value = decodeURIComponent(params.get('notes')); }
+}
+
+/* ---------------- Live summary + submit ---------------- */
+function updateSummary(){
+  setSum('sumOccasion', form.occasion);
+  setSum('sumQty', document.getElementById('qty').value ? document.getElementById('qty').value + ' cookies' : null);
+  setSum('sumNeedBy', document.getElementById('needBy').value);
+  setSum('sumDesign', form.design);
+  setSum('sumBudget', form.budget);
+  setSum('sumDelivery', form.delivery);
+}
+function setSum(id, val){
+  const el = document.getElementById(id);
+  if(val){ el.textContent = val; el.classList.remove('empty'); }
+  else { el.textContent = '—'; el.classList.add('empty'); }
+}
+document.getElementById('qty').addEventListener('input', updateSummary);
+document.getElementById('needBy').addEventListener('change', updateSummary);
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._t);
+  window._t = setTimeout(()=>t.classList.remove('show'), 3400);
+}
+
+function validate(){
+  const checks = [
+    ['f-name', document.getElementById('name').value.trim().length > 0],
+    ['f-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim())],
+    ['f-qty', document.getElementById('qty').value && Number(document.getElementById('qty').value) > 0],
+    ['f-needBy', document.getElementById('needBy').value.length > 0],
+  ];
+  let allValid = true;
+  checks.forEach(([id, ok]) => {
+    document.getElementById(id).classList.toggle('error', !ok);
+    if(!ok) allValid = false;
+  });
+  return allValid;
+}
+
+function summaryText(){
+  const occasion = form.occasion === 'Other' ? document.getElementById('occasionOther').value : form.occasion;
+  return `Custom Order Request — Double Joy Cookies
+
+Name: ${document.getElementById('name').value}
+Email: ${document.getElementById('email').value}
+Phone: ${document.getElementById('phone').value}
+
+Occasion: ${occasion || ''}
+Quantity: ${document.getElementById('qty').value}
+Need By: ${document.getElementById('needBy').value}
+
+Theme: ${document.getElementById('theme').value}
+Names/Wording: ${document.getElementById('names').value}
+
+Design Direction: ${form.design || ''}
+Budget: ${form.budget || ''}
+Delivery: ${form.delivery || ''}
+Photos attached in-app: ${form.photos.length}`;
+}
+
+function buildPayload(){
+  const occasion = form.occasion === 'Other' ? document.getElementById('occasionOther').value : form.occasion;
+  return {
+    type: 'order',
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    occasion: occasion || '',
+    qty: document.getElementById('qty').value,
+    needBy: document.getElementById('needBy').value,
+    theme: document.getElementById('theme').value,
+    names: document.getElementById('names').value,
+    design: form.design || '',
+    budget: form.budget || '',
+    delivery: form.delivery || '',
+    photos: form.photos.map(p => ({ filename: p.filename, mimeType: p.mimeType, data: p.data })),
+    handoff: handoffDesign || null,
+  };
+}
+
+function sendToBackend(payload){
+  if(!DJC_ENDPOINT || DJC_ENDPOINT.indexOf('PASTE_') !== -1) return;
+  fetch(DJC_ENDPOINT, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  }).catch(()=>{ /* fire-and-forget — mailto button is the fallback */ });
+}
+
+document.getElementById('submitBtn').onclick = () => {
+  if(!validate()){
+    showToast('A few details are missing — check the highlighted fields.');
+    document.querySelector('.field.error')?.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  sendToBackend(buildPayload());
+  document.getElementById('formArea').classList.add('hidden');
+  document.getElementById('side').classList.add('hidden');
+  document.getElementById('confirmBox').classList.add('show');
+  window.scrollTo({top:0, behavior:'smooth'});
+};
+
+document.getElementById('emailBtn').onclick = () => {
+  const subject = encodeURIComponent('Custom Order Request — Double Joy Cookies');
+  const body = encodeURIComponent(summaryText());
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+};
+
+function djcFooterSignup(form){
+  const note = form.nextElementSibling;
+  const email = form.querySelector('input[type=email]').value;
+  if(typeof DJC_ENDPOINT !== 'undefined' && DJC_ENDPOINT.indexOf('PASTE_') === -1){
+    fetch(DJC_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ type: 'newsletter', email: email })
+    }).catch(()=>{});
+  }
+  form.style.display = 'none';
+  note.textContent = "🍪 Thanks for joining! You're on the list for sweet updates from Emily.";
+  note.classList.add('show');
+  showToast("🍪 You're on the list for sweet updates from Emily!");
+  return false;
+}
+
+updateSummary();
+</script>
+</body>
+</html>

@@ -4,6 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Custom Order Request — Double Joy Cookies</title>
+<meta name="description" content="Request custom cookies for your next birthday, wedding, shower, or celebration. Emily follows up within 24–48 hours.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Double Joy Cookies">
+<meta property="og:title" content="Custom Order Request — Double Joy Cookies">
+<meta property="og:description" content="Request custom cookies for your next birthday, wedding, shower, or celebration. Emily follows up within 24–48 hours.">
+<meta property="og:image" content="https://doublejoycookies.com/images/social-share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://doublejoycookies.com/double_joy_order_form.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Custom Order Request — Double Joy Cookies">
+<meta name="twitter:description" content="Request custom cookies for your next birthday, wedding, shower, or celebration. Emily follows up within 24–48 hours.">
+<meta name="twitter:image" content="https://doublejoycookies.com/images/social-share.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@500;600&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
@@ -286,11 +299,12 @@
 
       <div class="step">
         <div class="step-title"><span class="step-num">6</span> Upload Inspiration <span style="font-family: var(--font-sans); font-size:11px; color:#c9beae; font-weight:normal; margin-left:6px;">(optional)</span></div>
+        <div class="step-help">Please attach just one photo — whichever best captures the look you're going for. You can always email more, or add a link/description in the theme notes above.</div>
         <div class="dropzone" id="dropzone">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4M12 4L7 9M12 4l5 5"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg>
-          <div>Drop photos here, or click to browse</div>
+          <div>Drop a photo here, or click to browse</div>
         </div>
-        <input type="file" id="fileInput" accept="image/*" multiple style="display:none;">
+        <input type="file" id="fileInput" accept="image/*" style="display:none;">
         <div class="thumbs" id="thumbs"></div>
       </div>
 
@@ -422,14 +436,35 @@ dropzone.addEventListener('drop', e => handleFiles(e.dataTransfer.files));
 fileInput.addEventListener('change', e => handleFiles(e.target.files));
 
 function handleFiles(files){
-  Array.from(files).forEach(file => {
-    if(!file.type.startsWith('image/')) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-      const id = 'thumb' + Math.random().toString(36).slice(2,8);
-      const dataUrl = e.target.result;
+  // Only one inspiration photo is supported right now — attaching more than one
+  // was silently failing to deliver, so we cap it at one and replace whatever
+  // was there before. Also downscale/compress it client-side so the upload
+  // stays small and reliable.
+  const file = Array.from(files).find(f => f.type.startsWith('image/'));
+  if(!file) return;
+
+  form.photos = [];
+  thumbs.innerHTML = '';
+
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const MAX_DIM = 1600;
+      let { width, height } = img;
+      if (width > MAX_DIM || height > MAX_DIM) {
+        const scale = MAX_DIM / Math.max(width, height);
+        width = Math.round(width * scale);
+        height = Math.round(height * scale);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = width;
+      canvas.height = height;
+      canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.72);
       const base64 = dataUrl.split(',')[1] || '';
-      form.photos.push({ id, filename: file.name, mimeType: file.type, data: base64 });
+      const id = 'thumb' + Math.random().toString(36).slice(2,8);
+      form.photos.push({ id, filename: file.name, mimeType: 'image/jpeg', data: base64 });
       const div = document.createElement('div');
       div.className = 'thumb';
       div.id = id;
@@ -437,8 +472,9 @@ function handleFiles(files){
       div.querySelector('.rm').onclick = () => { div.remove(); form.photos = form.photos.filter(p=>p.id!==id); };
       thumbs.appendChild(div);
     };
-    reader.readAsDataURL(file);
-  });
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
 }
 
 /* ---------------- Design handoff from the interactive menu ---------------- */

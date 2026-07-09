@@ -4,6 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact &amp; FAQ — Double Joy Cookies</title>
+<meta name="description" content="Questions about custom cookie orders, pricing, or timelines? Get in touch with Double Joy Cookies.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Double Joy Cookies">
+<meta property="og:title" content="Contact & FAQ — Double Joy Cookies">
+<meta property="og:description" content="Questions about custom cookie orders, pricing, or timelines? Get in touch with Double Joy Cookies.">
+<meta property="og:image" content="https://doublejoycookies.com/images/social-share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:url" content="https://doublejoycookies.com/double_joy_contact.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contact & FAQ — Double Joy Cookies">
+<meta name="twitter:description" content="Questions about custom cookie orders, pricing, or timelines? Get in touch with Double Joy Cookies.">
+<meta name="twitter:image" content="https://doublejoycookies.com/images/social-share.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@500;600&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
@@ -101,6 +115,7 @@
   .fnewsletter{ max-width:380px; margin: 8px auto 26px; }
   .fn-label{ font-family: var(--font-script); font-size:19px; color: var(--gold-light); margin-bottom:12px; }
   .fn-form{ display:flex; gap:8px; }
+  .fn-hp{ position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; opacity:0; pointer-events:none; }
   .fn-form input{ flex:1; border:none; border-radius:24px; padding:11px 16px; font-family: var(--font-sans); font-size:13px; background: rgba(255,255,255,0.95); color: var(--chocolate); }
   .fn-form input:focus{ outline:2px solid var(--gold-light); }
   .fn-form button{ background: var(--gold-light); color: var(--chocolate); border:none; border-radius:24px; padding:11px 20px; font-family: var(--font-sans); font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition: background .2s ease; }
@@ -203,6 +218,7 @@
   <div class="fnewsletter">
     <div class="fn-label">🍪 Get the occasional sweet note from Emily</div>
     <form class="fn-form" onsubmit="return djcFooterSignup(this)">
+      <input type="text" class="fn-hp" name="fn_hp" tabindex="-1" autocomplete="off">
       <input type="email" placeholder="you@email.com" required>
       <button type="submit">Join In</button>
     </form>
@@ -214,6 +230,7 @@
 <script>
 /* Paste the Apps Script Web App URL here once it's deployed (see Double_Joy_Cookies_Notes.md) */
 const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbyCCvDHXexq5_YRU1ATlpICSoEB4jg9Hkke3ub3KEOmUMLQrCvwJmCcPTt_sOcqMjY/exec";
+const djcFooterLoadTime = Date.now();
 
 function djcToggleNav(){
   const nav = document.getElementById('navLinks');
@@ -234,7 +251,9 @@ function showToast(msg){
 function djcFooterSignup(form){
   const note = form.nextElementSibling;
   const email = form.querySelector('input[type=email]').value;
-  if(DJC_ENDPOINT && DJC_ENDPOINT.indexOf('PASTE_') === -1){
+  const hp = form.querySelector('.fn-hp');
+  const isBot = (hp && hp.value) || (Date.now() - djcFooterLoadTime) < 1200;
+  if(!isBot && DJC_ENDPOINT && DJC_ENDPOINT.indexOf('PASTE_') === -1){
     fetch(DJC_ENDPOINT, {
       method: 'POST',
       mode: 'no-cors',

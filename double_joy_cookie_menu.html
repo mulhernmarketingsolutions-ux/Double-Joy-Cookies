@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dream Up Your Cookies — Double Joy Cookies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@500;600&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Double Joy Cookies brand kit (draft 1) */
+    --cream:#FBF6EE;
+    --cream-deep:#F3EADC;
+    --blush:#D9ACA7;
+    --sage:#9BAA8E;
+    --taupe:#C2B098;
+    --gold:#C9A24A;
+    --gold-light:#DDBD7E;
+    --blue:#8CA3AE;
+    --chocolate:#463C34;
+    --ink: var(--chocolate);
+    --rose: var(--blush);
+    --line:#E5DDD3;
+    --white:#FFFFFF;
+    --shadow: 0 12px 30px rgba(90,71,58,0.12);
+    --font-head: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Quicksand', Helvetica, Arial, sans-serif;
+    --font-script: 'Dancing Script', cursive;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: var(--font-head);
+    background: var(--cream);
+    background-image: url("images/bg-pattern.svg");
+    background-repeat: repeat;
+    background-size: 240px 240px;
+    color: var(--ink);
+  }
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding: 48px 24px 80px;
+  }
+  .nav-bar{ background: var(--blue); }
+  .site-nav{
+    max-width:1180px;
+    margin:0 auto;
+    padding: 16px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    font-family: var(--font-sans);
+  }
+  .nav-logo{
+    font-family: var(--font-head);
+    font-size: 18px;
+    color: var(--ink);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .brand-lockup{ display:inline-block; font-family:'Baloo 2', var(--font-sans); line-height:0.82; text-align:left; position:relative; }
+  .brand-lockup .bl-double{ display:block; font-size:1em; color: var(--blue); font-weight:700; position:relative; }
+  .brand-lockup .bl-row{ display:flex; align-items:flex-end; gap:0.12em; }
+  .brand-lockup .bl-cookies{ font-family: var(--font-sans); font-size:0.26em; letter-spacing:0.12em; text-transform:uppercase; color: var(--sage); font-weight:700; padding-bottom:0.16em; }
+  .brand-lockup .bl-joy{ font-size:1.05em; color: var(--blue); font-weight:700; margin-left:auto; }
+  .brand-lockup .bl-crumbs{ position:absolute; top:-0.02em; right:-0.08em; display:flex; align-items:flex-end; gap:0.045em; }
+  .brand-lockup .bl-crumbs i{ display:block; border-radius:50%; background: var(--cream); }
+  .brand-lockup .bl-crumbs i:nth-child(1){ width:0.07em; height:0.07em; }
+  .brand-lockup .bl-crumbs i:nth-child(2){ width:0.11em; height:0.11em; }
+  .brand-lockup .bl-crumbs i:nth-child(3){ width:0.05em; height:0.05em; }
+  a.brand-lockup{ text-decoration:none; }
+  .brand-lockup.nav-logo{ font-size:23px; }
+  .brand-lockup.hero-logo{ font-size:60px; margin:0 auto 20px; }
+  .nav-links{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; }
+  .nav-links a{
+    color: var(--white);
+    opacity:0.85;
+    text-decoration:none;
+    font-size:13px;
+    letter-spacing:0.3px;
+    padding-bottom:3px;
+    border-bottom: 1px solid transparent;
+    transition: all .15s ease;
+  }
+  .nav-links a:hover, .nav-links a.current{ opacity:1; border-bottom-color: var(--white); }
+  .nav-links a.nav-cta{ background: var(--white); color: var(--ink); opacity:1; border-radius:20px; padding:7px 18px; border-bottom:none; font-weight:700; }
+  .nav-links a.nav-cta:hover{ background: var(--blush); border-bottom:none; }
+  .page-header{
+    text-align:center;
+    margin-bottom: 44px;
+  }
+  .logo-badge{ width: 116px; margin: 0 auto 14px; }
+  .script-tag{
+    font-family: var(--font-script);
+    font-size: 22px;
+    color: var(--chocolate);
+    margin-bottom: 6px;
+  }
+  .kicker{
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--gold);
+    font-family: var(--font-sans);
+    margin-bottom: 10px;
+  }
+  h1{
+    font-size: 40px;
+    margin: 0 0 12px;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+  }
+  .sub{
+    font-family: var(--font-sans);
+    color: #6b6b6b;
+    font-size: 15px;
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .builder{
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    gap: 40px;
+    align-items:start;
+  }
+  @media (max-width: 900px){
+    .builder{ grid-template-columns: 1fr; }
+  }
+
+  /* ---- Preview panel ---- */
+  .preview{
+    position: sticky;
+    top: 24px;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 36px 28px 28px;
+    text-align:center;
+  }
+  .preview-stage{
+    width: 100%;
+    aspect-ratio: 1/1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: radial-gradient(circle at 50% 40%, var(--cream-deep), var(--cream));
+    border-radius: 16px;
+    margin-bottom: 20px;
+    position:relative;
+    overflow:hidden;
+  }
+  .preview-stage svg{
+    width: 78%;
+    height: 78%;
+    filter: drop-shadow(0 14px 18px rgba(43,36,32,0.18));
+    transition: all 0.35s ease;
+  }
+  .flavor-tag{
+    position:absolute;
+    top:14px; left:14px;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: var(--white);
+    color: var(--gold);
+    padding: 5px 12px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  }
+  .summary-title{
+    font-size: 20px;
+    margin: 4px 0 14px;
+  }
+  .summary-list{
+    text-align:left;
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    color: #4a4a4a;
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+    margin-bottom: 18px;
+  }
+  .summary-list div{
+    display:flex;
+    justify-content:space-between;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .summary-list span:first-child{ color:#8a8a8a; }
+  .summary-list span:last-child{ font-weight:bold; color:var(--ink); }
+  .helper-note{
+    font-family: var(--font-sans);
+    font-size:12px;
+    color:#9a9a9a;
+    line-height:1.5;
+    margin-bottom: 4px;
+  }
+  .cta{
+    width:100%;
+    background: var(--ink);
+    color: var(--cream);
+    border:none;
+    padding: 15px 20px;
+    border-radius: 30px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor:pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .cta:hover{ background: var(--sage); transform: translateY(-1px); }
+  .cta.secondary{
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--blush);
+    margin-top: 10px;
+  }
+  .cta.secondary:hover{ background: var(--blush); color: var(--ink); }
+
+  /* ---- Options panel ---- */
+  .options{ display:flex; flex-direction:column; gap: 30px; }
+  .step{
+    background: var(--white);
+    border-radius: 16px;
+    padding: 24px 26px;
+    box-shadow: var(--shadow);
+  }
+  .step-title{
+    display:flex;
+    align-items:center;
+    gap: 12px;
+    font-size: 19px;
+    margin-bottom: 16px;
+  }
+  .step-num{
+    width: 26px; height:26px;
+    border-radius:50%;
+    background: var(--gold-light);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .choice-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 12px;
+  }
+
+  .shape-btn{
+    width: 84px;
+    padding: 10px 0 8px;
+    border-radius: 12px;
+    border: 2px solid var(--line);
+    background: var(--cream);
+    cursor:pointer;
+    text-align:center;
+    font-family: var(--font-sans);
+    font-size: 11px;
+    color: #6b6b6b;
+    transition: all 0.15s ease;
+  }
+  .shape-btn svg{ width:34px; height:34px; margin-bottom:6px; }
+  .shape-btn.active, .shape-btn:hover{ border-color: var(--sage); color: var(--ink); background: var(--cream-deep); }
+
+  .pill-btn{
+    padding: 9px 18px;
+    border-radius: 24px;
+    border: 1.5px solid var(--line);
+    background: var(--cream);
+    cursor:pointer;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: #4a4a4a;
+    transition: all 0.15s ease;
+  }
+  .pill-btn.active, .pill-btn:hover{ border-color: var(--sage); background: var(--sage); color: var(--white); }
+
+  .swatch{
+    width: 36px; height:36px;
+    border-radius: 50%;
+    border: 3px solid var(--white);
+    outline: 2px solid var(--line);
+    cursor:pointer;
+    transition: all 0.15s ease;
+  }
+  .swatch.active, .swatch:hover{ outline: 2px solid var(--sage); transform: scale(1.08); }
+
+  .qty-row{ display:flex; gap:12px; }
+  .qty-card{
+    flex:1;
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 10px;
+    text-align:center;
+    cursor:pointer;
+    font-family: var(--font-sans);
+    transition: all 0.15s ease;
+  }
+  .qty-card .n{ font-size:22px; font-family: var(--font-head); }
+  .qty-card .l{ font-size:11px; color:#8a8a8a; text-transform:uppercase; letter-spacing:0.5px; }
+  .qty-card.active, .qty-card:hover{ border-color: var(--sage); background: var(--cream-deep); }
+
+  textarea{
+    width:100%;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    resize: vertical;
+    min-height: 70px;
+    background: var(--cream);
+  }
+  textarea:focus{ outline:none; border-color: var(--sage); }
+
+  .toast{
+    position: fixed;
+    bottom: 26px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: var(--cream);
+    padding: 14px 26px;
+    border-radius: 30px;
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    opacity:0;
+    pointer-events:none;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+    text-align:center;
+    max-width: 90%;
+  }
+  .toast.show{ opacity:1; transform: translateX(-50%) translateY(0); }
+
+  footer{ background: var(--chocolate); color: var(--cream); padding: 44px 24px; text-align:center; margin-top:20px; }
+  footer .flinks{ display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; font-family: var(--font-sans); font-size:13px; }
+  footer .flinks a{ color: var(--cream); text-decoration:none; opacity:0.85; }
+  footer .flinks a:hover{ opacity:1; }
+  .fnewsletter{ max-width:380px; margin: 8px auto 26px; }
+  .fn-label{ font-family: var(--font-script); font-size:19px; color: var(--gold-light); margin-bottom:12px; }
+  .fn-form{ display:flex; gap:8px; }
+  .fn-form input{ flex:1; border:none; border-radius:24px; padding:11px 16px; font-family: var(--font-sans); font-size:13px; background: rgba(255,255,255,0.95); color: var(--chocolate); }
+  .fn-form input:focus{ outline:2px solid var(--gold-light); }
+  .fn-form button{ background: var(--gold-light); color: var(--chocolate); border:none; border-radius:24px; padding:11px 20px; font-family: var(--font-sans); font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition: background .2s ease; }
+  .fn-form button:hover{ background: var(--blush); }
+  .fn-note{ font-family: var(--font-sans); font-size:11.5px; opacity:0.85; margin-top:10px; min-height:14px; }
+  .fn-note.show{ font-size:14px; opacity:1; background: rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); border-radius:14px; padding:14px 18px; line-height:1.5; margin-top:4px; }
+  footer .fine{ font-family: var(--font-sans); font-size:11.5px; opacity:0.6; }
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+<nav class="site-nav">
+  <a href="index.html" aria-label="Double Joy Cookies — Home"><img src="images/double-joy-logo-light.png" alt="Double Joy Cookies" style="height:32px; display:block;"></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="double_joy_about.html">About</a>
+    <a href="double_joy_cookie_menu.html" class="current">Dream Up Your Cookies</a>
+    <a href="double_joy_recipe_shop.html">Recipes</a>
+    <a href="double_joy_contact.html">Contact</a>
+    <a href="double_joy_order_form.html" class="nav-cta">Custom Order</a>
+  </div>
+</nav>
+</div>
+
+<div class="wrap">
+  <div class="page-header">
+    <div class="script-tag">Baked with love</div>
+    <div class="kicker">Get Inspired</div>
+    <h1>Dream Up Your Cookies</h1>
+    <p class="sub">Play with shapes, flavors, and icing styles to explore what's possible — this is just a starting point to help you dream, not a final preview. When something clicks, send it to Emily and she'll bring it to life (and quote you personally).</p>
+  </div>
+
+  <div class="builder">
+    <div class="options">
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">1</span> Choose a shape</div>
+        <div class="choice-row" id="shapeRow"></div>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">2</span> Choose a flavor</div>
+        <div class="choice-row" id="flavorRow"></div>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">3</span> Choose your icing color</div>
+        <div class="choice-row" id="colorRow"></div>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">4</span> Choose an icing style</div>
+        <div class="choice-row" id="styleRow"></div>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">5</span> Box size</div>
+        <div class="qty-row" id="qtyRow"></div>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">6</span> Tell us about your event <span style="font-family: var(--font-sans); font-size:11px; color:#aaa; font-weight:normal; margin-left:6px;">(optional)</span></div>
+        <textarea id="notes" placeholder="e.g. Baby shower, sage &amp; cream theme, needed by August 14th..."></textarea>
+      </div>
+
+    </div>
+
+    <div class="preview">
+      <div class="preview-stage">
+        <div class="flavor-tag" id="flavorTag">Vanilla Bean</div>
+        <svg id="cookieSvg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+      <div class="summary-title">Your Inspiration</div>
+      <div class="summary-list">
+        <div><span>Shape</span><span id="sumShape">Round</span></div>
+        <div><span>Flavor</span><span id="sumFlavor">Vanilla Bean</span></div>
+        <div><span>Icing</span><span id="sumColor">Blush</span></div>
+        <div><span>Style</span><span id="sumStyle">Smooth Flood</span></div>
+        <div><span>About This Many</span><span id="sumQty">12 Cookies</span></div>
+      </div>
+      <p class="helper-note">Pricing depends on the real details — Emily will follow up with a personal quote.</p>
+      <button class="cta" id="sendBtn">Send This Inspiration to Emily</button>
+      <button class="cta secondary" id="emailBtn">Email It To Me Instead</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="flinks">
+    <a href="index.html">Home</a>
+    <a href="double_joy_about.html">About</a>
+    <a href="double_joy_order_form.html">Custom Order</a>
+    <a href="double_joy_recipe_shop.html">Recipes</a>
+    <a href="double_joy_contact.html">Contact</a>
+    <a href="https://www.instagram.com/doublejoycookies" target="_blank" rel="noopener">Instagram</a>
+  </div>
+  <div class="fnewsletter">
+    <div class="fn-label">🍪 Get the occasional sweet note from Emily</div>
+    <form class="fn-form" onsubmit="return djcFooterSignup(this)">
+      <input type="email" placeholder="you@email.com" required>
+      <button type="submit">Join In</button>
+    </form>
+    <div class="fn-note"></div>
+  </div>
+  <div class="fine">© Double Joy Cookies. Made with love (and a little chaos).</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------------- Data ---------------- */
+const SHAPES = [
+  { id:'round',    label:'Round' },
+  { id:'scalloped', label:'Scalloped' },
+  { id:'heart',    label:'Heart' },
+  { id:'flower',   label:'Flower' },
+  { id:'square',   label:'Plaque' },
+];
+
+const FLAVORS = [
+  { id:'vanilla',  label:'Vanilla Bean', doughColor:'#EFD9A8' },
+  { id:'brownbutter', label:'Brown Butter', doughColor:'#D9B67E' },
+  { id:'chocolate', label:'Chocolate', doughColor:'#7A4B32' },
+  { id:'lemon',    label:'Lemon', doughColor:'#F3E28A' },
+  { id:'redvelvet',label:'Red Velvet', doughColor:'#8C2F39' },
+  { id:'almond',   label:'Almond', doughColor:'#E7C79A' },
+];
+
+const COLORS = [
+  { id:'blush',   label:'Blush',      hex:'#F7DADC' },
+  { id:'sage',    label:'Sage',       hex:'#A8B49A' },
+  { id:'ivory',   label:'Ivory',      hex:'#FFF7EF' },
+  { id:'taupe',   label:'Taupe',      hex:'#C2B098' },
+  { id:'gold',    label:'Gold',       hex:'#D4AF37' },
+  { id:'chocolate', label:'Chocolate', hex:'#5A473A' },
+  { id:'dustyblue', label:'Dusty Blue', hex:'#A9BFCB' },
+  { id:'terracotta', label:'Terracotta', hex:'#C97B54' },
+  { id:'lavender',label:'Lavender',   hex:'#C6B7D6' },
+  { id:'burgundy',label:'Burgundy',   hex:'#6E2B3A' },
+];
+
+const STYLES = [
+  { id:'flood', label:'Smooth Flood' },
+  { id:'marble', label:'Marbled' },
+  { id:'ombre', label:'Watercolor Ombré' },
+  { id:'piped', label:'Hand-Piped Detail' },
+  { id:'drizzle', label:'Drizzle' },
+];
+
+const SIZES = [
+  { id:6,  label:'Half Dozen' },
+  { id:12, label:'Dozen' },
+  { id:24, label:'Two Dozen' },
+];
+
+let state = {
+  shape: 'round',
+  flavor: 'vanilla',
+  color: 'blush',
+  style: 'flood',
+  qty: 12,
+};
+
+/* ---------------- Render option rows ---------------- */
+const shapeRow = document.getElementById('shapeRow');
+SHAPES.forEach(s => {
+  const btn = document.createElement('div');
+  btn.className = 'shape-btn' + (s.id === state.shape ? ' active' : '');
+  btn.dataset.id = s.id;
+  btn.innerHTML = shapeIcon(s.id) + `<div>${s.label}</div>`;
+  btn.onclick = () => { state.shape = s.id; refresh(); };
+  shapeRow.appendChild(btn);
+});
+
+const flavorRow = document.getElementById('flavorRow');
+FLAVORS.forEach(f => {
+  const btn = document.createElement('div');
+  btn.className = 'pill-btn' + (f.id === state.flavor ? ' active' : '');
+  btn.dataset.id = f.id;
+  btn.textContent = f.label;
+  btn.onclick = () => { state.flavor = f.id; refresh(); };
+  flavorRow.appendChild(btn);
+});
+
+const colorRow = document.getElementById('colorRow');
+COLORS.forEach(c => {
+  const sw = document.createElement('div');
+  sw.className = 'swatch' + (c.id === state.color ? ' active' : '');
+  sw.style.background = c.hex;
+  sw.title = c.label;
+  sw.dataset.id = c.id;
+  sw.onclick = () => { state.color = c.id; refresh(); };
+  colorRow.appendChild(sw);
+});
+
+const styleRow = document.getElementById('styleRow');
+STYLES.forEach(st => {
+  const btn = document.createElement('div');
+  btn.className = 'pill-btn' + (st.id === state.style ? ' active' : '');
+  btn.dataset.id = st.id;
+  btn.textContent = st.label;
+  btn.onclick = () => { state.style = st.id; refresh(); };
+  styleRow.appendChild(btn);
+});
+
+const qtyRow = document.getElementById('qtyRow');
+SIZES.forEach(sz => {
+  const card = document.createElement('div');
+  card.className = 'qty-card' + (sz.id === state.qty ? ' active' : '');
+  card.dataset.id = sz.id;
+  card.innerHTML = `<div class="n">${sz.id}</div><div class="l">${sz.label}</div>`;
+  card.onclick = () => { state.qty = sz.id; refresh(); };
+  qtyRow.appendChild(card);
+});
+
+/* ---------------- Shape path helpers ---------------- */
+function shapePath(id){
+  switch(id){
+    case 'round':
+      return 'M100,20 a80,80 0 1,0 0.1,0 Z';
+    case 'square':
+      return 'M40,30 h120 a10,10 0 0 1 10,10 v120 a10,10 0 0 1 -10,10 h-120 a10,10 0 0 1 -10,-10 v-120 a10,10 0 0 1 10,-10 Z';
+    case 'heart':
+      return 'M100,175 C40,130 15,95 15,65 C15,35 45,20 65,30 C82,38 95,55 100,68 C105,55 118,38 135,30 C155,20 185,35 185,65 C185,95 160,130 100,175 Z';
+    case 'scalloped':
+      return scallopedPath(100,100,78,16);
+    case 'flower':
+      return flowerPath(100,100,80,7);
+    default:
+      return 'M100,20 a80,80 0 1,0 0.1,0 Z';
+  }
+}
+function scallopedPath(cx,cy,r,bumps){
+  const inner = r - 8;
+  let d = '';
+  const step = (Math.PI*2)/bumps;
+  for(let i=0;i<bumps;i++){
+    const a1 = i*step - Math.PI/2;
+    const a2 = a1 + step;
+    const mid = (a1+a2)/2;
+    const x1 = cx + Math.cos(a1)*inner, y1 = cy + Math.sin(a1)*inner;
+    const xm = cx + Math.cos(mid)*r,     ym = cy + Math.sin(mid)*r;
+    const x2 = cx + Math.cos(a2)*inner, y2 = cy + Math.sin(a2)*inner;
+    if(i===0) d += `M${x1},${y1} `;
+    d += `Q${xm},${ym} ${x2},${y2} `;
+  }
+  return d + 'Z';
+}
+function flowerPath(cx,cy,r,petals){
+  const inner = r*0.55;
+  let d = '';
+  const step = (Math.PI*2)/petals;
+  for(let i=0;i<petals;i++){
+    const a0 = i*step;
+    const aMid = a0 + step/2;
+    const aNext = a0 + step;
+    const x0 = cx + Math.cos(a0)*inner, y0 = cy + Math.sin(a0)*inner;
+    const cxp = cx + Math.cos(aMid)*r*1.25, cyp = cy + Math.sin(aMid)*r*1.25;
+    const x1 = cx + Math.cos(aNext)*inner, y1 = cy + Math.sin(aNext)*inner;
+    if(i===0) d += `M${x0},${y0} `;
+    d += `Q${cxp},${cyp} ${x1},${y1} `;
+  }
+  return d + 'Z';
+}
+function shapeIcon(id){
+  const d = shapePathScaled(id);
+  return `<svg viewBox="0 0 200 200"><path d="${d}" fill="#E9D28C"/></svg>`;
+}
+function shapePathScaled(id){ return shapePath(id); }
+
+/* ---------------- Main render ---------------- */
+const svgNS = 'http://www.w3.org/2000/svg';
+function renderCookie(){
+  const svg = document.getElementById('cookieSvg');
+  svg.innerHTML = '';
+
+  const flavor = FLAVORS.find(f=>f.id===state.flavor);
+  const color = COLORS.find(c=>c.id===state.color);
+  const path = shapePath(state.shape);
+
+  // dough base (slightly larger, offset) to peek out as a baked edge
+  const dough = document.createElementNS(svgNS,'path');
+  dough.setAttribute('d', path);
+  dough.setAttribute('fill', flavor.doughColor);
+  dough.setAttribute('transform','translate(100,100) scale(1.06) translate(-100,-100)');
+  svg.appendChild(dough);
+
+  // icing layer
+  const defs = document.createElementNS(svgNS,'defs');
+  svg.appendChild(defs);
+
+  let fill = color.hex;
+  if(state.style === 'marble'){
+    const gid = 'marble'+Math.random().toString(36).slice(2,7);
+    const grad = document.createElementNS(svgNS,'linearGradient');
+    grad.setAttribute('id', gid);
+    grad.setAttribute('x1','0%'); grad.setAttribute('y1','0%');
+    grad.setAttribute('x2','100%'); grad.setAttribute('y2','100%');
+    grad.innerHTML = `<stop offset="0%" stop-color="${color.hex}"/><stop offset="35%" stop-color="#FFFFFF"/><stop offset="55%" stop-color="${color.hex}"/><stop offset="80%" stop-color="#FFFFFF"/><stop offset="100%" stop-color="${color.hex}"/>`;
+    defs.appendChild(grad);
+    fill = `url(#${gid})`;
+  } else if(state.style === 'ombre'){
+    const gid = 'ombre'+Math.random().toString(36).slice(2,7);
+    const grad = document.createElementNS(svgNS,'linearGradient');
+    grad.setAttribute('id', gid);
+    grad.setAttribute('x1','0%'); grad.setAttribute('y1','0%');
+    grad.setAttribute('x2','0%'); grad.setAttribute('y2','100%');
+    grad.innerHTML = `<stop offset="0%" stop-color="${color.hex}"/><stop offset="100%" stop-color="#FFFFFF"/>`;
+    defs.appendChild(grad);
+    fill = `url(#${gid})`;
+  }
+
+  const icing = document.createElementNS(svgNS,'path');
+  icing.setAttribute('d', path);
+  icing.setAttribute('fill', fill);
+  icing.setAttribute('stroke', 'rgba(0,0,0,0.06)');
+  icing.setAttribute('stroke-width','1');
+  svg.appendChild(icing);
+
+  // style-specific decoration
+  if(state.style === 'piped'){
+    const g = document.createElementNS(svgNS,'g');
+    g.setAttribute('fill','none');
+    g.setAttribute('stroke', shade(color.hex,-30));
+    g.setAttribute('stroke-width','3');
+    g.setAttribute('stroke-linecap','round');
+    // dotted border echoing the shape, inset
+    const border = document.createElementNS(svgNS,'path');
+    border.setAttribute('d', path);
+    border.setAttribute('transform','translate(100,100) scale(0.88) translate(-100,-100)');
+    border.setAttribute('stroke-dasharray','1 9');
+    g.appendChild(border);
+    // little center flourish
+    const flourish = document.createElementNS(svgNS,'path');
+    flourish.setAttribute('d','M80,105 C90,90 110,90 120,105 C110,115 90,115 80,105 Z');
+    flourish.setAttribute('stroke-dasharray','none');
+    g.appendChild(flourish);
+    svg.appendChild(g);
+  }
+  if(state.style === 'drizzle'){
+    const g = document.createElementNS(svgNS,'g');
+    g.setAttribute('fill','none');
+    g.setAttribute('stroke', '#FFFFFF');
+    g.setAttribute('stroke-width','3.5');
+    g.setAttribute('stroke-linecap','round');
+    g.setAttribute('opacity','0.85');
+    const lines = ['M55,70 Q100,110 145,60','M50,105 Q100,140 150,100','M60,140 Q100,165 140,135'];
+    lines.forEach(dd=>{
+      const l = document.createElementNS(svgNS,'path');
+      l.setAttribute('d', dd);
+      g.appendChild(l);
+    });
+    svg.appendChild(g);
+  }
+  if(state.style === 'flood'){
+    const shine = document.createElementNS(svgNS,'ellipse');
+    shine.setAttribute('cx','75'); shine.setAttribute('cy','65');
+    shine.setAttribute('rx','26'); shine.setAttribute('ry','14');
+    shine.setAttribute('fill','rgba(255,255,255,0.35)');
+    svg.appendChild(shine);
+  }
+
+  document.getElementById('flavorTag').textContent = flavor.label;
+}
+function shade(hex, percent){
+  const num = parseInt(hex.replace('#',''),16);
+  let r = (num>>16) + percent, g=(num>>8 & 0x00FF)+percent, b=(num & 0x0000FF)+percent;
+  r = Math.max(Math.min(255,r),0); g = Math.max(Math.min(255,g),0); b = Math.max(Math.min(255,b),0);
+  return '#' + (0x1000000 + r*0x10000 + g*0x100 + b).toString(16).slice(1);
+}
+
+function refresh(){
+  // active states
+  document.querySelectorAll('#shapeRow .shape-btn').forEach(el=>el.classList.toggle('active', el.dataset.id===state.shape));
+  document.querySelectorAll('#flavorRow .pill-btn').forEach(el=>el.classList.toggle('active', el.dataset.id===state.flavor));
+  document.querySelectorAll('#colorRow .swatch').forEach(el=>el.classList.toggle('active', el.dataset.id===state.color));
+  document.querySelectorAll('#styleRow .pill-btn').forEach(el=>el.classList.toggle('active', el.dataset.id===state.style));
+  document.querySelectorAll('#qtyRow .qty-card').forEach(el=>el.classList.toggle('active', Number(el.dataset.id)===state.qty));
+
+  renderCookie();
+
+  const flavor = FLAVORS.find(f=>f.id===state.flavor);
+  const color = COLORS.find(c=>c.id===state.color);
+  const styleObj = STYLES.find(s=>s.id===state.style);
+  const shapeObj = SHAPES.find(s=>s.id===state.shape);
+  const sizeObj = SIZES.find(s=>s.id===state.qty);
+
+  document.getElementById('sumShape').textContent = shapeObj.label;
+  document.getElementById('sumFlavor').textContent = flavor.label;
+  document.getElementById('sumColor').textContent = color.label;
+  document.getElementById('sumStyle').textContent = styleObj.label;
+  document.getElementById('sumQty').textContent = sizeObj.id + ' Cookies';
+}
+
+/* ---------------- CTA actions ---------------- */
+function summaryText(){
+  const flavor = FLAVORS.find(f=>f.id===state.flavor);
+  const color = COLORS.find(c=>c.id===state.color);
+  const styleObj = STYLES.find(s=>s.id===state.style);
+  const shapeObj = SHAPES.find(s=>s.id===state.shape);
+  const sizeObj = SIZES.find(s=>s.id===state.qty);
+  const notes = document.getElementById('notes').value.trim();
+  return `Cookie Inspiration — Double Joy Cookies\n\nShape: ${shapeObj.label}\nFlavor: ${flavor.label}\nIcing Color: ${color.label}\nIcing Style: ${styleObj.label}\nAbout This Many: ${sizeObj.label} (${sizeObj.id} cookies)\n\nEvent details: ${notes || '(none provided)'}`;
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>t.classList.remove('show'), 3200);
+}
+
+document.getElementById('sendBtn').onclick = () => {
+  const flavor = FLAVORS.find(f=>f.id===state.flavor);
+  const color = COLORS.find(c=>c.id===state.color);
+  const styleObj = STYLES.find(s=>s.id===state.style);
+  const sizeObj = SIZES.find(s=>s.id===state.qty);
+  const notes = document.getElementById('notes').value.trim();
+  const p = new URLSearchParams({
+    shape: state.shape,
+    flavor: flavor.label,
+    color: color.label,
+    colorHex: color.hex,
+    style: styleObj.label,
+    qty: sizeObj.id,
+    notes: encodeURIComponent(notes),
+  });
+  window.location.href = 'double_joy_order_form.html?' + p.toString();
+};
+document.getElementById('emailBtn').onclick = () => {
+  const subject = encodeURIComponent('My Custom Cookie Design — Double Joy Cookies');
+  const body = encodeURIComponent(summaryText());
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+};
+
+/* Paste the Apps Script Web App URL here once it's deployed (see Double_Joy_Cookies_Notes.md) */
+const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbyCCvDHXexq5_YRU1ATlpICSoEB4jg9Hkke3ub3KEOmUMLQrCvwJmCcPTt_sOcqMjY/exec";
+
+function djcFooterSignup(form){
+  const note = form.nextElementSibling;
+  const email = form.querySelector('input[type=email]').value;
+  if(DJC_ENDPOINT && DJC_ENDPOINT.indexOf('PASTE_') === -1){
+    fetch(DJC_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ type: 'newsletter', email: email })
+    }).catch(()=>{});
+  }
+  form.style.display = 'none';
+  note.textContent = "🍪 Thanks for joining! You're on the list for sweet updates from Emily.";
+  note.classList.add('show');
+  showToast("🍪 You're on the list for sweet updates from Emily!");
+  return false;
+}
+
+refresh();
+</script>
+</body>
+</html>

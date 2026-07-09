@@ -145,3 +145,49 @@ John flagged that the nav was funneling more people to "Dream Up Your Cookies" (
 
 ## Positioning Decision (Cookie Menu)
 Real price is $5/cookie flat today, with a goal of raising prices and building repeat customers — a specific dollar estimate next to a stylized, non-final preview risked anchoring low and creating mismatched expectations. Repositioned the builder as pure inspiration ("Dream Up Your Cookies," no live price), moved the actual quote to Emily's personal follow-up after the order form. Complexity tiers live on their own dedicated page (`double_joy_complexity_guide.html`) as qualitative info only — no $ figures, real photos with annotations.
+
+---
+
+## Session Update — Domain, Social Sharing, Pricing & Terms (July 2026)
+
+### www subdomain fixed
+`www.doublejoycookies.com` was stuck on "No zones match" in Cloudflare's Custom Domain dialog even with a correct CNAME. Fixed by using a **Workers Route** instead (`www.doublejoycookies.com/*` → `double-joy-cookies` worker) — Routes only need the DNS record proxied, not the special zone-matching step Custom Domains require. Important: the route pattern must include the `/*` wildcard, or only the home page works and every other page 404s.
+
+### Social share preview
+Added Open Graph/Twitter Card meta tags to all 6 live pages plus a custom branded `images/social-share.jpg` (1200x630, logo + cookie photo + tagline) so links shared in iMessage/Slack/etc. show a real preview instead of a blank box. As of this writing the image still isn't reliably showing in iMessage specifically — ruled out Cloudflare bot-blocking (Security Events log showed zero blocks), most likely Apple's own link-preview caching being unusually persistent. No further action needed on our end; worth spot-checking again after some time has passed, or testing a brand-new iMessage thread.
+
+### Newsletter + order form bug fixes
+- Newsletter signup was showing two confirmation popups — fixed (removed a duplicate toast call).
+- Uploading more than one inspiration photo on the order form silently failed to deliver the whole submission. Root cause couldn't be fully confirmed without Apps Script execution logs, so per John's direction the form now accepts **one photo only**, compressed client-side before upload (max 1600px, JPEG quality 0.72) to keep payload size down.
+
+### Anti-bot protection
+Added honeypot + timing-trap protection (invisible field bots tend to auto-fill, plus a minimum time-on-page before submit counts as human) to the footer newsletter form and the order form — invisible to real users, silently drops bot submissions.
+
+### About page
+Added flip-to-reveal interactivity to the 4 brand pillar cards (tap/click to flip and show a "Why It Matters" line), and added a real photo of Emily with her oldest daughter, Hailey.
+
+### Pricing — now live on the site
+Real dollar pricing was added for the first time (previously nothing on the site had a $ figure). Decisions:
+- **Basic $60/dozen, Standard $80/dozen, Complex $105/dozen & up** — 2-dozen minimum on all orders.
+- Pricing lives on the About page's existing "My Approach" section (no new nav page), with short pricing anchors ("Cookies start at $60/dozen — see full pricing →") added on the Dream Up Your Cookies tool and the top of the Custom Order form.
+- "Dream Up Your Cookies" now has a live price estimator: each icing style is tagged Basic/Standard/Complex, shows a running tier + price in the sidebar, and hands the estimate off to the order form (shown in the recap with an "estimate only — Emily will confirm" disclaimer). Also added a new premium "Hand-Painted Detail" style (Complex tier) and changed the batch-size options from 6/12/24 to 24/36/48+ to match the new 2-dozen minimum.
+- "VALUE" messaging added throughout ("she can literally make anything," "don't let creativity stop you, let's chat!") so the tiers read as a starting guide, not a hard ceiling.
+
+### Order form policy updates
+- Accepting custom order requests for events through **December 1, 2026**.
+- **$20/dozen rush fee** for orders placed with less than 2 weeks' notice.
+- **+$6/dozen gift bow upcharge** (new checkbox option on the order form).
+- **Payment in full before the date is reserved** on the calendar.
+- Delivery is now **local pickup or local delivery, Portland, OR area only** — removed the old generic "Shipping" option (Emily is Portland-based; the Contact page FAQ was also corrected to match, since it still said shipping was available).
+
+### New Terms & Policies page
+Added `double_joy_terms.html`, linked from the footer on all 6 live pages. Covers requests/booking, payment, rush orders, pickup/delivery area, gift bow add-on, cancellations (flagged as a draft — exact refund terms not yet finalized), allergen disclaimer, and Oregon's required cottage food statutory disclosure: *"This product is homemade, is not prepared in an inspected food establishment and must be stored and displayed separately if merchandised by a retailer."* (sourced from the Oregon Dept. of Agriculture). Note: this exact sentence is also legally required on physical product labels/packaging, separate from the website.
+
+### Code.gs updated for new fields
+Added `Estimated Price` and `Gift Bows` columns to the Orders sheet (appended at the end so existing rows aren't disrupted), plus a header-sync helper so the **already-live** Orders sheet picks up the new columns automatically the next time an order comes in — no manual sheet editing needed. Notification emails now include gift bow status and the price estimate (with an "estimate only" disclaimer). **Action needed:** paste the updated `Code.gs` into the Apps Script editor and redeploy via Deploy → Manage deployments → pencil icon → New version → Deploy (same `/exec` URL — no HTML changes required for this part).
+
+### Billing & handoff documents (for John/Emily, not the live site)
+Built `Double_Joy_Cookies_Project_Summary.docx` (project summary for billing Emily) and `Double_Joy_Cookies_Pricing_Breakeven_Mock.xlsx` (a formula-driven mock model using real COGS/labor numbers plus clearly-flagged guesses, showing profitability by order size). Key takeaway from the model: at $5/cookie, small orders (around 1 dozen) lose money once labor is factored in — true breakeven is around 21 cookies (~1.75 dozen), not 36.
+
+### "Website by Sought After Co." footer credit — done
+Added a small credit line + logo mark, linking to soughtafter.design, in the footer of all 6 live pages plus the new Terms page. Logo file (`images/sought-after-mark.png`) resized from John's uploaded source for footer use.

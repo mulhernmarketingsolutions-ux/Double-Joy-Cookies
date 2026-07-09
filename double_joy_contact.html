@@ -123,6 +123,9 @@
   .fn-note{ font-family: var(--font-sans); font-size:11.5px; opacity:0.85; margin-top:10px; min-height:14px; }
   .fn-note.show{ font-size:14px; opacity:1; background: rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); border-radius:14px; padding:14px 18px; line-height:1.5; margin-top:4px; }
   footer .fine{ font-family: var(--font-sans); font-size:11.5px; opacity:0.6; }
+  .sac-credit{ display:inline-flex; align-items:center; gap:8px; margin-top:14px; text-decoration:none; color: var(--cream); opacity:0.55; font-family: var(--font-sans); font-size:11px; transition: opacity .2s ease; }
+  .sac-credit:hover{ opacity:0.9; }
+  .sac-credit img{ height:18px; width:auto; display:block; }
   .toast{ position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background: var(--ink); color: var(--cream); padding:14px 26px; border-radius:30px; font-family: var(--font-sans); font-size:13.5px; opacity:0; pointer-events:none; transition: all .3s ease; box-shadow: var(--shadow); text-align:center; max-width:90%; z-index:999; }
   .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
@@ -165,7 +168,7 @@
   </details>
   <details>
     <summary>Do you ship, or is it pickup/local delivery only?</summary>
-    <p>We offer pickup, local delivery, and shipping depending on your location and order — you'll choose your preference on the custom order form and we'll confirm what's available for your area.</p>
+    <p>We offer local pickup and local delivery around the Portland, OR area only — we're not able to ship at this time. You'll choose your preference on the custom order form.</p>
   </details>
   <details>
     <summary>Can you accommodate allergies or dietary restrictions?</summary>
@@ -213,6 +216,7 @@
     <a href="index.html">Home</a>
     <a href="double_joy_about.html">About</a>
     <a href="double_joy_cookie_menu.html">Dream Up Your Cookies</a>
+    <a href="double_joy_terms.html">Terms</a>
     <a href="https://www.instagram.com/doublejoycookies" target="_blank" rel="noopener">Instagram</a>
   </div>
   <div class="fnewsletter">
@@ -225,6 +229,10 @@
     <div class="fn-note"></div>
   </div>
   <div class="fine">© Double Joy Cookies. Made with love (and a little chaos).</div>
+  <a href="https://soughtafter.design" target="_blank" rel="noopener" class="sac-credit">
+    <img src="images/sought-after-mark.png" alt="Sought After Co.">
+    <span>Website by Sought After Co. — helping brands become sought after</span>
+  </a>
 </footer>
 
 <script>

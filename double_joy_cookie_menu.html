@@ -152,6 +152,21 @@
     margin: 0 auto;
     line-height: 1.6;
   }
+  .price-anchor{
+    display:inline-block;
+    margin-top:16px;
+    font-family: var(--font-sans);
+    font-size:12.5px;
+    letter-spacing:0.3px;
+    color: var(--ink);
+    background: var(--cream-deep);
+    border-radius:20px;
+    padding:9px 18px;
+    text-decoration:none;
+    transition: background .15s ease;
+  }
+  .price-anchor:hover{ background: var(--blush); }
+  .price-anchor strong{ color: var(--gold); }
 
   .builder{
     display:grid;
@@ -232,6 +247,32 @@
     color:#9a9a9a;
     line-height:1.5;
     margin-bottom: 4px;
+  }
+  .estimate-badge{
+    background: var(--cream-deep, #F3EADC);
+    border-radius:14px;
+    padding:12px 16px;
+    margin-bottom:14px;
+    text-align:center;
+  }
+  .estimate-badge .tier{
+    font-family: var(--font-sans);
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:#9a8f80;
+    margin-bottom:2px;
+  }
+  .estimate-badge .price{
+    font-family: var(--font-sans);
+    font-size:19px;
+    font-weight:700;
+    color: var(--ink);
+  }
+  .estimate-badge .price span{
+    font-size:12px;
+    font-weight:500;
+    color:#9a9a9a;
   }
   .cta{
     width:100%;
@@ -388,6 +429,9 @@
   .fn-note{ font-family: var(--font-sans); font-size:11.5px; opacity:0.85; margin-top:10px; min-height:14px; }
   .fn-note.show{ font-size:14px; opacity:1; background: rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); border-radius:14px; padding:14px 18px; line-height:1.5; margin-top:4px; }
   footer .fine{ font-family: var(--font-sans); font-size:11.5px; opacity:0.6; }
+  .sac-credit{ display:inline-flex; align-items:center; gap:8px; margin-top:14px; text-decoration:none; color: var(--cream); opacity:0.55; font-family: var(--font-sans); font-size:11px; transition: opacity .2s ease; }
+  .sac-credit:hover{ opacity:0.9; }
+  .sac-credit img{ height:18px; width:auto; display:block; }
 </style>
 </head>
 <body>
@@ -414,7 +458,8 @@
     <div class="script-tag">Baked with love</div>
     <div class="kicker">Get Inspired</div>
     <h1>Dream Up Your Cookies</h1>
-    <p class="sub">Play with shapes, flavors, and icing styles to explore what's possible — this is just a starting point to help you dream, not a final preview. When something clicks, send it to Emily and she'll bring it to life (and quote you personally).</p>
+    <p class="sub">Play with shapes, flavors, and icing styles to explore what's possible — this is just a starting point to help you dream, not a final preview. And don't let it box you in — if you can dream it up, Emily can probably make it. When something clicks, send it to her and let's chat about bringing it to life.</p>
+    <a href="double_joy_about.html#approach" class="price-anchor">Cookies start at <strong>$60/dozen</strong> (2-dozen minimum) — see full pricing →</a>
   </div>
 
   <div class="builder">
@@ -465,7 +510,11 @@
         <div><span>Style</span><span id="sumStyle">Smooth Flood</span></div>
         <div><span>About This Many</span><span id="sumQty">12 Cookies</span></div>
       </div>
-      <p class="helper-note">Pricing depends on the real details — Emily will follow up with a personal quote.</p>
+      <div class="estimate-badge">
+        <div class="tier" id="sumTier">Basic</div>
+        <div class="price" id="sumPrice">$60<span>/dozen</span></div>
+      </div>
+      <p class="helper-note">This is an estimate based on icing style, not a final price — Emily will confirm exact pricing once she sees your full vision.</p>
       <button class="cta" id="sendBtn">Send This Inspiration to Emily</button>
       <button class="cta secondary" id="emailBtn">Email It To Me Instead</button>
     </div>
@@ -479,6 +528,7 @@
     <a href="double_joy_order_form.html">Custom Order</a>
     <a href="double_joy_recipe_shop.html">Recipes</a>
     <a href="double_joy_contact.html">Contact</a>
+    <a href="double_joy_terms.html">Terms</a>
     <a href="https://www.instagram.com/doublejoycookies" target="_blank" rel="noopener">Instagram</a>
   </div>
   <div class="fnewsletter">
@@ -491,6 +541,10 @@
     <div class="fn-note"></div>
   </div>
   <div class="fine">© Double Joy Cookies. Made with love (and a little chaos).</div>
+  <a href="https://soughtafter.design" target="_blank" rel="noopener" class="sac-credit">
+    <img src="images/sought-after-mark.png" alt="Sought After Co.">
+    <span>Website by Sought After Co. — helping brands become sought after</span>
+  </a>
 </footer>
 
 <div class="toast" id="toast"></div>
@@ -528,17 +582,24 @@ const COLORS = [
 ];
 
 const STYLES = [
-  { id:'flood', label:'Smooth Flood' },
-  { id:'marble', label:'Marbled' },
-  { id:'ombre', label:'Watercolor Ombré' },
-  { id:'piped', label:'Hand-Piped Detail' },
-  { id:'drizzle', label:'Drizzle' },
+  { id:'flood', label:'Smooth Flood', tier:'basic' },
+  { id:'drizzle', label:'Drizzle', tier:'basic' },
+  { id:'marble', label:'Marbled', tier:'standard' },
+  { id:'ombre', label:'Watercolor Ombré', tier:'standard' },
+  { id:'piped', label:'Hand-Piped Detail', tier:'standard' },
+  { id:'painted', label:'Hand-Painted Detail', tier:'complex' },
 ];
 
+const PRICE_TIERS = {
+  basic:    { label:'Basic',    price:60,  suffix:'/dozen' },
+  standard: { label:'Standard', price:80,  suffix:'/dozen' },
+  complex:  { label:'Complex',  price:105, suffix:'/dozen & up' },
+};
+
 const SIZES = [
-  { id:6,  label:'Half Dozen' },
-  { id:12, label:'Dozen' },
   { id:24, label:'Two Dozen' },
+  { id:36, label:'Three Dozen' },
+  { id:48, label:'Four+ Dozen' },
 ];
 
 let state = {
@@ -546,7 +607,7 @@ let state = {
   flavor: 'vanilla',
   color: 'blush',
   style: 'flood',
-  qty: 12,
+  qty: 24,
 };
 
 /* ---------------- Render option rows ---------------- */
@@ -696,6 +757,14 @@ function renderCookie(){
     grad.innerHTML = `<stop offset="0%" stop-color="${color.hex}"/><stop offset="100%" stop-color="#FFFFFF"/>`;
     defs.appendChild(grad);
     fill = `url(#${gid})`;
+  } else if(state.style === 'painted'){
+    const gid = 'paint'+Math.random().toString(36).slice(2,7);
+    const grad = document.createElementNS(svgNS,'radialGradient');
+    grad.setAttribute('id', gid);
+    grad.setAttribute('cx','35%'); grad.setAttribute('cy','30%'); grad.setAttribute('r','80%');
+    grad.innerHTML = `<stop offset="0%" stop-color="#FFFFFF"/><stop offset="45%" stop-color="${color.hex}"/><stop offset="100%" stop-color="${shade(color.hex,-30)}"/>`;
+    defs.appendChild(grad);
+    fill = `url(#${gid})`;
   }
 
   const icing = document.createElementNS(svgNS,'path');
@@ -747,6 +816,34 @@ function renderCookie(){
     shine.setAttribute('fill','rgba(255,255,255,0.35)');
     svg.appendChild(shine);
   }
+  if(state.style === 'painted'){
+    const g = document.createElementNS(svgNS,'g');
+    // fine hand-painted linework accent
+    const line = document.createElementNS(svgNS,'path');
+    line.setAttribute('d','M68,62 C85,48 115,48 132,62');
+    line.setAttribute('fill','none');
+    line.setAttribute('stroke', shade(color.hex,-45));
+    line.setAttribute('stroke-width','2');
+    line.setAttribute('stroke-linecap','round');
+    g.appendChild(line);
+    // dimensional appliqué accent (layered "flower" button)
+    const dot1 = document.createElementNS(svgNS,'circle');
+    dot1.setAttribute('cx','122'); dot1.setAttribute('cy','98'); dot1.setAttribute('r','11');
+    dot1.setAttribute('fill', '#FFFFFF'); dot1.setAttribute('opacity','0.92');
+    g.appendChild(dot1);
+    const dot2 = document.createElementNS(svgNS,'circle');
+    dot2.setAttribute('cx','122'); dot2.setAttribute('cy','98'); dot2.setAttribute('r','6');
+    dot2.setAttribute('fill', shade(color.hex,25));
+    g.appendChild(dot2);
+    // tiny metallic gold flecks
+    [[66,122],[88,138],[104,127]].forEach(([x,y])=>{
+      const fleck = document.createElementNS(svgNS,'circle');
+      fleck.setAttribute('cx', x); fleck.setAttribute('cy', y); fleck.setAttribute('r','2.2');
+      fleck.setAttribute('fill', '#D4AF37');
+      g.appendChild(fleck);
+    });
+    svg.appendChild(g);
+  }
 
   document.getElementById('flavorTag').textContent = flavor.label;
 }
@@ -778,6 +875,10 @@ function refresh(){
   document.getElementById('sumColor').textContent = color.label;
   document.getElementById('sumStyle').textContent = styleObj.label;
   document.getElementById('sumQty').textContent = sizeObj.id + ' Cookies';
+
+  const tierInfo = PRICE_TIERS[styleObj.tier];
+  document.getElementById('sumTier').textContent = tierInfo.label;
+  document.getElementById('sumPrice').innerHTML = `$${tierInfo.price}<span>${tierInfo.suffix}</span>`;
 }
 
 /* ---------------- CTA actions ---------------- */
@@ -787,8 +888,9 @@ function summaryText(){
   const styleObj = STYLES.find(s=>s.id===state.style);
   const shapeObj = SHAPES.find(s=>s.id===state.shape);
   const sizeObj = SIZES.find(s=>s.id===state.qty);
+  const tierInfo = PRICE_TIERS[styleObj.tier];
   const notes = document.getElementById('notes').value.trim();
-  return `Cookie Inspiration — Double Joy Cookies\n\nShape: ${shapeObj.label}\nFlavor: ${flavor.label}\nIcing Color: ${color.label}\nIcing Style: ${styleObj.label}\nAbout This Many: ${sizeObj.label} (${sizeObj.id} cookies)\n\nEvent details: ${notes || '(none provided)'}`;
+  return `Cookie Inspiration — Double Joy Cookies\n\nShape: ${shapeObj.label}\nFlavor: ${flavor.label}\nIcing Color: ${color.label}\nIcing Style: ${styleObj.label}\nAbout This Many: ${sizeObj.label} (${sizeObj.id} cookies)\nEstimated: ${tierInfo.label} tier, $${tierInfo.price}${tierInfo.suffix} (estimate only — Emily will confirm final pricing)\n\nEvent details: ${notes || '(none provided)'}`;
 }
 
 function showToast(msg){
@@ -804,6 +906,7 @@ document.getElementById('sendBtn').onclick = () => {
   const color = COLORS.find(c=>c.id===state.color);
   const styleObj = STYLES.find(s=>s.id===state.style);
   const sizeObj = SIZES.find(s=>s.id===state.qty);
+  const tierInfo = PRICE_TIERS[styleObj.tier];
   const notes = document.getElementById('notes').value.trim();
   const p = new URLSearchParams({
     shape: state.shape,
@@ -812,6 +915,8 @@ document.getElementById('sendBtn').onclick = () => {
     colorHex: color.hex,
     style: styleObj.label,
     qty: sizeObj.id,
+    tier: tierInfo.label,
+    estPrice: `$${tierInfo.price}${tierInfo.suffix}`,
     notes: encodeURIComponent(notes),
   });
   window.location.href = 'double_joy_order_form.html?' + p.toString();

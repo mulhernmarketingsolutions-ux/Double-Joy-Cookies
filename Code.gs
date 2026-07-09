@@ -14,7 +14,8 @@ const PHOTO_FOLDER_NAME = 'Double Joy Cookies — Order Photos';
 const ORDERS_HEADERS = [
   'Timestamp', 'Name', 'Email', 'Phone', 'Occasion', 'Quantity', 'Need By',
   'Theme', 'Names/Wording', 'Design Direction', 'Budget', 'Delivery', 'Photo Links',
-  'Handoff Shape', 'Handoff Flavor', 'Handoff Icing Color', 'Handoff Style', 'Handoff Notes'
+  'Handoff Shape', 'Handoff Flavor', 'Handoff Icing Color', 'Handoff Style', 'Handoff Notes',
+  'Estimated Price', 'Gift Bows'
 ];
 const SIGNUP_HEADERS = ['Timestamp', 'Email'];
 
@@ -41,8 +42,25 @@ function getSheet(name, headers) {
     sheet = ss.insertSheet(name);
     sheet.appendRow(headers);
     sheet.setFrozenRows(1);
+  } else {
+    // Header-sync: if this sheet already existed (e.g. from before we added
+    // new fields like "Estimated Price"/"Gift Bows"), append any headers
+    // that are missing from row 1 so old sheets pick up new columns
+    // automatically instead of needing manual edits.
+    syncHeaders(sheet, headers);
   }
   return sheet;
+}
+
+function syncHeaders(sheet, headers) {
+  const lastCol = sheet.getLastColumn();
+  const existing = lastCol > 0
+    ? sheet.getRange(1, 1, 1, lastCol).getValues()[0]
+    : [];
+  const missing = headers.filter(h => existing.indexOf(h) === -1);
+  if (missing.length) {
+    sheet.getRange(1, existing.length + 1, 1, missing.length).setValues([missing]);
+  }
 }
 
 function handleNewsletter(data) {
@@ -54,6 +72,8 @@ function handleOrder(data) {
   const photoLinks = savePhotos(data.photos || [], data.name || 'Unknown');
   const sheet = getSheet('Orders', ORDERS_HEADERS);
   const occasion = data.occasion || '';
+  const estimatedPrice = formatEstimate(data);
+  const giftBows = data.giftBows ? 'Yes' : 'No';
 
   sheet.appendRow([
     new Date(),
@@ -73,10 +93,22 @@ function handleOrder(data) {
     (data.handoff && data.handoff.flavor) || '',
     (data.handoff && data.handoff.color) || '',
     (data.handoff && data.handoff.style) || '',
-    (data.handoff && data.handoff.notes) || ''
+    (data.handoff && data.handoff.notes) || '',
+    estimatedPrice,
+    giftBows
   ]);
 
-  sendNotificationEmail(data, occasion, photoLinks);
+  sendNotificationEmail(data, occasion, photoLinks, estimatedPrice, giftBows);
+}
+
+// Builds a readable "Tier — $Price" string from the design-tool handoff data,
+// e.g. "Standard — $80/dozen". Blank if the customer didn't come through the
+// design tool. This is always an estimate — Emily confirms final pricing.
+function formatEstimate(data) {
+  const tier = data.handoff && data.handoff.tier;
+  const price = data.handoff && data.handoff.estPrice;
+  if (!tier && !price) return '';
+  return [tier, price].filter(Boolean).join(' — ');
 }
 
 function savePhotos(photos, customerName) {
@@ -103,7 +135,7 @@ function savePhotos(photos, customerName) {
   return links;
 }
 
-function sendNotificationEmail(data, occasion, photoLinks) {
+function sendNotificationEmail(data, occasion, photoLinks, estimatedPrice, giftBows) {
   const subject = `New Custom Order Request — ${data.name || 'Unknown'}`;
   const lines = [
     'New order request from the website:',
@@ -122,6 +154,7 @@ function sendNotificationEmail(data, occasion, photoLinks) {
     `Design Direction: ${data.design || ''}`,
     `Budget: ${data.budget || ''}`,
     `Delivery: ${data.delivery || ''}`,
+    `Gift Bows: ${giftBows}`,
   ];
 
   if (data.handoff && data.handoff.shape) {
@@ -133,6 +166,13 @@ function sendNotificationEmail(data, occasion, photoLinks) {
       `Icing: ${data.handoff.color}`,
       `Style: ${data.handoff.style}`,
       `Notes: ${data.handoff.notes || ''}`
+    );
+  }
+
+  if (estimatedPrice) {
+    lines.push(
+      '',
+      `Estimated Price: ${estimatedPrice} (estimate only — Emily will confirm final pricing)`
     );
   }
 

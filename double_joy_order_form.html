@@ -171,6 +171,7 @@
   .fnewsletter{ max-width:380px; margin: 8px auto 26px; }
   .fn-label{ font-family: var(--font-script); font-size:19px; color: var(--gold-light); margin-bottom:12px; }
   .fn-form{ display:flex; gap:8px; }
+  .fn-hp{ position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; opacity:0; pointer-events:none; }
   .fn-form input{ flex:1; border:none; border-radius:24px; padding:11px 16px; font-family: var(--font-sans); font-size:13px; background: rgba(255,255,255,0.95); color: var(--chocolate); }
   .fn-form input:focus{ outline:2px solid var(--gold-light); }
   .fn-form button{ background: var(--gold-light); color: var(--chocolate); border:none; border-radius:24px; padding:11px 20px; font-family: var(--font-sans); font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition: background .2s ease; }
@@ -216,6 +217,7 @@
           <div class="field" id="f-name">
             <label>Your Name</label>
             <input type="text" id="name" placeholder="Jane Smith">
+            <input type="text" id="orderHp" name="order_hp" class="fn-hp" tabindex="-1" autocomplete="off">
             <div class="error-msg">Please add your name.</div>
           </div>
           <div class="field" id="f-email">
@@ -345,6 +347,7 @@
   <div class="fnewsletter">
     <div class="fn-label">🍪 Get the occasional sweet note from Emily</div>
     <form class="fn-form" onsubmit="return djcFooterSignup(this)">
+      <input type="text" class="fn-hp" name="fn_hp" tabindex="-1" autocomplete="off">
       <input type="email" placeholder="you@email.com" required>
       <button type="submit">Join In</button>
     </form>
@@ -363,6 +366,7 @@ const DELIVERIES = ['Pickup','Local Delivery','Shipping'];
 
 /* Paste the Apps Script Web App URL here once it's deployed (see Double_Joy_Cookies_Notes.md) */
 const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbyCCvDHXexq5_YRU1ATlpICSoEB4jg9Hkke3ub3KEOmUMLQrCvwJmCcPTt_sOcqMjY/exec";
+const djcFooterLoadTime = Date.now();
 
 function djcToggleNav(){
   const nav = document.getElementById('navLinks');
@@ -606,7 +610,11 @@ document.getElementById('submitBtn').onclick = () => {
     document.querySelector('.field.error')?.scrollIntoView({behavior:'smooth', block:'center'});
     return;
   }
-  sendToBackend(buildPayload());
+  const hp = document.getElementById('orderHp');
+  const isBot = (hp && hp.value) || (Date.now() - djcFooterLoadTime) < 1200;
+  if(!isBot){
+    sendToBackend(buildPayload());
+  }
   document.getElementById('formArea').classList.add('hidden');
   document.getElementById('side').classList.add('hidden');
   document.getElementById('confirmBox').classList.add('show');
@@ -622,7 +630,9 @@ document.getElementById('emailBtn').onclick = () => {
 function djcFooterSignup(form){
   const note = form.nextElementSibling;
   const email = form.querySelector('input[type=email]').value;
-  if(typeof DJC_ENDPOINT !== 'undefined' && DJC_ENDPOINT.indexOf('PASTE_') === -1){
+  const hp = form.querySelector('.fn-hp');
+  const isBot = (hp && hp.value) || (Date.now() - djcFooterLoadTime) < 1200;
+  if(!isBot && typeof DJC_ENDPOINT !== 'undefined' && DJC_ENDPOINT.indexOf('PASTE_') === -1){
     fetch(DJC_ENDPOINT, {
       method: 'POST',
       mode: 'no-cors',

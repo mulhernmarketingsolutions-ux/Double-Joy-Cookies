@@ -75,7 +75,12 @@
 
   .pillars{ display:grid; grid-template-columns: repeat(4,1fr); gap:16px; margin-bottom:40px; }
   @media (max-width:700px){ .pillars{ grid-template-columns: repeat(2,1fr); } }
-  .pillar{ background: var(--white); border-radius:18px; padding:28px 16px 22px; text-align:center; box-shadow: var(--shadow); }
+  .pillar{ background:transparent; border-radius:18px; text-align:center; min-height:190px; perspective:1200px; cursor:pointer; }
+  .pillar-inner{ position:relative; width:100%; height:100%; min-height:190px; transition: transform .6s cubic-bezier(.4,.2,.2,1); transform-style: preserve-3d; }
+  .pillar.flipped .pillar-inner{ transform: rotateY(180deg); }
+  .pillar-front, .pillar-back{ position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:18px; box-shadow: var(--shadow); display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .pillar-front{ background: var(--white); padding:28px 16px 22px; }
+  .pillar-back{ background: var(--ink); color: var(--cream); padding:22px 18px; transform: rotateY(180deg); }
   .pillar-badge{ width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; }
   .pillar-badge svg{ width:24px; height:24px; }
   .pillar.c1 .pillar-badge{ background: var(--sage); }
@@ -83,6 +88,10 @@
   .pillar.c3 .pillar-badge{ background: var(--chocolate); }
   .pillar.c4 .pillar-badge{ background: var(--gold-light); }
   .pillar span{ font-family: var(--font-sans); font-size:12.5px; letter-spacing:0.3px; display:block; line-height:1.4; color: var(--ink); font-weight:600; }
+  .pillar-flip-hint{ position:absolute; bottom:9px; right:11px; width:18px; height:18px; opacity:0.35; }
+  .pillar-flip-hint svg{ width:100%; height:100%; }
+  .pillar-back-label{ font-family: var(--font-sans); font-size:9.5px; text-transform:uppercase; letter-spacing:1.2px; color: var(--gold-light); font-weight:700; margin-bottom:8px; }
+  .pillar-back p{ font-family: var(--font-sans); font-size:11.5px; line-height:1.55; letter-spacing:0.2px; margin:0; opacity:0.92; }
 
   .approach{ margin-bottom:40px; }
   .approach-head{ text-align:center; margin-bottom:28px; }
@@ -118,6 +127,7 @@
   .fnewsletter{ max-width:380px; margin: 8px auto 26px; }
   .fn-label{ font-family: var(--font-script); font-size:19px; color: var(--gold-light); margin-bottom:12px; }
   .fn-form{ display:flex; gap:8px; }
+  .fn-hp{ position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; opacity:0; pointer-events:none; }
   .fn-form input{ flex:1; border:none; border-radius:24px; padding:11px 16px; font-family: var(--font-sans); font-size:13px; background: rgba(255,255,255,0.95); color: var(--chocolate); }
   .fn-form input:focus{ outline:2px solid var(--gold-light); }
   .fn-form button{ background: var(--gold-light); color: var(--chocolate); border:none; border-radius:24px; padding:11px 20px; font-family: var(--font-sans); font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition: background .2s ease; }
@@ -159,6 +169,11 @@
     <p>It started small — cookies for my own girls' birthdays, decorated late at night because I wanted their day to feel a little more special. Somewhere along the way I realized I was actually good at this, and that maybe it could be something more than a once-a-year birthday project.</p>
 
     <div class="story-photo">
+      <img src="images/emily-hailey.jpg" alt="Emily crouching and hugging her oldest daughter Hailey on the street">
+      <div class="story-photo-caption">Me and my oldest, Hailey</div>
+    </div>
+
+    <div class="story-photo">
       <img src="images/daughters.jpg" alt="Emily's two daughters hugging in the backyard">
       <div class="story-photo-caption">My girls — the whole reason this started</div>
     </div>
@@ -171,29 +186,65 @@
   </div>
 
   <div class="pillars">
-    <div class="pillar c1">
-      <div class="pillar-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 001 1h10a1 1 0 001-1v-9"/><path d="M12 17.5s-2.5-1.6-2.5-3.3a1.6 1.6 0 013-1 1.6 1.6 0 013 1c0 1.7-2.5 3.3-2.5 3.3z"/></svg>
+    <div class="pillar c1" onclick="this.classList.toggle('flipped')">
+      <div class="pillar-inner">
+        <div class="pillar-front">
+          <div class="pillar-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 001 1h10a1 1 0 001-1v-9"/><path d="M12 17.5s-2.5-1.6-2.5-3.3a1.6 1.6 0 013-1 1.6 1.6 0 013 1c0 1.7-2.5 3.3-2.5 3.3z"/></svg>
+          </div>
+          <span>Made Locally</span>
+          <div class="pillar-flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 2.1l4 4-4 4"/><path d="M3 12.7V12a9 9 0 0114.85-6.36L21 5.1"/><path d="M7 21.9l-4-4 4-4"/><path d="M21 11.3v.7a9 9 0 01-14.85 6.36L3 18.9"/></svg></div>
+        </div>
+        <div class="pillar-back">
+          <div class="pillar-back-label">Why It Matters</div>
+          <p>Every batch is baked fresh to order — nothing pulled from a freezer, nothing shipped in from a warehouse.</p>
+        </div>
       </div>
-      <span>Made Locally</span>
     </div>
-    <div class="pillar c2">
-      <div class="pillar-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16l-1.7 7.5A2 2 0 0116.3 18H7.7a2 2 0 01-1.96-1.5L4 9z"/><path d="M8 9a4 4 0 018 0"/><path d="M16 5l3-2M17.5 4l1.2 1.6"/></svg>
+    <div class="pillar c2" onclick="this.classList.toggle('flipped')">
+      <div class="pillar-inner">
+        <div class="pillar-front">
+          <div class="pillar-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16l-1.7 7.5A2 2 0 0116.3 18H7.7a2 2 0 01-1.96-1.5L4 9z"/><path d="M8 9a4 4 0 018 0"/><path d="M16 5l3-2M17.5 4l1.2 1.6"/></svg>
+          </div>
+          <span>Premium Ingredients</span>
+          <div class="pillar-flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 2.1l4 4-4 4"/><path d="M3 12.7V12a9 9 0 0114.85-6.36L21 5.1"/><path d="M7 21.9l-4-4 4-4"/><path d="M21 11.3v.7a9 9 0 01-14.85 6.36L3 18.9"/></svg></div>
+        </div>
+        <div class="pillar-back">
+          <div class="pillar-back-label">Why It Matters</div>
+          <p>Real butter, real vanilla, no shortcuts — the same ingredients you'd want in your own kitchen.</p>
+        </div>
       </div>
-      <span>Premium Ingredients</span>
     </div>
-    <div class="pillar c3">
-      <div class="pillar-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6l1 5-2 2v6a2 2 0 01-2 2h0a2 2 0 01-2-2v-6l-2-2 1-5z"/><path d="M9.5 4c0-1 1-2 2.5-2s2.5 1 2.5 2"/><path d="M12 11v2"/></svg>
+    <div class="pillar c3" onclick="this.classList.toggle('flipped')">
+      <div class="pillar-inner">
+        <div class="pillar-front">
+          <div class="pillar-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6l1 5-2 2v6a2 2 0 01-2 2h0a2 2 0 01-2-2v-6l-2-2 1-5z"/><path d="M9.5 4c0-1 1-2 2.5-2s2.5 1 2.5 2"/><path d="M12 11v2"/></svg>
+          </div>
+          <span>Custom Designs</span>
+          <div class="pillar-flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 2.1l4 4-4 4"/><path d="M3 12.7V12a9 9 0 0114.85-6.36L21 5.1"/><path d="M7 21.9l-4-4 4-4"/><path d="M21 11.3v.7a9 9 0 01-14.85 6.36L3 18.9"/></svg></div>
+        </div>
+        <div class="pillar-back">
+          <div class="pillar-back-label">Why It Matters</div>
+          <p>No templates, no two boxes alike — every cookie is hand-piped and hand-painted to match your theme.</p>
+        </div>
       </div>
-      <span>Custom Designs</span>
     </div>
-    <div class="pillar c4">
-      <div class="pillar-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="1.5"/><path d="M4 14h16"/><path d="M12 10v10"/><path d="M12 10c-1.5-3-4-4-5-2.5S8 10 12 10z"/><path d="M12 10c1.5-3 4-4 5-2.5S16 10 12 10z"/></svg>
+    <div class="pillar c4" onclick="this.classList.toggle('flipped')">
+      <div class="pillar-inner">
+        <div class="pillar-front">
+          <div class="pillar-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="1.5"/><path d="M4 14h16"/><path d="M12 10v10"/><path d="M12 10c-1.5-3-4-4-5-2.5S8 10 12 10z"/><path d="M12 10c1.5-3 4-4 5-2.5S16 10 12 10z"/></svg>
+          </div>
+          <span>Made for Life's Sweet Moments</span>
+          <div class="pillar-flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 2.1l4 4-4 4"/><path d="M3 12.7V12a9 9 0 0114.85-6.36L21 5.1"/><path d="M7 21.9l-4-4 4-4"/><path d="M21 11.3v.7a9 9 0 01-14.85 6.36L3 18.9"/></svg></div>
+        </div>
+        <div class="pillar-back">
+          <div class="pillar-back-label">Why It Matters</div>
+          <p>From first birthdays to milestone celebrations, every set is made to mark something worth celebrating.</p>
+        </div>
       </div>
-      <span>Made for Life's Sweet Moments</span>
     </div>
   </div>
 
@@ -272,6 +323,7 @@
   <div class="fnewsletter">
     <div class="fn-label">🍪 Get the occasional sweet note from Emily</div>
     <form class="fn-form" onsubmit="return djcFooterSignup(this)">
+      <input type="text" class="fn-hp" name="fn_hp" tabindex="-1" autocomplete="off">
       <input type="email" placeholder="you@email.com" required>
       <button type="submit">Join In</button>
     </form>
@@ -283,6 +335,7 @@
 <script>
 /* Paste the Apps Script Web App URL here once it's deployed (see Double_Joy_Cookies_Notes.md) */
 const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbyCCvDHXexq5_YRU1ATlpICSoEB4jg9Hkke3ub3KEOmUMLQrCvwJmCcPTt_sOcqMjY/exec";
+const djcFooterLoadTime = Date.now();
 
 function djcToggleNav(){
   const nav = document.getElementById('navLinks');
@@ -303,7 +356,9 @@ function showToast(msg){
 function djcFooterSignup(form){
   const note = form.nextElementSibling;
   const email = form.querySelector('input[type=email]').value;
-  if(DJC_ENDPOINT && DJC_ENDPOINT.indexOf('PASTE_') === -1){
+  const hp = form.querySelector('.fn-hp');
+  const isBot = (hp && hp.value) || (Date.now() - djcFooterLoadTime) < 1200;
+  if(!isBot && DJC_ENDPOINT && DJC_ENDPOINT.indexOf('PASTE_') === -1){
     fetch(DJC_ENDPOINT, {
       method: 'POST',
       mode: 'no-cors',

@@ -1,5 +1,14 @@
 # Double Joy Cookies — Working Notes
 
+## Live Site
+The site is live at **doublejoycookies.com**, deployed via Cloudflare Workers (static assets) connected to the GitHub repo `mulhernmarketingsolutions-ux/Double-Joy-Cookies`. Deploys are triggered by pushing/uploading new files to the `main` branch on GitHub — Cloudflare picks up the change and redeploys automatically. Domain DNS is on Cloudflare (nameservers switched from Namecheap), with existing Namecheap email-forwarding MX/TXT records preserved. Domain is registered under John's Namecheap account for now; plan is to hand ownership to Emily later.
+
+## Favicon
+Generated a full favicon set from `images/Favicon.png` (John's uploaded 256x256 source): `favicon.ico` (multi-size, at the repo root so browsers find it at `/favicon.ico` automatically), plus `images/favicon-32x32.png`, `images/favicon-16x16.png`, and `images/apple-touch-icon.png` (180x180, for iOS home-screen icons). Linked via `<link rel="icon">` / `<link rel="apple-touch-icon">` tags in the `<head>` of all 6 live pages.
+
+## Mobile Nav
+Added a proper hamburger toggle menu (all 6 live pages) — below 780px width, the plain nav links (Home/About/Dream Up Your Cookies/Recipes/Contact) collapse behind a hamburger icon that expands into a vertical stacked menu. The **Custom Order button stays visible outside the hamburger** at all times (next to the icon on mobile, at the end of the nav on desktop) so the primary call-to-action is never hidden behind a menu tap. Also disabled the cookie-menu preview panel's `position: sticky` on mobile (only needed next to a tall sidebar on desktop; on mobile it's a single stacked column so sticky wasn't doing anything useful).
+
 ## Reference
 - Instagram: [@doublejoycookies](https://www.instagram.com/doublejoycookies) — 40 posts, custom cookie orders, "Inspired by my girls"
 - Visual style confirmed from IG grid: soft sage green, blush pink, ivory, gold, dusty blue — matches the palette used in the interactive menu prototype. Recurring themes: milestone birthdays (numbers, "wild one," dinosaurs), bridal/wedding (florals, script names), holidays (USA/4th of July, Christmas), sports (baseball, basketball), baby/kids (onesies, animals), florals, and hand-lettered names/monograms.

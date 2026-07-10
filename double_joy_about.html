@@ -27,8 +27,8 @@
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <style>
   :root{
-    --cream:#FBF6EE; --cream-deep:#F3EADC; --blush:#F6C9DB; --sage:#F2955B; --taupe:#C2B098;
-    --gold:#C9A24A; --gold-light:#DDBD7E; --blue:#E8577E; --chocolate:#463C34; --ink: var(--chocolate); --rose: var(--blush);
+    --cream:#FBF6EE; --cream-deep:#F3EADC; --blush:#E9C7BD; --sage:#D9A28E; --taupe:#C2B098;
+    --gold:#C9A24A; --gold-light:#DDBD7E; --blue:#C98177; --chocolate:#463C34; --ink: var(--chocolate); --berry:#6E3A34; --rose: var(--blush);
     --line:#E5DDD3; --white:#FFFFFF; --shadow: 0 12px 30px rgba(90,71,58,0.12);
     --font-head: 'Playfair Display', Georgia, serif; --font-sans: 'Quicksand', Helvetica, Arial, sans-serif; --font-script: 'Dancing Script', cursive;
   }
@@ -89,6 +89,26 @@
   .story-photo img{ width:100%; max-width:420px; border-radius:20px; box-shadow: var(--shadow); display:block; margin:0 auto; }
   .story-photo-caption{ font-family: var(--font-script); font-size:18px; color: var(--gold); margin-top:12px; }
 
+  .photobook{ margin-bottom:44px; }
+  .photobook-head{ text-align:center; margin-bottom:30px; }
+  .photobook-head .kicker{ margin-bottom:8px; }
+  .photobook-head h2{ font-size:28px; margin:0 0 10px; font-weight:normal; }
+  .photobook-head p{ font-family: var(--font-sans); color:#6b6b6b; font-size:14px; max-width:480px; margin:0 auto; line-height:1.7; }
+  .photobook-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:34px 22px; padding: 14px 10px 20px; }
+  @media (max-width:760px){ .photobook-grid{ grid-template-columns: repeat(2,1fr); gap:36px 18px; } }
+  .polaroid{ background: var(--white); padding:10px 10px 36px; box-shadow: var(--shadow); position:relative; transition: transform .25s ease, box-shadow .25s ease; }
+  .polaroid:hover{ transform: rotate(0deg) scale(1.06) !important; box-shadow: 0 18px 34px rgba(90,71,58,0.22); z-index:5; }
+  .polaroid img{ width:100%; aspect-ratio:4/5; object-fit:cover; display:block; background: var(--cream-deep); }
+  .polaroid-cap{ position:absolute; bottom:8px; left:4px; right:4px; text-align:center; font-family: var(--font-script); font-size:14.5px; color: var(--chocolate); line-height:1.2; }
+  .washi{ position:absolute; top:-11px; left:50%; height:22px; width:62px; border-radius:1px; opacity:0.82; box-shadow: 0 2px 4px rgba(0,0,0,0.12); }
+  .washi.blush{ background: var(--blush); }
+  .washi.sage{ background: var(--sage); }
+  .washi.gold{ background: var(--gold-light); }
+  .washi.blue{ background: var(--blue); }
+  .r1{ transform: rotate(-4deg); } .r2{ transform: rotate(3deg); } .r3{ transform: rotate(-2deg); } .r4{ transform: rotate(5deg); }
+  .r5{ transform: rotate(2deg); } .r6{ transform: rotate(-5deg); } .r7{ transform: rotate(4deg); } .r8{ transform: rotate(-3deg); }
+  .t1{ transform: translateX(-50%) rotate(-6deg); } .t2{ transform: translateX(-50%) rotate(5deg); } .t3{ transform: translateX(-50%) rotate(-3deg); } .t4{ transform: translateX(-50%) rotate(7deg); }
+
   .pillars{ display:grid; grid-template-columns: repeat(4,1fr); gap:16px; margin-bottom:40px; }
   @media (max-width:700px){ .pillars{ grid-template-columns: repeat(2,1fr); } }
   .pillar{ background:transparent; border-radius:18px; text-align:center; min-height:190px; perspective:1200px; cursor:pointer; }
@@ -134,16 +154,16 @@
   .approach-more a{ color: var(--gold); text-decoration:none; border-bottom:1px solid var(--gold); padding-bottom:2px; }
   .approach-anything{ text-align:center; background: var(--cream-deep); border-radius:20px; padding:26px 30px; margin-bottom:22px; }
   .approach-anything p{ font-family: var(--font-sans); font-size:14px; color:#5a5148; line-height:1.7; margin:0 0 14px; max-width:560px; margin-left:auto; margin-right:auto; }
-  .approach-anything a.cta{ display:inline-block; text-decoration:none; font-family: var(--font-sans); font-size:13px; letter-spacing:1px; text-transform:uppercase; background: var(--ink); color: var(--cream); border-radius:30px; padding:12px 26px; transition: background .2s ease, transform .15s ease; }
+  .approach-anything a.cta{ display:inline-block; text-decoration:none; font-family: var(--font-sans); font-size:13px; letter-spacing:1px; text-transform:uppercase; background: var(--berry); color: var(--cream); border-radius:30px; padding:12px 26px; transition: background .2s ease, transform .15s ease; }
   .approach-anything a.cta:hover{ background: var(--sage); transform: translateY(-1px); }
 
   .cta-band{ text-align:center; background: var(--white); border-radius:24px; padding:44px; box-shadow: var(--shadow); }
   .cta-band h2{ font-size:26px; margin:0 0 10px; font-weight:normal; }
   .cta-band p{ font-family: var(--font-sans); color:#8a8a8a; font-size:14px; margin:0 0 22px; }
-  .cta{ display:inline-block; background: var(--ink); color: var(--cream); border:none; padding:15px 30px; border-radius:30px; font-family: var(--font-sans); font-size:13.5px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition: background .2s ease, transform .15s ease; }
+  .cta{ display:inline-block; background: var(--berry); color: var(--cream); border:none; padding:15px 30px; border-radius:30px; font-family: var(--font-sans); font-size:13.5px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition: background .2s ease, transform .15s ease; }
   .cta:hover{ background: var(--sage); transform: translateY(-1px); }
 
-  footer{ background: var(--chocolate); color: var(--cream); padding: 44px 24px; text-align:center; margin-top:40px; }
+  footer{ background: var(--berry); color: var(--cream); padding: 44px 24px; text-align:center; margin-top:40px; }
   footer .flinks{ display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; font-family: var(--font-sans); font-size:13px; }
   footer .flinks a{ color: var(--cream); text-decoration:none; opacity:0.85; }
   footer .flinks a:hover{ opacity:1; }
@@ -162,7 +182,7 @@
   .sac-credit:hover{ opacity:0.9; }
   .sac-credit img{ height:1.2em; width:auto; display:block; flex-shrink:0; }
   .sac-credit span{ min-width:0; }
-  .toast{ position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background: var(--ink); color: var(--cream); padding:14px 26px; border-radius:30px; font-family: var(--font-sans); font-size:13.5px; opacity:0; pointer-events:none; transition: all .3s ease; box-shadow: var(--shadow); text-align:center; max-width:90%; z-index:999; }
+  .toast{ position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background: var(--berry); color: var(--cream); padding:14px 26px; border-radius:30px; font-family: var(--font-sans); font-size:13.5px; opacity:0; pointer-events:none; transition: all .3s ease; box-shadow: var(--shadow); text-align:center; max-width:90%; z-index:999; }
   .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
 </head>
@@ -174,8 +194,9 @@
   <div class="nav-links" id="navLinks">
     <a href="index.html">Home</a>
     <a href="double_joy_about.html" class="current">About</a>
-    <a href="double_joy_cookie_menu.html">Dream Up Your Cookies</a>
+    <a href="double_joy_pricing.html">Pricing</a>
     <a href="double_joy_recipe_shop.html">Recipes</a>
+    <a href="double_joy_faq.html">FAQ</a>
     <a href="double_joy_contact.html">Contact</a>
   </div>
   <div class="nav-right">
@@ -195,21 +216,61 @@
   <div class="story-card">
     <p>It started small — cookies for my own girls' birthdays, decorated late at night because I wanted their day to feel a little more special. Somewhere along the way I realized I was actually good at this, and that maybe it could be something more than a once-a-year birthday project.</p>
 
-    <div class="story-photo">
-      <img src="images/emily-hailey.jpg" alt="Emily crouching and hugging her oldest daughter Hailey on the street">
-      <div class="story-photo-caption">Me and my oldest, Hailey</div>
-    </div>
-
-    <div class="story-photo">
-      <img src="images/daughters.jpg" alt="Emily's two daughters hugging in the backyard">
-      <div class="story-photo-caption">My girls — the whole reason this started</div>
-    </div>
-
     <p>That's how Double Joy Cookies came to be. Every set is still made the same way those first ones were — by hand, one at a time, made to fit the celebration it's for.</p>
 
     <div class="pull-quote">"Double Joy" means the joy you feel receiving the cookies,<br>and the joy I feel making them. Happiness shared both ways.</div>
 
     <p>These days that means custom cookies for birthdays, showers, weddings, holidays, and just-because moments — always designed around your event, never off a shelf. I still get the same rush from a finished box that I did with that first batch for my girls.</p>
+  </div>
+
+  <div class="photobook">
+    <div class="photobook-head">
+      <div class="kicker">The Whole Reason</div>
+      <h2>My Family Photo Book</h2>
+      <p>The two little ones (and the dog) who started all of this. Excuse the chaos — that's kind of the point.</p>
+    </div>
+    <div class="photobook-grid">
+      <div class="polaroid r1">
+        <div class="washi blush t1"></div>
+        <img src="images/emily-hailey.jpg" alt="Emily crouching and hugging her oldest daughter Hailey on the street">
+        <div class="polaroid-cap">Me &amp; my oldest, Hailey</div>
+      </div>
+      <div class="polaroid r2">
+        <div class="washi sage t2"></div>
+        <img src="images/daughters.jpg" alt="Emily's two daughters hugging in the backyard">
+        <div class="polaroid-cap">My girls</div>
+      </div>
+      <div class="polaroid r3">
+        <div class="washi gold t3"></div>
+        <img src="images/family/family-6.jpg" alt="Family of four laughing together in a chair, toddler mid-giggle">
+        <div class="polaroid-cap">Never a normal photo</div>
+      </div>
+      <div class="polaroid r4">
+        <div class="washi blue t4"></div>
+        <img src="images/family/family-4.jpg" alt="Family of four with their dog, dad holding toddler upside down">
+        <div class="polaroid-cap">The whole crew (dog included)</div>
+      </div>
+      <div class="polaroid r5">
+        <div class="washi blush t2"></div>
+        <img src="images/family/family-1.jpg" alt="Emily holding hands with her toddler on the couch">
+        <div class="polaroid-cap">Someone doesn't want to let go</div>
+      </div>
+      <div class="polaroid r6">
+        <div class="washi sage t1"></div>
+        <img src="images/family/family-2.jpg" alt="Emily holding her newborn while her toddler reaches in">
+        <div class="polaroid-cap">All hands on deck</div>
+      </div>
+      <div class="polaroid r7">
+        <div class="washi gold t4"></div>
+        <img src="images/family/family-3.jpg" alt="Toddler sitting in the crib next to her sleeping newborn sister">
+        <div class="polaroid-cap">Not sure that crib's for you, love</div>
+      </div>
+      <div class="polaroid r8">
+        <div class="washi blue t3"></div>
+        <img src="images/family/family-5.jpg" alt="Emily kissing her newborn daughter's forehead">
+        <div class="polaroid-cap">Newest member, already loved</div>
+      </div>
+    </div>
   </div>
 
   <div class="pillars">
@@ -276,74 +337,16 @@
   </div>
 
   <div class="approach" id="approach">
-    <div class="approach-head">
-      <div class="kicker">My Approach</div>
-      <h2>From Simple to Showstopper</h2>
-      <p>Every order is priced around how much time and detail it takes — here's a real look at what that range looks like, and what it costs. Think of these as starting points, not a menu — the best way to get an exact number is to send over your idea.</p>
-    </div>
-    <div class="approach-grid">
-      <div class="approach-card">
-        <div class="approach-photo">
-          <img src="images/Easy-square.jpg" alt="Clean, coordinated suitcase-shaped cookies in sage and blush">
-          <div class="approach-dot" style="left:53%; top:9%;">1</div>
-          <div class="approach-dot" style="left:74%; top:66%;">2</div>
-        </div>
-        <div class="approach-body">
-          <div class="approach-label">01 — Basic</div>
-          <h3 class="approach-title">Clean &amp; Simple</h3>
-          <div class="approach-price">$60<span>/dozen</span></div>
-          <div class="approach-min">2-dozen minimum</div>
-          <ul class="approach-legend">
-            <li><span class="num">1</span> Flat color blocks, minimal blending</li>
-            <li><span class="num">2</span> One shape repeated, clean piped lines</li>
-          </ul>
-        </div>
-      </div>
-      <div class="approach-card">
-        <div class="approach-photo">
-          <img src="images/Medium-square.jpg" alt="Custom map and Bon Voyage cookies with hand-piped linework">
-          <div class="approach-dot" style="left:40%; top:26%;">1</div>
-          <div class="approach-dot" style="left:61%; top:50%;">2</div>
-        </div>
-        <div class="approach-body">
-          <div class="approach-label">02 — Standard</div>
-          <h3 class="approach-title">Custom &amp; Coordinated</h3>
-          <div class="approach-price">$80<span>/dozen</span></div>
-          <div class="approach-min">2-dozen minimum</div>
-          <ul class="approach-legend">
-            <li><span class="num">1</span> Hand-piped fine linework, tiny gold accents</li>
-            <li><span class="num">2</span> Custom shapes &amp; hand-lettered script</li>
-          </ul>
-        </div>
-      </div>
-      <div class="approach-card">
-        <div class="approach-photo">
-          <img src="images/Hard-square.jpg" alt="Dimensional baby shower cookies with hand-painted shading and appliqué">
-          <div class="approach-dot" style="left:33%; top:23%;">1</div>
-          <div class="approach-dot" style="left:76%; top:80%;">2</div>
-        </div>
-        <div class="approach-body">
-          <div class="approach-label">03 — Complex</div>
-          <h3 class="approach-title">Showstopper</h3>
-          <div class="approach-price">$105<span>/dozen &amp; up</span></div>
-          <div class="approach-min">2-dozen minimum</div>
-          <ul class="approach-legend">
-            <li><span class="num">1</span> Hand-painted wet-on-wet shading</li>
-            <li><span class="num">2</span> Dimensional bows &amp; miniature appliqué details</li>
-          </ul>
-        </div>
-      </div>
-    </div>
     <div class="approach-anything">
-      <p>These tiers are just a guide, not a limit. Emily can bring almost any idea to life — so don't let the pictures above box in your imagination. If you can dream it up, chances are she can make it happen.</p>
-      <a href="double_joy_order_form.html" class="cta">Let's Chat — Get a Custom Quote</a>
+      <p>Curious what a custom order actually costs? I've put together a full breakdown — four simple tiers from Sweet &amp; Simple to Showstopper, with real photos of past orders for each.</p>
+      <a href="double_joy_pricing.html" class="cta">See Full Pricing</a>
     </div>
-    <div class="approach-more">Want to see what she's been baking lately? <a href="https://www.instagram.com/doublejoycookies" target="_blank" rel="noopener">Follow along on Instagram →</a></div>
+    <div class="approach-more">Want to see what I've been baking lately? <a href="https://www.instagram.com/doublejoycookies" target="_blank" rel="noopener">Follow along on Instagram →</a></div>
   </div>
 
   <div class="cta-band">
     <h2>Ready to Start?</h2>
-    <p>Tell us about your occasion and Emily will follow up personally with a custom quote and next steps.</p>
+    <p>Tell me about your occasion and I'll follow up personally with a custom quote and next steps.</p>
     <a href="double_joy_order_form.html" class="cta">Start a Custom Order</a>
   </div>
 </div>
@@ -351,15 +354,16 @@
 <footer>
   <div class="flinks">
     <a href="index.html">Home</a>
-    <a href="double_joy_cookie_menu.html">Dream Up Your Cookies</a>
+    <a href="double_joy_pricing.html">Pricing</a>
     <a href="double_joy_order_form.html">Custom Order</a>
     <a href="double_joy_recipe_shop.html">Recipes</a>
+    <a href="double_joy_faq.html">FAQ</a>
     <a href="double_joy_contact.html">Contact</a>
     <a href="double_joy_terms.html">Terms</a>
     <a href="https://www.instagram.com/doublejoycookies" target="_blank" rel="noopener">Instagram</a>
   </div>
   <div class="fnewsletter">
-    <div class="fn-label">🍪 Get the occasional sweet note from Emily</div>
+    <div class="fn-label">🍪 Get the occasional sweet note from me</div>
     <form class="fn-form" onsubmit="return djcFooterSignup(this)">
       <input type="text" class="fn-hp" name="fn_hp" tabindex="-1" autocomplete="off">
       <input type="email" placeholder="you@email.com" required>
@@ -409,7 +413,7 @@ function djcFooterSignup(form){
     }).catch(()=>{});
   }
   form.style.display = 'none';
-  note.textContent = "🍪 Thanks for joining! You're on the list for sweet updates from Emily.";
+  note.textContent = "🍪 Thanks for joining! You're on the list for sweet updates from me.";
   note.classList.add('show');
   return false;
 }

@@ -29,14 +29,15 @@
   :root{
     --cream:#FBF6EE;
     --cream-deep:#F3EADC;
-    --blush:#F6C9DB;
-    --sage:#F2955B;
+    --blush:#E9C7BD;
+    --sage:#D9A28E;
     --taupe:#C2B098;
     --gold:#C9A24A;
     --gold-light:#DDBD7E;
-    --blue:#E8577E;
+    --blue:#C98177;
     --chocolate:#463C34;
     --ink: var(--chocolate);
+    --berry:#6E3A34;
     --rose: var(--blush);
     --line:#E5DDD3;
     --white:#FFFFFF;
@@ -98,7 +99,7 @@
   .hero .sub{ font-family: var(--font-sans); color:#6b6b6b; font-size:16px; max-width:560px; margin:0 auto 32px; line-height:1.7; }
   .hero-ctas{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
 
-  .cta{ display:inline-block; background: var(--ink); color: var(--cream); border:none; padding:16px 32px; border-radius:30px; font-family: var(--font-sans); font-size:14px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition: background .2s ease, transform .15s ease; }
+  .cta{ display:inline-block; background: var(--berry); color: var(--cream); border:none; padding:16px 32px; border-radius:30px; font-family: var(--font-sans); font-size:14px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition: background .2s ease, transform .15s ease; }
   .cta:hover{ background: var(--sage); transform: translateY(-1px); }
   .cta.secondary{ background: transparent; color: var(--ink); border: 1.5px solid var(--blush); }
   .cta.secondary:hover{ background: var(--blush); color: var(--ink); }
@@ -134,7 +135,7 @@
   .insta-tile{ aspect-ratio:1/1; border-radius:14px; display:flex; align-items:center; justify-content:center; color: var(--white); font-family: var(--font-sans); font-size:11px; letter-spacing:0.5px; text-align:center; padding:10px; }
   .insta-follow{ display:inline-flex; align-items:center; gap:8px; margin-top:26px; font-family: var(--font-sans); font-size:13px; color: var(--ink); text-decoration:none; border-bottom:1px solid var(--gold); padding-bottom:3px; }
 
-  footer{ background: var(--chocolate); color: var(--cream); padding: 44px 24px; text-align:center; margin-top:40px; }
+  footer{ background: var(--berry); color: var(--cream); padding: 44px 24px; text-align:center; margin-top:40px; }
   footer .flinks{ display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; font-family: var(--font-sans); font-size:13px; }
   footer .flinks a{ color: var(--cream); text-decoration:none; opacity:0.85; }
   footer .flinks a:hover{ opacity:1; }
@@ -153,7 +154,7 @@
   .sac-credit:hover{ opacity:0.9; }
   .sac-credit img{ height:1.2em; width:auto; display:block; flex-shrink:0; }
   .sac-credit span{ min-width:0; }
-  .toast{ position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background: var(--ink); color: var(--cream); padding:14px 26px; border-radius:30px; font-family: var(--font-sans); font-size:13.5px; opacity:0; pointer-events:none; transition: all .3s ease; box-shadow: var(--shadow); text-align:center; max-width:90%; z-index:999; }
+  .toast{ position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background: var(--berry); color: var(--cream); padding:14px 26px; border-radius:30px; font-family: var(--font-sans); font-size:13.5px; opacity:0; pointer-events:none; transition: all .3s ease; box-shadow: var(--shadow); text-align:center; max-width:90%; z-index:999; }
   .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
 </head>
@@ -165,8 +166,9 @@
   <div class="nav-links" id="navLinks">
     <a href="index.html" class="current">Home</a>
     <a href="double_joy_about.html">About</a>
-    <a href="double_joy_cookie_menu.html">Dream Up Your Cookies</a>
+    <a href="double_joy_pricing.html">Pricing</a>
     <a href="double_joy_recipe_shop.html">Recipes</a>
+    <a href="double_joy_faq.html">FAQ</a>
     <a href="double_joy_contact.html">Contact</a>
   </div>
   <div class="nav-right">
@@ -181,19 +183,19 @@
   <div class="script-tag">Baked with love (and a little chaos)</div>
   <div class="kicker">Custom Cookies</div>
   <h1>Made to Celebrate<br>Life's Sweetest Moments</h1>
-  <p class="sub">Every set is made to order and hand-decorated in Emily's kitchen — inspired by her girls, made for yours (or whoever you're celebrating).</p>
+  <p class="sub">Every set is made to order and hand-decorated in my kitchen — inspired by my girls, made for yours (or whoever you're celebrating).</p>
   <div class="hero-ctas">
-    <a href="double_joy_cookie_menu.html" class="cta">Dream Up Your Cookies</a>
-    <a href="double_joy_order_form.html" class="cta secondary">Start a Custom Order</a>
+    <a href="double_joy_order_form.html" class="cta">Start a Custom Order</a>
+    <a href="double_joy_pricing.html" class="cta secondary">See Pricing</a>
   </div>
 </div>
 
 <section>
   <div class="story">
-    <div class="script-tag">A little bit about us</div>
+    <div class="script-tag">A little bit about me</div>
     <h2>Inspired by my girls</h2>
-    <p>What started as birthday cookies for her own two girls turned into something more — Double Joy Cookies. The name has a double meaning: the joy customers feel receiving the cookies, and the joy Emily feels making them. Happiness shared both ways.</p>
-    <a href="double_joy_about.html">Read Emily's story →</a>
+    <p>What started as birthday cookies for my own two girls turned into something more — Double Joy Cookies. The name has a double meaning: the joy customers feel receiving the cookies, and the joy I feel making them. Happiness shared both ways.</p>
+    <a href="double_joy_about.html">Read my story →</a>
   </div>
 </section>
 
@@ -201,21 +203,21 @@
   <div class="section-inner">
     <div class="features">
       <div class="feature-card">
-        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
-        <h3>Dream Up Your Cookies</h3>
-        <p>Play with shapes, flavors, and icing styles in our interactive design tool — pure inspiration, no commitment.</p>
-        <a href="double_joy_cookie_menu.html">Start exploring →</a>
-      </div>
-      <div class="feature-card">
         <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a4 4 0 018 0v2"/></svg>
         <h3>Start a Custom Order</h3>
-        <p>Tell us about your occasion, theme, and timeline — Emily will follow up personally with pricing and next steps.</p>
+        <p>Tell me about your occasion, theme, and timeline — I'll follow up personally with pricing and next steps.</p>
         <a href="double_joy_order_form.html">Get started →</a>
+      </div>
+      <div class="feature-card">
+        <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+        <h3>See Pricing</h3>
+        <p>Four simple tiers from Sweet &amp; Simple to Showstopper, with real photos of past orders for each.</p>
+        <a href="double_joy_pricing.html">View pricing →</a>
       </div>
       <div class="feature-card">
         <svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
         <h3>Shop Recipes</h3>
-        <p>Love her cookies? Bring the recipes home — Emily's actual cookie and icing recipes, ready to download.</p>
+        <p>Love my cookies? Bring the recipes home — my actual cookie and icing recipes, ready to download.</p>
         <a href="double_joy_recipe_shop.html">Browse the shop →</a>
       </div>
     </div>
@@ -226,7 +228,7 @@
   <div class="section-inner center insta-head">
     <div class="divider"></div>
     <h2>Follow the Latest</h2>
-    <p>Emily shares new designs every week on Instagram — that's our real, always-fresh portfolio.</p>
+    <p>I share new designs every week on Instagram — that's my real, always-fresh portfolio.</p>
   </div>
   <div class="section-inner">
     <div class="sk-instagram-feed" data-embed-id="25695819"></div>
@@ -240,15 +242,16 @@
 <footer>
   <div class="flinks">
     <a href="double_joy_about.html">About</a>
-    <a href="double_joy_cookie_menu.html">Dream Up Your Cookies</a>
+    <a href="double_joy_pricing.html">Pricing</a>
     <a href="double_joy_order_form.html">Custom Order</a>
     <a href="double_joy_recipe_shop.html">Recipes</a>
+    <a href="double_joy_faq.html">FAQ</a>
     <a href="double_joy_contact.html">Contact</a>
     <a href="double_joy_terms.html">Terms</a>
     <a href="https://www.instagram.com/doublejoycookies" target="_blank" rel="noopener">Instagram</a>
   </div>
   <div class="fnewsletter">
-    <div class="fn-label">🍪 Get the occasional sweet note from Emily</div>
+    <div class="fn-label">🍪 Get the occasional sweet note from me</div>
     <form class="fn-form" onsubmit="return djcFooterSignup(this)">
       <input type="text" class="fn-hp" name="fn_hp" tabindex="-1" autocomplete="off">
       <input type="email" placeholder="you@email.com" required>
@@ -298,7 +301,7 @@ function djcFooterSignup(form){
     }).catch(()=>{});
   }
   form.style.display = 'none';
-  note.textContent = "🍪 Thanks for joining! You're on the list for sweet updates from Emily.";
+  note.textContent = "🍪 Thanks for joining! You're on the list for sweet updates from me.";
   note.classList.add('show');
   return false;
 }

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ============================================================
+     PRESALE PAGE — reusable for Halloween / Thanksgiving / Christmas / etc.
+     To run a new presale:
+       1. Update the <title> and meta tags below with the holiday name.
+       2. Edit the "PRESALE CONTENT — EDIT EACH TIME" block in the <body>
+          (heading, cutoff date, pickup date, price, design options).
+       3. Update the PRESALE_NAME constant near the top of the <script>
+          at the bottom — this is what shows up in the Orders sheet.
+       4. Ask Claude to "turn the presale nav link on" — this adds a
+          Presale link to every page's nav + footer. When the batch is
+          full or the holiday's over, ask to "turn it off" to unlink it
+          again (the page itself stays live at this same URL either way,
+          same pattern as the retired Dream Up Your Cookies tool).
+     ============================================================ -->
+<title>Halloween Presale — Double Joy Cookies</title>
+<meta name="description" content="Limited-batch Halloween cookie presale from Double Joy Cookies — order ahead, pick up on the date, no full custom form needed.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Double Joy Cookies">
+<meta property="og:title" content="Halloween Presale — Double Joy Cookies">
+<meta property="og:description" content="Limited-batch Halloween cookie presale from Double Joy Cookies — order ahead, pick up on the date, no full custom form needed.">
+<meta property="og:image" content="https://doublejoycookies.com/images/social-share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:url" content="https://doublejoycookies.com/double_joy_presale.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Halloween Presale — Double Joy Cookies">
+<meta name="twitter:description" content="Limited-batch Halloween cookie presale from Double Joy Cookies — order ahead, pick up on the date, no full custom form needed.">
+<meta name="twitter:image" content="https://doublejoycookies.com/images/social-share.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@500;600&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+<style>
+  :root{
+    --cream:#FBF6EE; --cream-deep:#F3EADC; --blush:#E9C7BD; --sage:#D9A28E; --taupe:#C2B098;
+    --gold:#C9A24A; --gold-light:#DDBD7E; --blue:#C98177; --chocolate:#463C34; --ink: var(--chocolate); --berry:#6E3A34; --rose: var(--blush);
+    --line:#E5DDD3; --white:#FFFFFF; --error:#B4534A; --shadow: 0 12px 30px rgba(90,71,58,0.12);
+    --font-head: 'Playfair Display', Georgia, serif; --font-sans: 'Quicksand', Helvetica, Arial, sans-serif; --font-script: 'Dancing Script', cursive;
+  }
+  *{box-sizing:border-box;}
+  html{ overflow-x:hidden; max-width:100%; }
+  body{ margin:0; font-family: var(--font-head); background: var(--cream);
+    background-image: url("images/bg-pattern.svg");
+    background-repeat: repeat;
+    background-size: 240px 240px; color: var(--ink);
+    overflow-x:hidden; max-width:100%; }
+  a{ color: inherit; }
+  .wrap{ max-width:900px; margin:0 auto; padding: 0 24px 80px; }
+
+  .nav-bar{ background: var(--blue); }
+  .site-nav{ max-width:1180px; margin:0 auto; padding: 16px 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family: var(--font-sans); }
+  .site-nav > a:first-child{ margin-right:auto; }
+  .nav-links{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; order:2; }
+  .nav-links a{ color: var(--white); opacity:0.85; text-decoration:none; font-size:13px; letter-spacing:0.3px; padding-bottom:3px; border-bottom: 1px solid transparent; transition: all .15s ease; }
+  .nav-links a:hover, .nav-links a.current{ opacity:1; border-bottom-color: var(--white); }
+  .nav-right{ display:flex; align-items:center; gap:16px; order:3; }
+  .nav-cta{ display:inline-block; text-decoration:none; font-family: var(--font-sans); font-size:13px; letter-spacing:0.3px; transition: all .15s ease; background: var(--white); color: var(--ink); border-radius:20px; padding:7px 18px; font-weight:700; }
+  .nav-cta:hover{ background: var(--blush); }
+  .nav-toggle{ display:none; flex-direction:column; justify-content:center; gap:5px; width:34px; height:34px; background:none; border:none; cursor:pointer; padding:0; flex-shrink:0; }
+  .nav-toggle span{ display:block; width:24px; height:2px; background: var(--white); border-radius:2px; transition: all .2s ease; }
+  .nav-toggle.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.active span:nth-child(2){ opacity:0; }
+  .nav-toggle.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+  @media (max-width:780px){
+    .nav-toggle{ display:flex; }
+    .nav-links{ display:none; flex-basis:100%; order:4; flex-direction:column; align-items:flex-start; gap:16px; padding:18px 0 6px; }
+    .nav-links.open{ display:flex; }
+  }
+
+  .page-header{ text-align:center; padding: 56px 24px 36px; }
+  .script-tag{ font-family: var(--font-script); font-size: 24px; color: var(--chocolate); margin-bottom: 6px; }
+  .kicker{ letter-spacing: 3px; text-transform: uppercase; font-size: 12px; color: var(--gold); font-family: var(--font-sans); margin-bottom: 12px; }
+  h1{ font-size: 42px; margin: 0 0 16px; font-weight: normal; letter-spacing: 0.5px; }
+  .sub{ font-family: var(--font-sans); color:#6b6b6b; font-size:15px; max-width:520px; margin:0 auto; line-height:1.7; }
+
+  .presale-card{ background: var(--white); border-radius:20px; padding:28px 30px; box-shadow: var(--shadow); margin-bottom:28px; }
+  .presale-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:18px; margin-bottom:18px; }
+  @media (max-width:640px){ .presale-grid{ grid-template-columns:1fr; } }
+  .presale-stat{ text-align:center; background: var(--cream-deep); border-radius:14px; padding:16px 12px; }
+  .presale-stat .label{ font-family: var(--font-sans); font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color: var(--gold); margin-bottom:6px; }
+  .presale-stat .value{ font-family: var(--font-sans); font-size:15px; font-weight:700; color: var(--ink); }
+  .presale-note{ font-family: var(--font-sans); font-size:13px; color:#6b6b6b; line-height:1.75; }
+  .presale-note strong{ color: var(--ink); }
+
+  .step{ background: var(--white); border-radius:16px; padding:26px 28px; box-shadow: var(--shadow); margin-bottom: 22px; }
+  .step-title{ display:flex; align-items:center; gap:12px; font-size:19px; margin-bottom:6px; }
+  .step-num{ width:26px; height:26px; border-radius:50%; background: var(--gold-light); color: var(--ink); font-family: var(--font-sans); font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .step-help{ font-family: var(--font-sans); font-size:12.5px; color:#9a9a9a; margin: 0 0 16px 38px; line-height:1.5; }
+
+  label{ display:block; font-family: var(--font-sans); font-size:12.5px; color:#8a8a8a; text-transform:uppercase; letter-spacing:0.6px; margin-bottom:6px; }
+  .field{ margin-bottom:18px; min-width:0; max-width:100%; overflow:hidden; border-radius:10px; }
+  .field:last-child{ margin-bottom:0; }
+  input[type=text], input[type=email], input[type=tel], input[type=number], textarea{
+    width:100%; max-width:100%; min-width:0; border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
+    font-family: var(--font-sans); font-size:14.5px; background: var(--cream); color: var(--ink); box-sizing:border-box;
+  }
+  input:focus, textarea:focus{ outline:none; border-color: var(--sage); }
+  textarea{ resize:vertical; min-height:70px; }
+  .field.error input, .field.error textarea{ border-color: var(--error); }
+  .error-msg{ display:none; font-family: var(--font-sans); font-size:11.5px; color: var(--error); margin-top:5px; }
+  .field.error .error-msg{ display:block; }
+
+  .row2{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; min-width:0; }
+  @media (max-width:520px){ .row2{ grid-template-columns:1fr; } }
+
+  .choice-row{ display:flex; flex-wrap:wrap; gap:10px; }
+  .pill-btn{ padding:9px 18px; border-radius:24px; border:1.5px solid var(--line); background: var(--cream); cursor:pointer; font-family: var(--font-sans); font-size:13px; color:#4a4a4a; transition: all .15s ease; }
+  .pill-btn.active, .pill-btn:hover{ border-color: var(--sage); background: var(--sage); color: var(--white); }
+
+  .checkbox-row{ display:flex; align-items:center; gap:9px; margin-top:16px; font-family: var(--font-sans); font-size:13.5px; color: var(--ink); cursor:pointer; }
+  .checkbox-row input[type=checkbox]{ width:17px; height:17px; accent-color: var(--sage); cursor:pointer; }
+
+  .dropzone{ border:2px dashed var(--line); border-radius:14px; padding:22px; text-align:center; font-family: var(--font-sans); color:#8a8a8a; font-size:13px; cursor:pointer; transition: all .15s ease; }
+  .dropzone:hover, .dropzone.dragover{ border-color: var(--sage); background: var(--cream-deep); }
+  .dropzone svg{ width:26px; height:26px; margin-bottom:8px; opacity:0.6; }
+  .thumbs{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+  .thumb{ width:64px; height:64px; border-radius:10px; overflow:hidden; position:relative; box-shadow: var(--shadow); }
+  .thumb img{ width:100%; height:100%; object-fit:cover; }
+  .thumb .rm{ position:absolute; top:2px; right:2px; width:18px; height:18px; border-radius:50%; background:rgba(43,36,32,0.7); color:#fff; font-size:11px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-family: var(--font-sans); }
+
+  .cta{ width:100%; background: var(--berry); color: var(--cream); border:none; padding:15px 20px; border-radius:30px; font-family: var(--font-sans); font-size:14px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; transition: background .2s ease, transform .15s ease; margin-top:6px; }
+  .cta:hover{ background: var(--sage); transform: translateY(-1px); }
+
+  .confirm{ display:none; text-align:center; background: var(--white); border-radius:20px; box-shadow: var(--shadow); padding:56px 40px; }
+  .confirm.show{ display:block; }
+  .confirm svg{ width:56px; height:56px; margin-bottom:18px; }
+  .confirm h2{ font-size:26px; margin:0 0 12px; }
+  .confirm p{ font-family: var(--font-sans); color:#6b6b6b; font-size:14.5px; max-width:440px; margin:0 auto 10px; line-height:1.65; }
+  .confirm p:last-child{ margin-bottom:0; }
+  .form-area.hidden{ display:none; }
+
+  .toast{ position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background: var(--berry); color: var(--cream); padding:14px 26px; border-radius:30px; font-family: var(--font-sans); font-size:13.5px; opacity:0; pointer-events:none; transition: all .3s ease; box-shadow: var(--shadow); text-align:center; max-width:90%; }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  footer{ background: var(--berry); color: var(--cream); padding: 44px 24px; text-align:center; margin-top:20px; }
+  footer .flinks{ display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; font-family: var(--font-sans); font-size:13px; }
+  footer .flinks a{ color: var(--cream); text-decoration:none; opacity:0.85; }
+  footer .flinks a:hover{ opacity:1; }
+  .fnewsletter{ max-width:380px; margin: 8px auto 26px; }
+  .fn-label{ font-family: var(--font-script); font-size:19px; color: var(--gold-light); margin-bottom:12px; }
+  .fn-form{ display:flex; flex-wrap:wrap; gap:8px; }
+  .fn-hp{ position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; opacity:0; pointer-events:none; }
+  .fn-form input{ flex:1; border:none; border-radius:24px; padding:11px 16px; font-family: var(--font-sans); font-size:13px; background: rgba(255,255,255,0.95); color: var(--chocolate); }
+  .fn-form input:focus{ outline:2px solid var(--gold-light); }
+  .fn-form button{ background: var(--gold-light); color: var(--chocolate); border:none; border-radius:24px; padding:11px 20px; font-family: var(--font-sans); font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition: background .2s ease; }
+  .fn-form button:hover{ background: var(--blush); }
+  .fn-note{ font-family: var(--font-sans); font-size:11.5px; opacity:0.85; margin-top:10px; min-height:14px; }
+  .fn-note.show{ font-size:14px; opacity:1; background: rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); border-radius:14px; padding:14px 18px; line-height:1.5; margin-top:4px; }
+  footer .fine{ font-family: var(--font-sans); font-size:11.5px; opacity:0.6; }
+  .sac-credit{ display:inline-flex; align-items:center; gap:6px; margin-top:14px; max-width:100%; text-decoration:none; color: var(--cream); opacity:0.55; font-family: var(--font-sans); font-size:11px; line-height:1.5; transition: opacity .2s ease; }
+  .sac-credit:hover{ opacity:0.9; }
+  .sac-credit img{ height:1.2em; width:auto; display:block; flex-shrink:0; }
+  .sac-credit span{ min-width:0; }
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+<nav class="site-nav">
+  <a href="index.html" aria-label="Double Joy Cookies — Home"><img src="images/double-joy-logo-light.png" alt="Double Joy Cookies" style="height:32px; display:block;"></a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="double_joy_about.html">About</a>
+    <a href="double_joy_pricing.html">Pricing</a>
+    <a href="double_joy_recipe_shop.html">Recipes</a>
+    <a href="double_joy_faq.html">FAQ</a>
+    <a href="double_joy_contact.html">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="double_joy_order_form.html" class="nav-cta">Custom Order</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" onclick="djcToggleNav()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+</div>
+
+<!-- ==================== PRESALE CONTENT — EDIT EACH TIME ==================== -->
+<div class="page-header">
+  <div class="script-tag">Limited-batch presale</div>
+  <div class="kicker">Presale</div>
+  <h1>🎃 Halloween Cookie Presale</h1>
+  <p class="sub">One batch, made ahead of the holiday rush. Reserve your spot below — presale quantities are limited, so once it's full, it's full until next time.</p>
+</div>
+
+<div class="wrap">
+  <div class="presale-card">
+    <div class="presale-grid">
+      <div class="presale-stat">
+        <div class="label">Order By</div>
+        <div class="value">October 20, 2026</div>
+      </div>
+      <div class="presale-stat">
+        <div class="label">Pickup Date</div>
+        <div class="value">October 30, 2026</div>
+      </div>
+      <div class="presale-stat">
+        <div class="label">Price</div>
+        <div class="value">$70/dozen (2-dozen min)</div>
+      </div>
+    </div>
+    <p class="presale-note"><strong>How this works:</strong> pick a design below, submit your reservation, and I'll send an invoice within 24–48 hours. <strong>Your spot isn't reserved until that invoice is paid in full</strong> — presale batches are first-paid, first-served, so I'd recommend paying promptly. Pickup is local (Portland, OR) on the date above only; this batch isn't available for delivery or full custom design.</p>
+  </div>
+
+  <div class="builder">
+    <div class="form-area" id="formArea">
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">1</span> Your Info</div>
+        <div class="row2">
+          <div class="field" id="f-name">
+            <label>Your Name</label>
+            <input type="text" id="name" placeholder="Jane Smith">
+            <input type="text" id="orderHp" name="order_hp" class="fn-hp" tabindex="-1" autocomplete="off">
+            <div class="error-msg">Please add your name.</div>
+          </div>
+          <div class="field" id="f-email">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="jane@email.com">
+            <div class="error-msg">Please add a valid email.</div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Phone <span style="text-transform:none; color:#c9beae;">(optional)</span></label>
+          <input type="tel" id="phone" placeholder="(555) 123-4567">
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">2</span> Pick a Design</div>
+        <div class="step-help">This batch's presale designs — no full custom design for presale orders, but I can work in a color preference below.</div>
+        <div class="choice-row" id="designRow"></div>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">3</span> Quantity</div>
+        <div class="field" id="f-qty">
+          <label>How many dozen? <span style="text-transform:none; color:#c9beae;">(2-dozen minimum)</span></label>
+          <input type="number" id="qty" min="2" step="1" placeholder="e.g. 2">
+          <div class="error-msg">Let me know how many dozen you'd like.</div>
+        </div>
+        <label class="checkbox-row">
+          <input type="checkbox" id="giftBows">
+          <span>Tie with gift bows <span style="color:#c9beae;">(+$6/dozen)</span></span>
+        </label>
+      </div>
+
+      <div class="step">
+        <div class="step-title"><span class="step-num">4</span> Notes <span style="font-family: var(--font-sans); font-size:11px; color:#c9beae; font-weight:normal; margin-left:6px;">(optional)</span></div>
+        <div class="step-help">Color preference, allergies, anything else I should know.</div>
+        <div class="field">
+          <textarea id="notes" placeholder="e.g. Purple and black if possible, one person in the house has a nut allergy..."></textarea>
+        </div>
+        <div class="step-help" style="margin-top:14px;">Have inspiration for the color palette? Attach up to 3 photos.</div>
+        <div class="dropzone" id="dropzone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4M12 4L7 9M12 4l5 5"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg>
+          <div>Drop photos here, or click to browse</div>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" multiple style="display:none;">
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+
+      <button class="cta" id="submitBtn">Reserve My Spot</button>
+    </div>
+
+    <div class="confirm" id="confirmBox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg>
+      <h2>Your spot is requested!</h2>
+      <p>Thank you for reserving a spot in this presale batch. I'll send an invoice within 24–48 hours — your spot isn't officially reserved until it's paid in full, so keep an eye on your email.</p>
+      <p>Questions in the meantime? Reach out on the <a href="double_joy_contact.html" style="color:var(--gold); text-decoration:underline;">Contact</a> page.</p>
+    </div>
+  </div>
+</div>
+<!-- ==================== END PRESALE CONTENT ==================== -->
+
+<footer>
+  <div class="flinks">
+    <a href="index.html">Home</a>
+    <a href="double_joy_about.html">About</a>
+    <a href="double_joy_pricing.html">Pricing</a>
+    <a href="double_joy_order_form.html">Custom Order</a>
+    <a href="double_joy_recipe_shop.html">Recipes</a>
+    <a href="double_joy_faq.html">FAQ</a>
+    <a href="double_joy_contact.html">Contact</a>
+    <a href="double_joy_terms.html">Terms</a>
+    <a href="https://www.instagram.com/doublejoycookies" target="_blank" rel="noopener">Instagram</a>
+  </div>
+  <div class="fnewsletter">
+    <div class="fn-label">🍪 Get the occasional sweet note from me</div>
+    <form class="fn-form" onsubmit="return djcFooterSignup(this)">
+      <input type="text" class="fn-hp" name="fn_hp" tabindex="-1" autocomplete="off">
+      <input type="email" placeholder="you@email.com" required>
+      <button type="submit">Join In</button>
+    </form>
+    <div class="fn-note"></div>
+  </div>
+  <div class="fine">© Double Joy Cookies. Made with love (and a little chaos).</div>
+  <a href="https://soughtafter.design" target="_blank" rel="noopener" class="sac-credit">
+    <img src="images/sought-after-mark.png" alt="Sought After Co.">
+    <span>Website by Sought After Co. — helping brands become sought after</span>
+  </a>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============= PRESALE SETTINGS — EDIT THESE EACH TIME ============= */
+const PRESALE_NAME = "🎃 Presale — Halloween 2026";   // shows up in the Orders sheet + email so it's easy to spot
+const DESIGN_OPTIONS = ["Jack-o'-Lantern Set", "Spooky Ghosts", "Candy Corn", "Surprise Me"];
+/* ===================================================================== */
+
+const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbyCCvDHXexq5_YRU1ATlpICSoEB4jg9Hkke3ub3KEOmUMLQrCvwJmCcPTt_sOcqMjY/exec";
+const djcFooterLoadTime = Date.now();
+
+function djcToggleNav(){
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('navToggle');
+  const isOpen = nav.classList.toggle('open');
+  btn.classList.toggle('active', isOpen);
+  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+
+let form = { design:null, photos:[] };
+
+function buildPills(containerId, options, stateKey){
+  const row = document.getElementById(containerId);
+  options.forEach(opt => {
+    const btn = document.createElement('div');
+    btn.className = 'pill-btn';
+    btn.textContent = opt;
+    btn.onclick = () => {
+      form[stateKey] = opt;
+      row.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    };
+    row.appendChild(btn);
+  });
+}
+buildPills('designRow', DESIGN_OPTIONS, 'design');
+
+/* ---------------- Photo upload (client-side, compressed before send) ---------------- */
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const thumbs = document.getElementById('thumbs');
+dropzone.onclick = () => fileInput.click();
+['dragover','dragenter'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.add('dragover'); }));
+['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.remove('dragover'); }));
+dropzone.addEventListener('drop', e => handleFiles(e.dataTransfer.files));
+fileInput.addEventListener('change', e => handleFiles(e.target.files));
+
+const MAX_PHOTOS = 3;
+
+function handleFiles(files){
+  const incoming = Array.from(files).filter(f => f.type.startsWith('image/'));
+  if(!incoming.length) return;
+  const remainingSlots = MAX_PHOTOS - form.photos.length;
+  if(remainingSlots <= 0) return;
+  const toProcess = incoming.slice(0, remainingSlots);
+
+  toProcess.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const MAX_DIM = 1600;
+        let { width, height } = img;
+        if (width > MAX_DIM || height > MAX_DIM) {
+          const scale = MAX_DIM / Math.max(width, height);
+          width = Math.round(width * scale);
+          height = Math.round(height * scale);
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.72);
+        const base64 = dataUrl.split(',')[1] || '';
+        const id = 'thumb' + Math.random().toString(36).slice(2,8);
+        form.photos.push({ id, filename: file.name, mimeType: 'image/jpeg', data: base64 });
+        const div = document.createElement('div');
+        div.className = 'thumb';
+        div.id = id;
+        div.innerHTML = `<img src="${dataUrl}"><div class="rm">×</div>`;
+        div.querySelector('.rm').onclick = () => { div.remove(); form.photos = form.photos.filter(p=>p.id!==id); };
+        thumbs.appendChild(div);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._t);
+  window._t = setTimeout(()=>t.classList.remove('show'), 3400);
+}
+
+function validate(){
+  const checks = [
+    ['f-name', document.getElementById('name').value.trim().length > 0],
+    ['f-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim())],
+    ['f-qty', document.getElementById('qty').value && Number(document.getElementById('qty').value) >= 2],
+  ];
+  let allValid = true;
+  checks.forEach(([id, ok]) => {
+    document.getElementById(id).classList.toggle('error', !ok);
+    if(!ok) allValid = false;
+  });
+  return allValid;
+}
+
+function buildPayload(){
+  return {
+    type: 'order',
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value,
+    occasion: PRESALE_NAME,
+    qty: document.getElementById('qty').value + ' dozen',
+    needBy: '',
+    theme: (form.design ? `Design: ${form.design}. ` : '') + document.getElementById('notes').value,
+    names: '',
+    design: form.design || '',
+    budget: '',
+    delivery: 'Local Pickup — presale batch date',
+    giftBows: document.getElementById('giftBows').checked,
+    photos: form.photos.map(p => ({ filename: p.filename, mimeType: p.mimeType, data: p.data })),
+    handoff: null,
+  };
+}
+
+function sendToBackend(payload){
+  if(!DJC_ENDPOINT || DJC_ENDPOINT.indexOf('PASTE_') !== -1) return;
+  fetch(DJC_ENDPOINT, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  }).catch(()=>{});
+}
+
+document.getElementById('submitBtn').onclick = () => {
+  if(!validate()){
+    showToast('A few details are missing — check the highlighted fields.');
+    document.querySelector('.field.error')?.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  const hp = document.getElementById('orderHp');
+  const isBot = (hp && hp.value) || (Date.now() - djcFooterLoadTime) < 1200;
+  if(!isBot){
+    sendToBackend(buildPayload());
+  }
+  document.getElementById('formArea').classList.add('hidden');
+  const confirmBox = document.getElementById('confirmBox');
+  confirmBox.classList.add('show');
+  confirmBox.scrollIntoView({behavior:'smooth', block:'start'});
+};
+
+function djcFooterSignup(form){
+  const note = form.nextElementSibling;
+  const email = form.querySelector('input[type=email]').value;
+  const hp = form.querySelector('.fn-hp');
+  const isBot = (hp && hp.value) || (Date.now() - djcFooterLoadTime) < 1200;
+  if(!isBot && DJC_ENDPOINT && DJC_ENDPOINT.indexOf('PASTE_') === -1){
+    fetch(DJC_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ type: 'newsletter', email: email })
+    }).catch(()=>{});
+  }
+  form.style.display = 'none';
+  note.textContent = "🍪 Thanks for joining! You're on the list for sweet updates from me.";
+  note.classList.add('show');
+  return false;
+}
+</script>
+</body>
+</html>

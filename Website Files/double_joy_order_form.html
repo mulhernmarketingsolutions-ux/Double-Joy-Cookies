@@ -342,7 +342,7 @@
 
       <div class="step">
         <div class="step-title"><span class="step-num">7</span> Budget &amp; Pickup</div>
-        <div class="step-help">Budget Range <span style="color:#c9beae;">(optional — just helps me plan)</span></div>
+        <div class="step-help">Which of these fits your budget? <span style="color:#c9beae;">(optional — I'll custom quote based on your inspiration either way, this just helps me plan)</span></div>
         <div class="choice-row" id="budgetRow" style="margin-bottom:18px;"></div>
         <div class="step-help">Delivery <span style="color:#c9beae;">— this form is set up for local pickup in the Portland, OR area. Need delivery? Reach out directly on the <a href="double_joy_contact.html" style="color:var(--gold);">Contact</a> page.</span></div>
         <div class="choice-row" id="deliveryRow"></div>
@@ -369,7 +369,7 @@
           <div><span>Quantity</span><span id="sumQty" class="empty">—</span></div>
           <div><span>Need By</span><span id="sumNeedBy" class="empty">—</span></div>
           <div><span>Design</span><span id="sumDesign" class="empty">—</span></div>
-          <div><span>Budget</span><span id="sumBudget" class="empty">—</span></div>
+          <div><span>Pricing Tier</span><span id="sumBudget" class="empty">—</span></div>
           <div><span>Delivery</span><span id="sumDelivery" class="empty">—</span></div>
         </div>
         <button class="cta" id="submitBtn">Send My Request</button>
@@ -418,7 +418,7 @@
 <script>
 /* ---------------- Options ---------------- */
 const OCCASIONS = ['Birthday','Bridal Shower','Baby Shower','Wedding','Graduation','Holiday','Corporate / Event','Other'];
-const BUDGETS = ['$120–200','$200–300','$300–400','$400+','Not sure yet'];
+const BUDGETS = ['Sweet & Simple — $60/dz','Basic — $70/dz','Custom & Coordinated — $80/dz','Showstopper — $90+/dz','Not sure yet'];
 const DELIVERIES = ['Local Pickup (Portland, OR)'];
 
 /* Paste the Apps Script Web App URL here once it's deployed (see Double_Joy_Cookies_Notes.md) */
@@ -662,7 +662,7 @@ Theme: ${document.getElementById('theme').value}
 Names/Wording: ${document.getElementById('names').value}
 
 Design Direction: ${form.design || ''}
-Budget: ${form.budget || ''}
+Pricing Tier: ${form.budget || ''}
 Delivery: ${form.delivery || ''}
 Gift Bows (+$6/dozen): ${document.getElementById('giftBows').checked ? 'Yes' : 'No'}
 Photos attached in-app: ${form.photos.length}`;

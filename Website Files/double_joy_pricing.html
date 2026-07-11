@@ -81,10 +81,10 @@
   h1{ font-size: 44px; margin: 0 0 16px; font-weight: normal; letter-spacing: 0.5px; }
   .page-header p{ font-family: var(--font-sans); color:#6b6b6b; font-size:14.5px; max-width:560px; margin:0 auto; line-height:1.75; }
 
-  .tier-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:18px; margin-bottom:26px; }
-  @media (max-width:900px){ .tier-grid{ grid-template-columns: repeat(2,1fr); } }
-  @media (max-width:520px){ .tier-grid{ grid-template-columns: 1fr; } }
-  .tier-card{ position:relative; background: var(--white); border-radius:20px; padding:26px 22px 24px; box-shadow: var(--shadow); display:flex; flex-direction:column; }
+  .tier-stack{ display:flex; flex-direction:column; margin-bottom:8px; }
+  .tier-section{ margin-bottom:50px; }
+  .tier-section:last-child{ margin-bottom:26px; }
+  .tier-card{ position:relative; background: var(--white); border-radius:20px; padding:26px 22px 24px; box-shadow: var(--shadow); display:flex; flex-direction:column; max-width:480px; margin:0 auto 24px; }
   .tier-card.popular{ border:2px solid var(--gold); }
   .tier-badge{ position:absolute; top:-13px; left:50%; transform:translateX(-50%); background: var(--gold); color: var(--white); font-family: var(--font-sans); font-size:10.5px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; padding:5px 14px; border-radius:20px; white-space:nowrap; box-shadow: 0 4px 10px rgba(201,162,74,0.35); }
   .tier-label{ font-family: var(--font-sans); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color: var(--gold); margin-bottom:6px; }
@@ -105,20 +105,11 @@
   .approach-anything a.cta{ display:inline-block; text-decoration:none; font-family: var(--font-sans); font-size:13px; letter-spacing:1px; text-transform:uppercase; background: var(--berry); color: var(--cream); border-radius:30px; padding:12px 26px; transition: background .2s ease, transform .15s ease; }
   .approach-anything a.cta:hover{ background: var(--sage); transform: translateY(-1px); }
 
-  .gallery-section{ margin-bottom:40px; }
-  .gallery-head{ text-align:center; margin-bottom:22px; }
-  .gallery-head .kicker{ margin-bottom:8px; }
-  .gallery-head h2{ font-size:26px; margin:0 0 8px; font-weight:normal; }
-  .gallery-head p{ font-family: var(--font-sans); color:#6b6b6b; font-size:13.5px; max-width:520px; margin:0 auto; line-height:1.7; }
-  .tier-gallery-block{ margin-bottom:34px; }
-  .tier-gallery-label{ font-family: var(--font-sans); font-size:13px; font-weight:700; letter-spacing:0.4px; color: var(--ink); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+  .tier-gallery-label{ font-family: var(--font-sans); font-size:13px; font-weight:700; letter-spacing:0.4px; color: var(--ink); margin:0 auto 12px; display:flex; align-items:center; justify-content:center; gap:8px; max-width:420px; }
   .tier-gallery-label .dot{ width:8px; height:8px; border-radius:50%; background: var(--gold); display:inline-block; }
-  .photo-grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); gap:12px; }
-  .photo-grid.single{ grid-template-columns: minmax(150px,240px); }
-  .photo-grid img{ width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:16px; box-shadow: var(--shadow); display:block; }
 
   /* Large tier photo viewer */
-  .tier-viewer{ background: var(--white); border-radius:22px; box-shadow: var(--shadow); padding:16px; }
+  .tier-viewer{ background: var(--white); border-radius:22px; box-shadow: var(--shadow); padding:16px; max-width:480px; margin:0 auto; }
   .viewer-main{ position:relative; max-width:420px; margin:0 auto; aspect-ratio:3/4; border-radius:16px; overflow:hidden; background: var(--cream-deep); box-shadow: 0 12px 22px rgba(90,71,58,0.26); }
   .viewer-main img{ width:100%; height:100%; object-fit:cover; display:block; }
   .viewer-arrow{ position:absolute; top:50%; transform:translateY(-50%); width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.92); box-shadow: var(--shadow); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2; color: var(--ink); transition: background .15s ease, transform .15s ease; }
@@ -197,73 +188,25 @@
 
 <div class="wrap">
 
-  <div class="tier-grid">
-    <div class="tier-card">
-      <div class="tier-label">01 — Sweet &amp; Simple</div>
-      <h3 class="tier-title">Sweet &amp; Simple</h3>
-      <div class="tier-price">$60<span>/dozen</span></div>
-      <div class="tier-min">2-dozen minimum</div>
-      <ul class="tier-legend">
-        <li><span class="check">✓</span> 1 color in addition to white</li>
-        <li><span class="check">✓</span> 1 cookie design</li>
-      </ul>
-    </div>
-    <div class="tier-card">
-      <div class="tier-label">02 — Basic</div>
-      <h3 class="tier-title">Basic</h3>
-      <div class="tier-price">$70<span>/dozen</span></div>
-      <div class="tier-min">2-dozen minimum</div>
-      <ul class="tier-legend">
-        <li><span class="check">✓</span> 2 colors in addition to white</li>
-        <li><span class="check">✓</span> Simple fonts only</li>
-        <li><span class="check">✓</span> Simple designs</li>
-        <li><span class="check">✓</span> No characters</li>
-        <li><span class="check">✓</span> No metallics</li>
-      </ul>
-    </div>
-    <div class="tier-card popular">
-      <div class="tier-badge">Most Popular</div>
-      <div class="tier-label">03 — Custom &amp; Coordinated</div>
-      <h3 class="tier-title">Custom &amp; Coordinated</h3>
-      <div class="tier-price">$80<span>/dozen</span></div>
-      <div class="tier-min">2-dozen minimum</div>
-      <ul class="tier-legend">
-        <li><span class="check">✓</span> Up to 6 designs</li>
-        <li><span class="check">✓</span> 3–5 colors in addition to white</li>
-        <li><span class="check">✓</span> Metallics &amp; florals</li>
-        <li><span class="check">✓</span> Assortment of simple &amp; detailed</li>
-      </ul>
-    </div>
-    <div class="tier-card">
-      <div class="tier-label">04 — Showstopper</div>
-      <h3 class="tier-title">Showstopper</h3>
-      <div class="tier-price">$90<span>+/dozen</span></div>
-      <div class="tier-min">2-dozen minimum</div>
-      <ul class="tier-legend">
-        <li><span class="check">✓</span> 6+ designs</li>
-        <li><span class="check">✓</span> 5+ colors</li>
-        <li><span class="check">✓</span> Intricate details &amp; fonts</li>
-        <li><span class="check">✓</span> Detailed to highly detailed cookies</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="price-note">Rush orders (less than 2 weeks out) add $20/dozen. Gift bows are +$6/dozen. See the full <a href="double_joy_terms.html">Terms &amp; Policies</a> for payment, cancellation, and delivery details.</div>
-
   <div class="approach-anything">
     <p>These tiers are just a guide, not a limit. I can bring almost any idea to life — so don't let the photos below box in your imagination. If you can dream it up, chances are I can make it happen.</p>
     <a href="double_joy_order_form.html" class="cta">Let's Chat — Get a Custom Quote</a>
   </div>
 
-  <div class="gallery-section">
-    <div class="gallery-head">
-      <div class="kicker">Real Orders</div>
-      <h2>See Each Tier in Action</h2>
-      <p>Every photo below is a real set I've made for a real order — one tier at a time, full-size, so you can see the actual detail.</p>
-    </div>
+  <div class="tier-stack">
 
-    <div class="tier-gallery-block">
-      <div class="tier-gallery-label"><span class="dot"></span>Sweet &amp; Simple</div>
+    <div class="tier-section">
+      <div class="tier-card">
+        <div class="tier-label">01 — Sweet &amp; Simple</div>
+        <h3 class="tier-title">Sweet &amp; Simple</h3>
+        <div class="tier-price">$60<span>/dozen</span></div>
+        <div class="tier-min">2-dozen minimum</div>
+        <ul class="tier-legend">
+          <li><span class="check">✓</span> 1 color in addition to white</li>
+          <li><span class="check">✓</span> 1 cookie design</li>
+        </ul>
+      </div>
+      <div class="tier-gallery-label"><span class="dot"></span>Real order example</div>
       <div class="tier-viewer">
         <div class="viewer-main">
           <img id="viewer-simple-img" src="images/tiers/simple-1.jpg" alt="Sweet and Simple tier cookies — one accent color with clean piped monogram design">
@@ -271,12 +214,41 @@
       </div>
     </div>
 
-    <div class="tier-gallery-block">
-      <div class="tier-gallery-label"><span class="dot"></span>Custom &amp; Coordinated</div>
+    <div class="tier-section">
+      <div class="tier-card">
+        <div class="tier-label">02 — Basic</div>
+        <h3 class="tier-title">Basic</h3>
+        <div class="tier-price">$70<span>/dozen</span></div>
+        <div class="tier-min">2-dozen minimum</div>
+        <ul class="tier-legend">
+          <li><span class="check">✓</span> 2 colors in addition to white</li>
+          <li><span class="check">✓</span> Simple fonts only</li>
+          <li><span class="check">✓</span> Simple designs</li>
+          <li><span class="check">✓</span> No characters</li>
+          <li><span class="check">✓</span> No metallics</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tier-section">
+      <div class="tier-card popular">
+        <div class="tier-badge">Most Popular</div>
+        <div class="tier-label">03 — Custom &amp; Coordinated</div>
+        <h3 class="tier-title">Custom &amp; Coordinated</h3>
+        <div class="tier-price">$80<span>/dozen</span></div>
+        <div class="tier-min">2-dozen minimum</div>
+        <ul class="tier-legend">
+          <li><span class="check">✓</span> Up to 6 designs</li>
+          <li><span class="check">✓</span> 3–5 colors in addition to white</li>
+          <li><span class="check">✓</span> Metallics &amp; florals</li>
+          <li><span class="check">✓</span> Assortment of simple &amp; detailed</li>
+        </ul>
+      </div>
+      <div class="tier-gallery-label"><span class="dot"></span>Real order examples</div>
       <div class="tier-viewer">
         <div class="viewer-main">
           <button class="viewer-arrow left" onclick="viewerNav('coordinated',-1)" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-          <img id="viewer-coordinated-img" src="images/tiers/coordinated-1.jpg" alt="Custom and Coordinated tier cookie set">
+          <img id="viewer-coordinated-img" src="images/tiers/coordinated-2.jpg" alt="Custom and Coordinated tier cookie set">
           <button class="viewer-arrow right" onclick="viewerNav('coordinated',1)" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
           <div class="viewer-counter" id="viewer-coordinated-counter">1 / 9</div>
         </div>
@@ -284,19 +256,34 @@
       </div>
     </div>
 
-    <div class="tier-gallery-block">
-      <div class="tier-gallery-label"><span class="dot"></span>Showstopper</div>
+    <div class="tier-section">
+      <div class="tier-card">
+        <div class="tier-label">04 — Showstopper</div>
+        <h3 class="tier-title">Showstopper</h3>
+        <div class="tier-price">$90<span>+/dozen</span></div>
+        <div class="tier-min">2-dozen minimum</div>
+        <ul class="tier-legend">
+          <li><span class="check">✓</span> 6+ designs</li>
+          <li><span class="check">✓</span> 5+ colors</li>
+          <li><span class="check">✓</span> Intricate details &amp; fonts</li>
+          <li><span class="check">✓</span> Detailed to highly detailed cookies</li>
+        </ul>
+      </div>
+      <div class="tier-gallery-label"><span class="dot"></span>Real order examples</div>
       <div class="tier-viewer">
         <div class="viewer-main">
           <button class="viewer-arrow left" onclick="viewerNav('showstopper',-1)" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-          <img id="viewer-showstopper-img" src="images/tiers/showstopper-1.jpg" alt="Showstopper tier cookie set">
+          <img id="viewer-showstopper-img" src="images/tiers/showstopper-6.jpg" alt="Showstopper tier cookie set">
           <button class="viewer-arrow right" onclick="viewerNav('showstopper',1)" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
           <div class="viewer-counter" id="viewer-showstopper-counter">1 / 6</div>
         </div>
         <div class="viewer-thumbs" id="viewer-showstopper-thumbs"></div>
       </div>
     </div>
+
   </div>
+
+  <div class="price-note">Rush orders (less than 2 weeks out) add $20/dozen. Gift bows are +$6/dozen. See the full <a href="double_joy_terms.html">Terms &amp; Policies</a> for payment, cancellation, and delivery details.</div>
 
   <div class="cta-band">
     <h2>Ready to Start?</h2>
@@ -339,8 +326,8 @@ const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbyCCvDHXexq5_YRU1A
 const djcFooterLoadTime = Date.now();
 
 const TIER_GALLERIES = {
-  coordinated: Array.from({length:9}, (_,i) => `images/tiers/coordinated-${i+1}.jpg`),
-  showstopper: Array.from({length:6}, (_,i) => `images/tiers/showstopper-${i+1}.jpg`),
+  coordinated: [2,4,5,1,9,7,6,3,8].map(n => `images/tiers/coordinated-${n}.jpg`),
+  showstopper: [6,4,5,3,2,1].map(n => `images/tiers/showstopper-${n}.jpg`),
 };
 const tierIndex = { coordinated:0, showstopper:0 };
 

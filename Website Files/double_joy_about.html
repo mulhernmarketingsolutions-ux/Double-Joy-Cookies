@@ -94,20 +94,11 @@
   .photobook-head .kicker{ margin-bottom:8px; }
   .photobook-head h2{ font-size:28px; margin:0 0 10px; font-weight:normal; }
   .photobook-head p{ font-family: var(--font-sans); color:#6b6b6b; font-size:14px; max-width:480px; margin:0 auto; line-height:1.7; }
-  .photobook-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:34px 22px; padding: 14px 10px 20px; }
-  @media (max-width:760px){ .photobook-grid{ grid-template-columns: repeat(2,1fr); gap:36px 18px; } }
-  .polaroid{ background: var(--white); padding:10px 10px 36px; box-shadow: var(--shadow); position:relative; transition: transform .25s ease, box-shadow .25s ease; }
-  .polaroid:hover{ transform: rotate(0deg) scale(1.06) !important; box-shadow: 0 18px 34px rgba(90,71,58,0.22); z-index:5; }
-  .polaroid img{ width:100%; aspect-ratio:4/5; object-fit:cover; display:block; background: var(--cream-deep); }
-  .polaroid-cap{ position:absolute; bottom:8px; left:4px; right:4px; text-align:center; font-family: var(--font-script); font-size:14.5px; color: var(--chocolate); line-height:1.2; }
-  .washi{ position:absolute; top:-11px; left:50%; height:22px; width:62px; border-radius:1px; opacity:0.82; box-shadow: 0 2px 4px rgba(0,0,0,0.12); }
-  .washi.blush{ background: var(--blush); }
-  .washi.sage{ background: var(--sage); }
-  .washi.gold{ background: var(--gold-light); }
-  .washi.blue{ background: var(--blue); }
-  .r1{ transform: rotate(-4deg); } .r2{ transform: rotate(3deg); } .r3{ transform: rotate(-2deg); } .r4{ transform: rotate(5deg); }
-  .r5{ transform: rotate(2deg); } .r6{ transform: rotate(-5deg); } .r7{ transform: rotate(4deg); } .r8{ transform: rotate(-3deg); }
-  .t1{ transform: translateX(-50%) rotate(-6deg); } .t2{ transform: translateX(-50%) rotate(5deg); } .t3{ transform: translateX(-50%) rotate(-3deg); } .t4{ transform: translateX(-50%) rotate(7deg); }
+  .photobook-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:3px; border-radius:18px; overflow:hidden; box-shadow: var(--shadow); }
+  @media (max-width:760px){ .photobook-grid{ grid-template-columns: repeat(2,1fr); } }
+  .photobook-grid .pb-photo{ position:relative; overflow:hidden; }
+  .photobook-grid img{ width:100%; height:100%; aspect-ratio:1/1; object-fit:cover; display:block; background: var(--cream-deep); transition: transform .3s ease; }
+  .photobook-grid .pb-photo:hover img{ transform: scale(1.04); }
 
   .pillars{ display:grid; grid-template-columns: repeat(4,1fr); gap:16px; margin-bottom:40px; }
   @media (max-width:700px){ .pillars{ grid-template-columns: repeat(2,1fr); } }
@@ -231,45 +222,23 @@
       <p>The two little ones (and the dog) who started all of this. Excuse the chaos — that's kind of the point.</p>
     </div>
     <div class="photobook-grid">
-      <div class="polaroid r1">
-        <div class="washi blush t1"></div>
-        <img src="images/emily-hailey.jpg" alt="Emily crouching and hugging her oldest daughter Hailey on the street">
-        <div class="polaroid-cap">Me &amp; my oldest, Hailey</div>
-      </div>
-      <div class="polaroid r2">
-        <div class="washi sage t2"></div>
-        <img src="images/daughters.jpg" alt="Emily's two daughters hugging in the backyard">
-        <div class="polaroid-cap">My girls</div>
-      </div>
-      <div class="polaroid r3">
-        <div class="washi gold t3"></div>
+      <div class="pb-photo">
         <img src="images/family/family-6.jpg" alt="Family of four laughing together in a chair, toddler mid-giggle">
-        <div class="polaroid-cap">Never a normal photo</div>
       </div>
-      <div class="polaroid r4">
-        <div class="washi blue t4"></div>
+      <div class="pb-photo">
         <img src="images/family/family-4.jpg" alt="Family of four with their dog, dad holding toddler upside down">
-        <div class="polaroid-cap">The whole crew (dog included)</div>
       </div>
-      <div class="polaroid r5">
-        <div class="washi blush t2"></div>
+      <div class="pb-photo">
         <img src="images/family/family-1.jpg" alt="Emily holding hands with her toddler on the couch">
-        <div class="polaroid-cap">Someone doesn't want to let go</div>
       </div>
-      <div class="polaroid r6">
-        <div class="washi sage t1"></div>
+      <div class="pb-photo">
         <img src="images/family/family-2.jpg" alt="Emily holding her newborn while her toddler reaches in">
-        <div class="polaroid-cap">All hands on deck</div>
       </div>
-      <div class="polaroid r7">
-        <div class="washi gold t4"></div>
+      <div class="pb-photo">
         <img src="images/family/family-3.jpg" alt="Toddler sitting in the crib next to her sleeping newborn sister">
-        <div class="polaroid-cap">Not sure that crib's for you, love</div>
       </div>
-      <div class="polaroid r8">
-        <div class="washi blue t3"></div>
+      <div class="pb-photo">
         <img src="images/family/family-5.jpg" alt="Emily kissing her newborn daughter's forehead">
-        <div class="polaroid-cap">Newest member, already loved</div>
       </div>
     </div>
   </div>

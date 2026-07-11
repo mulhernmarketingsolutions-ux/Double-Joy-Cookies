@@ -117,27 +117,26 @@
   .photo-grid.single{ grid-template-columns: minmax(150px,240px); }
   .photo-grid img{ width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:16px; box-shadow: var(--shadow); display:block; }
 
-  /* Bakery display case */
-  .bakery-case{ position:relative; max-width:820px; margin:0 auto; background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.35) 45%, rgba(255,255,255,0) 78%), var(--white); border-radius:26px 26px 10px 10px; box-shadow: var(--shadow); overflow:hidden; }
-  .case-rim{ height:6px; background: linear-gradient(90deg, var(--gold-light), var(--gold), var(--gold-light)); }
-  .case-shelf{ display:flex; gap:24px; overflow-x:auto; scroll-snap-type:x mandatory; padding: 26px 52px 10px; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
-  .case-shelf::-webkit-scrollbar{ display:none; }
-  .case-shelf.single{ justify-content:center; padding: 26px 20px 10px; }
-  .case-cookie{ flex:0 0 auto; scroll-snap-align:center; width:200px; text-align:center; }
-  .case-cookie img{ width:200px; height:200px; border-radius:50%; object-fit:cover; display:block; box-shadow: 0 14px 18px -6px rgba(90,71,58,0.4), 0 0 0 5px var(--white), 0 0 0 6px rgba(0,0,0,0.05); }
-  @media (max-width:760px){
-    .case-cookie{ width:150px; }
-    .case-cookie img{ width:150px; height:150px; }
-    .case-shelf{ gap:18px; padding: 22px 42px 10px; }
+  /* Large tier photo viewer */
+  .tier-viewer{ background: var(--white); border-radius:26px; box-shadow: var(--shadow); padding:22px; }
+  .viewer-main{ position:relative; max-width:600px; margin:0 auto; aspect-ratio:3/4; border-radius:20px; overflow:hidden; background: var(--cream-deep); box-shadow: 0 16px 30px rgba(90,71,58,0.28); }
+  .viewer-main img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .viewer-arrow{ position:absolute; top:50%; transform:translateY(-50%); width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,0.92); box-shadow: var(--shadow); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2; color: var(--ink); transition: background .15s ease, transform .15s ease; }
+  .viewer-arrow:hover{ background: var(--white); transform: translateY(-50%) scale(1.06); }
+  .viewer-arrow.left{ left:12px; }
+  .viewer-arrow.right{ right:12px; }
+  .viewer-arrow svg{ width:20px; height:20px; }
+  .viewer-counter{ position:absolute; bottom:14px; right:14px; background:rgba(43,36,32,0.62); color:#fff; font-family: var(--font-sans); font-size:12px; padding:5px 12px; border-radius:14px; }
+  .viewer-thumbs{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:18px; }
+  .viewer-thumbs .vt{ width:48px; height:48px; border-radius:50%; overflow:hidden; cursor:pointer; border:2px solid transparent; opacity:0.55; transition: all .15s ease; flex-shrink:0; padding:0; background:none; }
+  .viewer-thumbs .vt img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .viewer-thumbs .vt.active{ border-color: var(--gold); opacity:1; }
+  .viewer-thumbs .vt:hover{ opacity:1; }
+  @media (max-width:600px){
+    .viewer-arrow{ width:38px; height:38px; }
+    .viewer-arrow svg{ width:16px; height:16px; }
+    .viewer-thumbs .vt{ width:40px; height:40px; }
   }
-  .case-cookie .num{ margin-top:10px; font-family: var(--font-script); font-size:14px; color: var(--gold); }
-  .case-ledge{ height:16px; background: linear-gradient(180deg, #C9B899, #A9906F); box-shadow: inset 0 3px 6px rgba(0,0,0,0.18); border-radius:0 0 10px 10px; }
-  .case-arrow{ position:absolute; top:50%; transform:translateY(-8px); width:36px; height:36px; border-radius:50%; background: var(--white); box-shadow: var(--shadow); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2; color: var(--ink); transition: background .15s ease, transform .15s ease; }
-  .case-arrow:hover{ background: var(--cream-deep); transform: translateY(-8px) scale(1.06); }
-  .case-arrow.left{ left:8px; }
-  .case-arrow.right{ right:8px; }
-  .case-arrow svg{ width:16px; height:16px; }
-  .case-hint{ text-align:center; font-family: var(--font-sans); font-size:11px; color:#9a9a9a; margin-top:8px; }
 
   .cta-band{ text-align:center; background: var(--white); border-radius:24px; padding:44px; box-shadow: var(--shadow); }
   .cta-band h2{ font-size:26px; margin:0 0 10px; font-weight:normal; }
@@ -259,61 +258,42 @@
     <div class="gallery-head">
       <div class="kicker">Real Orders</div>
       <h2>See Each Tier in Action</h2>
-      <p>Every photo below is a real set I've made for a real order — displayed tier by tier, like the case at the counter. Scroll or use the arrows to browse.</p>
+      <p>Every photo below is a real set I've made for a real order — one tier at a time, full-size, so you can see the actual detail.</p>
     </div>
 
     <div class="tier-gallery-block">
       <div class="tier-gallery-label"><span class="dot"></span>Sweet &amp; Simple</div>
-      <div class="bakery-case">
-        <div class="case-rim"></div>
-        <div class="case-shelf single" id="case-simple">
-          <div class="case-cookie">
-            <img src="images/tiers/simple-1.jpg" alt="Sweet and Simple tier cookies — one accent color with clean piped monogram design">
-          </div>
+      <div class="tier-viewer">
+        <div class="viewer-main">
+          <img id="viewer-simple-img" src="images/tiers/simple-1.jpg" alt="Sweet and Simple tier cookies — one accent color with clean piped monogram design">
         </div>
-        <div class="case-ledge"></div>
       </div>
     </div>
 
     <div class="tier-gallery-block">
       <div class="tier-gallery-label"><span class="dot"></span>Custom &amp; Coordinated</div>
-      <div class="bakery-case">
-        <div class="case-rim"></div>
-        <button class="case-arrow left" onclick="scrollCase('case-coordinated',-1)" aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button class="case-arrow right" onclick="scrollCase('case-coordinated',1)" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
-        <div class="case-shelf" id="case-coordinated">
-          <div class="case-cookie"><img src="images/tiers/coordinated-1.jpg" alt="Custom and Coordinated tier cookie set, example 1"></div>
-          <div class="case-cookie"><img src="images/tiers/coordinated-2.jpg" alt="Custom and Coordinated tier cookie set, example 2"></div>
-          <div class="case-cookie"><img src="images/tiers/coordinated-3.jpg" alt="Custom and Coordinated tier cookie set, example 3"></div>
-          <div class="case-cookie"><img src="images/tiers/coordinated-4.jpg" alt="Custom and Coordinated tier cookie set, example 4"></div>
-          <div class="case-cookie"><img src="images/tiers/coordinated-5.jpg" alt="Custom and Coordinated tier cookie set, example 5"></div>
-          <div class="case-cookie"><img src="images/tiers/coordinated-6.jpg" alt="Custom and Coordinated tier cookie set, example 6"></div>
-          <div class="case-cookie"><img src="images/tiers/coordinated-7.jpg" alt="Custom and Coordinated tier cookie set, example 7"></div>
-          <div class="case-cookie"><img src="images/tiers/coordinated-8.jpg" alt="Custom and Coordinated tier cookie set, example 8"></div>
-          <div class="case-cookie"><img src="images/tiers/coordinated-9.jpg" alt="Custom and Coordinated tier cookie set, example 9"></div>
+      <div class="tier-viewer">
+        <div class="viewer-main">
+          <button class="viewer-arrow left" onclick="viewerNav('coordinated',-1)" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <img id="viewer-coordinated-img" src="images/tiers/coordinated-1.jpg" alt="Custom and Coordinated tier cookie set">
+          <button class="viewer-arrow right" onclick="viewerNav('coordinated',1)" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+          <div class="viewer-counter" id="viewer-coordinated-counter">1 / 9</div>
         </div>
-        <div class="case-ledge"></div>
+        <div class="viewer-thumbs" id="viewer-coordinated-thumbs"></div>
       </div>
-      <div class="case-hint">← scroll or tap the arrows to see more →</div>
     </div>
 
     <div class="tier-gallery-block">
       <div class="tier-gallery-label"><span class="dot"></span>Showstopper</div>
-      <div class="bakery-case">
-        <div class="case-rim"></div>
-        <button class="case-arrow left" onclick="scrollCase('case-showstopper',-1)" aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button class="case-arrow right" onclick="scrollCase('case-showstopper',1)" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
-        <div class="case-shelf" id="case-showstopper">
-          <div class="case-cookie"><img src="images/tiers/showstopper-1.jpg" alt="Showstopper tier cookie set, example 1"></div>
-          <div class="case-cookie"><img src="images/tiers/showstopper-2.jpg" alt="Showstopper tier cookie set, example 2"></div>
-          <div class="case-cookie"><img src="images/tiers/showstopper-3.jpg" alt="Showstopper tier cookie set, example 3"></div>
-          <div class="case-cookie"><img src="images/tiers/showstopper-4.jpg" alt="Showstopper tier cookie set, example 4"></div>
-          <div class="case-cookie"><img src="images/tiers/showstopper-5.jpg" alt="Showstopper tier cookie set, example 5"></div>
-          <div class="case-cookie"><img src="images/tiers/showstopper-6.jpg" alt="Showstopper tier cookie set, example 6"></div>
+      <div class="tier-viewer">
+        <div class="viewer-main">
+          <button class="viewer-arrow left" onclick="viewerNav('showstopper',-1)" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+          <img id="viewer-showstopper-img" src="images/tiers/showstopper-1.jpg" alt="Showstopper tier cookie set">
+          <button class="viewer-arrow right" onclick="viewerNav('showstopper',1)" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+          <div class="viewer-counter" id="viewer-showstopper-counter">1 / 6</div>
         </div>
-        <div class="case-ledge"></div>
+        <div class="viewer-thumbs" id="viewer-showstopper-thumbs"></div>
       </div>
-      <div class="case-hint">← scroll or tap the arrows to see more →</div>
     </div>
   </div>
 
@@ -356,12 +336,41 @@
 const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbyCCvDHXexq5_YRU1ATlpICSoEB4jg9Hkke3ub3KEOmUMLQrCvwJmCcPTt_sOcqMjY/exec";
 const djcFooterLoadTime = Date.now();
 
-function scrollCase(id, dir){
-  const el = document.getElementById(id);
-  if(!el) return;
-  const step = Math.round(el.clientWidth * 0.7) || 340;
-  el.scrollBy({ left: dir * step, behavior: 'smooth' });
+const TIER_GALLERIES = {
+  coordinated: Array.from({length:9}, (_,i) => `images/tiers/coordinated-${i+1}.jpg`),
+  showstopper: Array.from({length:6}, (_,i) => `images/tiers/showstopper-${i+1}.jpg`),
+};
+const tierIndex = { coordinated:0, showstopper:0 };
+
+function initTierViewer(key){
+  const thumbsEl = document.getElementById(`viewer-${key}-thumbs`);
+  TIER_GALLERIES[key].forEach((src, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'vt';
+    btn.innerHTML = `<img src="${src}" alt="">`;
+    btn.setAttribute('aria-label', `View photo ${i+1}`);
+    btn.onclick = () => { tierIndex[key] = i; updateTierViewer(key); };
+    thumbsEl.appendChild(btn);
+  });
+  updateTierViewer(key);
 }
+
+function viewerNav(key, dir){
+  const imgs = TIER_GALLERIES[key];
+  tierIndex[key] = (tierIndex[key] + dir + imgs.length) % imgs.length;
+  updateTierViewer(key);
+}
+
+function updateTierViewer(key){
+  const imgs = TIER_GALLERIES[key];
+  const idx = tierIndex[key];
+  document.getElementById(`viewer-${key}-img`).src = imgs[idx];
+  document.getElementById(`viewer-${key}-counter`).textContent = `${idx+1} / ${imgs.length}`;
+  document.querySelectorAll(`#viewer-${key}-thumbs .vt`).forEach((el,i) => el.classList.toggle('active', i===idx));
+}
+
+initTierViewer('coordinated');
+initTierViewer('showstopper');
 
 function djcToggleNav(){
   const nav = document.getElementById('navLinks');

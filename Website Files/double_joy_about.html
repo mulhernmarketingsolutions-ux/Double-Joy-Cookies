@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Emily — Double Joy Cookies</title>
+<meta name="description" content="Meet Emily, the baker behind Double Joy Cookies — custom, hand-decorated cookies made for your celebrations.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Double Joy Cookies">
+<meta property="og:title" content="About Emily — Double Joy Cookies">
+<meta property="og:description" content="Meet Emily, the baker behind Double Joy Cookies — custom, hand-decorated cookies made for your celebrations.">
+<meta property="og:image" content="https://doublejoycookies.com/images/social-share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:url" content="https://doublejoycookies.com/double_joy_about.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About Emily — Double Joy Cookies">
+<meta name="twitter:description" content="Meet Emily, the baker behind Double Joy Cookies — custom, hand-decorated cookies made for your celebrations.">
+<meta name="twitter:image" content="https://doublejoycookies.com/images/social-share.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@500;600&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+<style>
+  :root{
+    --cream:#FBF6EE; --cream-deep:#F3EADC; --blush:#E9C7BD; --sage:#D9A28E; --taupe:#C2B098;
+    --gold:#C9A24A; --gold-light:#DDBD7E; --blue:#C98177; --chocolate:#463C34; --ink: var(--chocolate); --berry:#6E3A34; --rose: var(--blush);
+    --line:#E5DDD3; --white:#FFFFFF; --shadow: 0 12px 30px rgba(90,71,58,0.12);
+    --font-head: 'Playfair Display', Georgia, serif; --font-sans: 'Quicksand', Helvetica, Arial, sans-serif; --font-script: 'Dancing Script', cursive;
+  }
+  *{box-sizing:border-box;}
+  html{ overflow-x:hidden; max-width:100%; }
+  body{ margin:0; font-family: var(--font-head); background: var(--cream);
+    background-image: url("images/bg-pattern.svg");
+    background-repeat: repeat;
+    background-size: 240px 240px; color: var(--ink);
+    overflow-x:hidden; max-width:100%; }
+  a{ color: inherit; }
+  .wrap{ max-width:900px; margin:0 auto; padding: 0 24px 80px; }
+
+  .nav-bar{ background: var(--blue); }
+  .site-nav{ max-width:1180px; margin:0 auto; padding: 16px 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family: var(--font-sans); }
+  .nav-logo{ font-family: var(--font-head); font-size: 18px; color: var(--ink); text-decoration:none; letter-spacing:0.5px; }
+  .brand-lockup{ display:inline-block; font-family:'Baloo 2', var(--font-sans); line-height:0.82; text-align:left; position:relative; }
+  .brand-lockup .bl-double{ display:block; font-size:1em; color: var(--blue); font-weight:700; position:relative; }
+  .brand-lockup .bl-row{ display:flex; align-items:flex-end; gap:0.12em; }
+  .brand-lockup .bl-cookies{ font-family: var(--font-sans); font-size:0.26em; letter-spacing:0.12em; text-transform:uppercase; color: var(--sage); font-weight:700; padding-bottom:0.16em; }
+  .brand-lockup .bl-joy{ font-size:1.05em; color: var(--blue); font-weight:700; margin-left:auto; }
+  .brand-lockup .bl-crumbs{ position:absolute; top:-0.02em; right:-0.08em; display:flex; align-items:flex-end; gap:0.045em; }
+  .brand-lockup .bl-crumbs i{ display:block; border-radius:50%; background: var(--cream); }
+  .brand-lockup .bl-crumbs i:nth-child(1){ width:0.07em; height:0.07em; }
+  .brand-lockup .bl-crumbs i:nth-child(2){ width:0.11em; height:0.11em; }
+  .brand-lockup .bl-crumbs i:nth-child(3){ width:0.05em; height:0.05em; }
+  a.brand-lockup{ text-decoration:none; }
+  .brand-lockup.nav-logo{ font-size:23px; }
+  .brand-lockup.hero-logo{ font-size:60px; margin:0 auto 20px; }
+  .site-nav > a:first-child{ margin-right:auto; }
+  .nav-links{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; order:2; }
+  .nav-links a{ color: var(--white); opacity:0.85; text-decoration:none; font-size:13px; letter-spacing:0.3px; padding-bottom:3px; border-bottom: 1px solid transparent; transition: all .15s ease; }
+  .nav-links a:hover, .nav-links a.current{ opacity:1; border-bottom-color: var(--white); }
+  .nav-right{ display:flex; align-items:center; gap:16px; order:3; }
+  .nav-cta{ display:inline-block; text-decoration:none; font-family: var(--font-sans); font-size:13px; letter-spacing:0.3px; transition: all .15s ease; background: var(--white); color: var(--ink); border-radius:20px; padding:7px 18px; font-weight:700; }
+  .nav-cta:hover{ background: var(--blush); }
+  .nav-toggle{ display:none; flex-direction:column; justify-content:center; gap:5px; width:34px; height:34px; background:none; border:none; cursor:pointer; padding:0; flex-shrink:0; }
+  .nav-toggle span{ display:block; width:24px; height:2px; background: var(--white); border-radius:2px; transition: all .2s ease; }
+  .nav-toggle.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .nav-toggle.active span:nth-child(2){ opacity:0; }
+  .nav-toggle.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+  @media (max-width:780px){
+    .nav-toggle{ display:flex; }
+    .nav-links{ display:none; flex-basis:100%; order:4; flex-direction:column; align-items:flex-start; gap:16px; padding:18px 0 6px; }
+    .nav-links.open{ display:flex; }
+  }
+
+  .page-header{ text-align:center; padding: 56px 24px 40px; }
+  .script-tag{ font-family: var(--font-script); font-size: 24px; color: var(--chocolate); margin-bottom: 6px; }
+  .kicker{ letter-spacing: 3px; text-transform: uppercase; font-size: 12px; color: var(--gold); font-family: var(--font-sans); margin-bottom: 12px; }
+  h1{ font-size: 44px; margin: 0 0 16px; font-weight: normal; letter-spacing: 0.5px; }
+
+  .story-card{ background: var(--white); border-radius:24px; padding:48px 44px; box-shadow: var(--shadow); margin-bottom:32px; }
+  .story-card p{ font-family: var(--font-sans); color:#5a5148; font-size:16px; line-height:1.9; margin:0 0 20px; }
+  .story-card p:last-child{ margin-bottom:0; }
+  .pull-quote{ font-family: var(--font-script); font-size:28px; color: var(--gold); text-align:center; margin: 8px 0 28px; line-height:1.4; }
+  .story-photo{ margin: 8px 0 28px; text-align:center; }
+  .story-photo img{ width:100%; max-width:420px; border-radius:20px; box-shadow: var(--shadow); display:block; margin:0 auto; }
+  .story-photo-caption{ font-family: var(--font-script); font-size:18px; color: var(--gold); margin-top:12px; }
+
+  .photobook{ margin-bottom:44px; }
+  .photobook-head{ text-align:center; margin-bottom:30px; }
+  .photobook-head .kicker{ margin-bottom:8px; }
+  .photobook-head h2{ font-size:28px; margin:0 0 10px; font-weight:normal; }
+  .photobook-head p{ font-family: var(--font-sans); color:#6b6b6b; font-size:14px; max-width:480px; margin:0 auto; line-height:1.7; }
+  .photobook-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:34px 22px; padding: 14px 10px 20px; }
+  @media (max-width:760px){ .photobook-grid{ grid-template-columns: repeat(2,1fr); gap:36px 18px; } }
+  .polaroid{ background: var(--white); padding:10px 10px 36px; box-shadow: var(--shadow); position:relative; transition: transform .25s ease, box-shadow .25s ease; }
+  .polaroid:hover{ transform: rotate(0deg) scale(1.06) !important; box-shadow: 0 18px 34px rgba(90,71,58,0.22); z-index:5; }
+  .polaroid img{ width:100%; aspect-ratio:4/5; object-fit:cover; display:block; background: var(--cream-deep); }
+  .polaroid-cap{ position:absolute; bottom:8px; left:4px; right:4px; text-align:center; font-family: var(--font-script); font-size:14.5px; color: var(--chocolate); line-height:1.2; }
+  .washi{ position:absolute; top:-11px; left:50%; height:22px; width:62px; border-radius:1px; opacity:0.82; box-shadow: 0 2px 4px rgba(0,0,0,0.12); }
+  .washi.blush{ background: var(--blush); }
+  .washi.sage{ background: var(--sage); }
+  .washi.gold{ background: var(--gold-light); }
+  .washi.blue{ background: var(--blue); }
+  .r1{ transform: rotate(-4deg); } .r2{ transform: rotate(3deg); } .r3{ transform: rotate(-2deg); } .r4{ transform: rotate(5deg); }
+  .r5{ transform: rotate(2deg); } .r6{ transform: rotate(-5deg); } .r7{ transform: rotate(4deg); } .r8{ transform: rotate(-3deg); }
+  .t1{ transform: translateX(-50%) rotate(-6deg); } .t2{ transform: translateX(-50%) rotate(5deg); } .t3{ transform: translateX(-50%) rotate(-3deg); } .t4{ transform: translateX(-50%) rotate(7deg); }
+
+  .pillars{ display:grid; grid-template-columns: repeat(4,1fr); gap:16px; margin-bottom:40px; }
+  @media (max-width:700px){ .pillars{ grid-template-columns: repeat(2,1fr); } }
+  .pillar{ background:transparent; border-radius:18px; text-align:center; min-height:190px; perspective:1200px; cursor:pointer; }
+  .pillar-inner{ position:relative; width:100%; height:100%; min-height:190px; transition: transform .6s cubic-bezier(.4,.2,.2,1); transform-style: preserve-3d; }
+  .pillar.flipped .pillar-inner{ transform: rotateY(180deg); }
+  .pillar-front, .pillar-back{ position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:18px; box-shadow: var(--shadow); display:flex; flex-direction:column; align-items:center; justify-content:center; }
+  .pillar-front{ background: var(--white); padding:28px 16px 22px; }
+  .pillar-back{ background: var(--ink); color: var(--cream); padding:22px 18px; transform: rotateY(180deg); }
+  .pillar-badge{ width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; }
+  .pillar-badge svg{ width:24px; height:24px; }
+  .pillar.c1 .pillar-badge{ background: var(--sage); }
+  .pillar.c2 .pillar-badge{ background: var(--blush); }
+  .pillar.c3 .pillar-badge{ background: var(--chocolate); }
+  .pillar.c4 .pillar-badge{ background: var(--gold-light); }
+  .pillar span{ font-family: var(--font-sans); font-size:12.5px; letter-spacing:0.3px; display:block; line-height:1.4; color: var(--ink); font-weight:600; }
+  .pillar-flip-hint{ position:absolute; bottom:9px; right:11px; width:18px; height:18px; opacity:0.35; }
+  .pillar-flip-hint svg{ width:100%; height:100%; }
+  .pillar-back-label{ font-family: var(--font-sans); font-size:9.5px; text-transform:uppercase; letter-spacing:1.2px; color: var(--gold-light); font-weight:700; margin-bottom:8px; }
+  .pillar-back p{ font-family: var(--font-sans); font-size:11.5px; line-height:1.55; letter-spacing:0.2px; margin:0; opacity:0.92; }
+
+  .approach{ margin-bottom:40px; }
+  .approach-head{ text-align:center; margin-bottom:28px; }
+  .approach-head .kicker{ margin-bottom:8px; }
+  .approach-head h2{ font-size:28px; margin:0 0 10px; font-weight:normal; }
+  .approach-head p{ font-family: var(--font-sans); color:#6b6b6b; font-size:14px; max-width:520px; margin:0 auto; line-height:1.7; }
+  .approach-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:20px; margin-bottom:22px; }
+  @media (max-width:760px){ .approach-grid{ grid-template-columns: 1fr; } }
+  .approach-card{ background: var(--white); border-radius:20px; overflow:hidden; box-shadow: var(--shadow); }
+  .approach-photo{ position:relative; width:100%; aspect-ratio:1/1; }
+  .approach-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .approach-dot{ position:absolute; width:20px; height:20px; margin:-10px 0 0 -10px; border-radius:50%; background: var(--cream); border:1.5px solid var(--gold); display:flex; align-items:center; justify-content:center; font-family: var(--font-sans); font-size:10.5px; font-weight:700; color: var(--gold); box-shadow: 0 2px 6px rgba(0,0,0,0.18); }
+  .approach-body{ padding:18px 20px 22px; }
+  .approach-label{ font-family: var(--font-sans); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color: var(--gold); margin-bottom:5px; }
+  .approach-title{ font-size:18px; margin:0 0 6px; font-weight:normal; }
+  .approach-price{ font-family: var(--font-sans); font-size:16px; font-weight:700; color: var(--ink); margin-bottom:2px; }
+  .approach-price span{ font-size:11.5px; font-weight:500; color:#9a9a9a; text-transform:none; letter-spacing:0; margin-left:4px; }
+  .approach-min{ font-family: var(--font-sans); font-size:11px; color:#9a9a9a; margin-bottom:12px; }
+  .approach-legend{ font-family: var(--font-sans); font-size:12.5px; color:#6b6b6b; line-height:1.6; margin:0; padding:0; list-style:none; }
+  .approach-legend li{ display:flex; gap:8px; margin-bottom:4px; }
+  .approach-legend li:last-child{ margin-bottom:0; }
+  .approach-legend .num{ flex-shrink:0; width:16px; height:16px; border-radius:50%; background: var(--cream-deep); color: var(--gold); font-size:9.5px; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  .approach-more{ text-align:center; font-family: var(--font-sans); font-size:13px; color: var(--ink); }
+  .approach-more a{ color: var(--gold); text-decoration:none; border-bottom:1px solid var(--gold); padding-bottom:2px; }
+  .approach-anything{ text-align:center; background: var(--cream-deep); border-radius:20px; padding:26px 30px; margin-bottom:22px; }
+  .approach-anything p{ font-family: var(--font-sans); font-size:14px; color:#5a5148; line-height:1.7; margin:0 0 14px; max-width:560px; margin-left:auto; margin-right:auto; }
+  .approach-anything a.cta{ display:inline-block; text-decoration:none; font-family: var(--font-sans); font-size:13px; letter-spacing:1px; text-transform:uppercase; background: var(--berry); color: var(--cream); border-radius:30px; padding:12px 26px; transition: background .2s ease, transform .15s ease; }
+  .approach-anything a.cta:hover{ background: var(--sage); transform: translateY(-1px); }
+
+  .cta-band{ text-align:center; background: var(--white); border-radius:24px; padding:44px; box-shadow: var(--shadow); }
+  .cta-band h2{ font-size:26px; margin:0 0 10px; font-weight:normal; }
+  .cta-band p{ font-family: var(--font-sans); color:#8a8a8a; font-size:14px; margin:0 0 22px; }
+  .cta{ display:inline-block; background: var(--berry); color: var(--cream); border:none; padding:15px 30px; border-radius:30px; font-family: var(--font-sans); font-size:13.5px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition: background .2s ease, transform .15s ease; }
+  .cta:hover{ background: var(--sage); transform: translateY(-1px); }
+
+  footer{ background: var(--berry); color: var(--cream); padding: 44px 24px; text-align:center; margin-top:40px; }
+  footer .flinks{ display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; font-family: var(--font-sans); font-size:13px; }
+  footer .flinks a{ color: var(--cream); text-decoration:none; opacity:0.85; }
+  footer .flinks a:hover{ opacity:1; }
+  .fnewsletter{ max-width:380px; margin: 8px auto 26px; }
+  .fn-label{ font-family: var(--font-script); font-size:19px; color: var(--gold-light); margin-bottom:12px; }
+  .fn-form{ display:flex; flex-wrap:wrap; gap:8px; }
+  .fn-hp{ position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; opacity:0; pointer-events:none; }
+  .fn-form input{ flex:1; border:none; border-radius:24px; padding:11px 16px; font-family: var(--font-sans); font-size:13px; background: rgba(255,255,255,0.95); color: var(--chocolate); }
+  .fn-form input:focus{ outline:2px solid var(--gold-light); }
+  .fn-form button{ background: var(--gold-light); color: var(--chocolate); border:none; border-radius:24px; padding:11px 20px; font-family: var(--font-sans); font-size:12px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; cursor:pointer; white-space:nowrap; transition: background .2s ease; }
+  .fn-form button:hover{ background: var(--blush); }
+  .fn-note{ font-family: var(--font-sans); font-size:11.5px; opacity:0.85; margin-top:10px; min-height:14px; }
+  .fn-note.show{ font-size:14px; opacity:1; background: rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); border-radius:14px; padding:14px 18px; line-height:1.5; margin-top:4px; }
+  footer .fine{ font-family: var(--font-sans); font-size:11.5px; opacity:0.6; }
+  .sac-credit{ display:inline-flex; align-items:center; gap:6px; margin-top:14px; max-width:100%; text-decoration:none; color: var(--cream); opacity:0.55; font-family: var(--font-sans); font-size:11px; line-height:1.5; transition: opacity .2s ease; }
+  .sac-credit:hover{ opacity:0.9; }
+  .sac-credit img{ height:1.2em; width:auto; display:block; flex-shrink:0; }
+  .sac-credit span{ min-width:0; }
+  .toast{ position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background: var(--berry); color: var(--cream); padding:14px 26px; border-radius:30px; font-family: var(--font-sans); font-size:13.5px; opacity:0; pointer-events:none; transition: all .3s ease; box-shadow: var(--shadow); text-align:center; max-width:90%; z-index:999; }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+<nav class="site-nav">
+  <a href="index.html" aria-label="Double Joy Cookies — Home"><img src="images/double-joy-logo-light.png" alt="Double Joy Cookies" style="height:32px; display:block;"></a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="double_joy_about.html" class="current">About</a>
+    <a href="double_joy_pricing.html">Pricing</a>
+    <a href="double_joy_recipe_shop.html">Recipes</a>
+    <a href="double_joy_faq.html">FAQ</a>
+    <a href="double_joy_contact.html">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a href="double_joy_order_form.html" class="nav-cta">Custom Order</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" onclick="djcToggleNav()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+</div>
+
+<div class="page-header">
+  <div class="script-tag">Hi, I'm Emily</div>
+  <div class="kicker">About Double Joy Cookies</div>
+  <h1>Inspired by My Girls</h1>
+</div>
+
+<div class="wrap">
+  <div class="story-card">
+    <p>It started small — cookies for my own girls' birthdays, decorated late at night because I wanted their day to feel a little more special. Somewhere along the way I realized I was actually good at this, and that maybe it could be something more than a once-a-year birthday project.</p>
+
+    <p>That's how Double Joy Cookies came to be. Every set is still made the same way those first ones were — by hand, one at a time, made to fit the celebration it's for.</p>
+
+    <div class="pull-quote">"Double Joy" means the joy you feel receiving the cookies,<br>and the joy I feel making them. Happiness shared both ways.</div>
+
+    <p>These days that means custom cookies for birthdays, showers, weddings, holidays, and just-because moments — always designed around your event, never off a shelf. I still get the same rush from a finished box that I did with that first batch for my girls.</p>
+  </div>
+
+  <div class="photobook">
+    <div class="photobook-head">
+      <div class="kicker">The Whole Reason</div>
+      <h2>My Family Photo Book</h2>
+      <p>The two little ones (and the dog) who started all of this. Excuse the chaos — that's kind of the point.</p>
+    </div>
+    <div class="photobook-grid">
+      <div class="polaroid r1">
+        <div class="washi blush t1"></div>
+        <img src="images/emily-hailey.jpg" alt="Emily crouching and hugging her oldest daughter Hailey on the street">
+        <div class="polaroid-cap">Me &amp; my oldest, Hailey</div>
+      </div>
+      <div class="polaroid r2">
+        <div class="washi sage t2"></div>
+        <img src="images/daughters.jpg" alt="Emily's two daughters hugging in the backyard">
+        <div class="polaroid-cap">My girls</div>
+      </div>
+      <div class="polaroid r3">
+        <div class="washi gold t3"></div>
+        <img src="images/family/family-6.jpg" alt="Family of four laughing together in a chair, toddler mid-giggle">
+        <div class="polaroid-cap">Never a normal photo</div>
+      </div>
+      <div class="polaroid r4">
+        <div class="washi blue t4"></div>
+        <img src="images/family/family-4.jpg" alt="Family of four with their dog, dad holding toddler upside down">
+        <div class="polaroid-cap">The whole crew (dog included)</div>
+      </div>
+      <div class="polaroid r5">
+        <div class="washi blush t2"></div>
+        <img src="images/family/family-1.jpg" alt="Emily holding hands with her toddler on the couch">
+        <div class="polaroid-cap">Someone doesn't want to let go</div>
+      </div>
+      <div class="polaroid r6">
+        <div class="washi sage t1"></div>
+        <img src="images/family/family-2.jpg" alt="Emily holding her newborn while her toddler reaches in">
+        <div class="polaroid-cap">All hands on deck</div>
+      </div>
+      <div class="polaroid r7">
+        <div class="washi gold t4"></div>
+        <img src="images/family/family-3.jpg" alt="Toddler sitting in the crib next to her sleeping newborn sister">
+        <div class="polaroid-cap">Not sure that crib's for you, love</div>
+      </div>
+      <div class="polaroid r8">
+        <div class="washi blue t3"></div>
+        <img src="images/family/family-5.jpg" alt="Emily kissing her newborn daughter's forehead">
+        <div class="polaroid-cap">Newest member, already loved</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pillars">
+    <div class="pillar c1" onclick="this.classList.toggle('flipped')">
+      <div class="pillar-inner">
+        <div class="pillar-front">
+          <div class="pillar-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7"/><path d="M6 10v9a1 1 0 001 1h10a1 1 0 001-1v-9"/><path d="M12 17.5s-2.5-1.6-2.5-3.3a1.6 1.6 0 013-1 1.6 1.6 0 013 1c0 1.7-2.5 3.3-2.5 3.3z"/></svg>
+          </div>
+          <span>Made Locally</span>
+          <div class="pillar-flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 2.1l4 4-4 4"/><path d="M3 12.7V12a9 9 0 0114.85-6.36L21 5.1"/><path d="M7 21.9l-4-4 4-4"/><path d="M21 11.3v.7a9 9 0 01-14.85 6.36L3 18.9"/></svg></div>
+        </div>
+        <div class="pillar-back">
+          <div class="pillar-back-label">Why It Matters</div>
+          <p>Every batch is baked fresh to order — nothing pulled from a freezer, nothing shipped in from a warehouse.</p>
+        </div>
+      </div>
+    </div>
+    <div class="pillar c2" onclick="this.classList.toggle('flipped')">
+      <div class="pillar-inner">
+        <div class="pillar-front">
+          <div class="pillar-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16l-1.7 7.5A2 2 0 0116.3 18H7.7a2 2 0 01-1.96-1.5L4 9z"/><path d="M8 9a4 4 0 018 0"/><path d="M16 5l3-2M17.5 4l1.2 1.6"/></svg>
+          </div>
+          <span>Premium Ingredients</span>
+          <div class="pillar-flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 2.1l4 4-4 4"/><path d="M3 12.7V12a9 9 0 0114.85-6.36L21 5.1"/><path d="M7 21.9l-4-4 4-4"/><path d="M21 11.3v.7a9 9 0 01-14.85 6.36L3 18.9"/></svg></div>
+        </div>
+        <div class="pillar-back">
+          <div class="pillar-back-label">Why It Matters</div>
+          <p>Real butter, real vanilla, no shortcuts — the same ingredients you'd want in your own kitchen.</p>
+        </div>
+      </div>
+    </div>
+    <div class="pillar c3" onclick="this.classList.toggle('flipped')">
+      <div class="pillar-inner">
+        <div class="pillar-front">
+          <div class="pillar-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6l1 5-2 2v6a2 2 0 01-2 2h0a2 2 0 01-2-2v-6l-2-2 1-5z"/><path d="M9.5 4c0-1 1-2 2.5-2s2.5 1 2.5 2"/><path d="M12 11v2"/></svg>
+          </div>
+          <span>Custom Designs</span>
+          <div class="pillar-flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 2.1l4 4-4 4"/><path d="M3 12.7V12a9 9 0 0114.85-6.36L21 5.1"/><path d="M7 21.9l-4-4 4-4"/><path d="M21 11.3v.7a9 9 0 01-14.85 6.36L3 18.9"/></svg></div>
+        </div>
+        <div class="pillar-back">
+          <div class="pillar-back-label">Why It Matters</div>
+          <p>No templates, no two boxes alike — every cookie is hand-piped and hand-painted to match your theme.</p>
+        </div>
+      </div>
+    </div>
+    <div class="pillar c4" onclick="this.classList.toggle('flipped')">
+      <div class="pillar-inner">
+        <div class="pillar-front">
+          <div class="pillar-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="1.5"/><path d="M4 14h16"/><path d="M12 10v10"/><path d="M12 10c-1.5-3-4-4-5-2.5S8 10 12 10z"/><path d="M12 10c1.5-3 4-4 5-2.5S16 10 12 10z"/></svg>
+          </div>
+          <span>Made for Life's Sweet Moments</span>
+          <div class="pillar-flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 2.1l4 4-4 4"/><path d="M3 12.7V12a9 9 0 0114.85-6.36L21 5.1"/><path d="M7 21.9l-4-4 4-4"/><path d="M21 11.3v.7a9 9 0 01-14.85 6.36L3 18.9"/></svg></div>
+        </div>
+        <div class="pillar-back">
+          <div class="pillar-back-label">Why It Matters</div>
+          <p>From first birthdays to milestone celebrations, every set is made to mark something worth celebrating.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="approach" id="approach">
+    <div class="approach-anything">
+      <p>Curious what a custom order actually costs? I've put together a full breakdown — four simple tiers from Sweet &amp; Simple to Showstopper, with real photos of past orders for each.</p>
+      <a href="double_joy_pricing.html" class="cta">See Full Pricing</a>
+    </div>
+    <div class="approach-more">Want to see what I've been baking lately? <a href="https://www.instagram.com/doublejoycookies" target="_blank" rel="noopener">Follow along on Instagram →</a></div>
+  </div>
+
+  <div class="cta-band">
+    <h2>Ready to Start?</h2>
+    <p>Tell me about your occasion and I'll follow up personally with a custom quote and next steps.</p>
+    <a href="double_joy_order_form.html" class="cta">Start a Custom Order</a>
+  </div>
+</div>
+
+<footer>
+  <div class="flinks">
+    <a href="index.html">Home</a>
+    <a href="double_joy_pricing.html">Pricing</a>
+    <a href="double_joy_order_form.html">Custom Order</a>
+    <a href="double_joy_recipe_shop.html">Recipes</a>
+    <a href="double_joy_faq.html">FAQ</a>
+    <a href="double_joy_contact.html">Contact</a>
+    <a href="double_joy_terms.html">Terms</a>
+    <a href="https://www.instagram.com/doublejoycookies" target="_blank" rel="noopener">Instagram</a>
+  </div>
+  <div class="fnewsletter">
+    <div class="fn-label">🍪 Get the occasional sweet note from me</div>
+    <form class="fn-form" onsubmit="return djcFooterSignup(this)">
+      <input type="text" class="fn-hp" name="fn_hp" tabindex="-1" autocomplete="off">
+      <input type="email" placeholder="you@email.com" required>
+      <button type="submit">Join In</button>
+    </form>
+    <div class="fn-note"></div>
+  </div>
+  <div class="fine">© Double Joy Cookies. Made with love (and a little chaos).</div>
+  <a href="https://soughtafter.design" target="_blank" rel="noopener" class="sac-credit">
+    <img src="images/sought-after-mark.png" alt="Sought After Co.">
+    <span>Website by Sought After Co. — helping brands become sought after</span>
+  </a>
+</footer>
+
+<script>
+/* Paste the Apps Script Web App URL here once it's deployed (see Double_Joy_Cookies_Notes.md) */
+const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbyCCvDHXexq5_YRU1ATlpICSoEB4jg9Hkke3ub3KEOmUMLQrCvwJmCcPTt_sOcqMjY/exec";
+const djcFooterLoadTime = Date.now();
+
+function djcToggleNav(){
+  const nav = document.getElementById('navLinks');
+  const btn = document.getElementById('navToggle');
+  const isOpen = nav.classList.toggle('open');
+  btn.classList.toggle('active', isOpen);
+  btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._t);
+  window._t = setTimeout(()=>t.classList.remove('show'), 3400);
+}
+
+function djcFooterSignup(form){
+  const note = form.nextElementSibling;
+  const email = form.querySelector('input[type=email]').value;
+  const hp = form.querySelector('.fn-hp');
+  const isBot = (hp && hp.value) || (Date.now() - djcFooterLoadTime) < 1200;
+  if(!isBot && DJC_ENDPOINT && DJC_ENDPOINT.indexOf('PASTE_') === -1){
+    fetch(DJC_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ type: 'newsletter', email: email })
+    }).catch(()=>{});
+  }
+  form.style.display = 'none';
+  note.textContent = "🍪 Thanks for joining! You're on the list for sweet updates from me.";
+  note.classList.add('show');
+  return false;
+}
+</script>
+<div class="toast" id="toast"></div>
+
+</body>
+</html>

@@ -96,11 +96,13 @@
   .photobook-head .kicker{ margin-bottom:8px; }
   .photobook-head h2{ font-size:28px; margin:0 0 10px; font-weight:normal; }
   .photobook-head p{ font-family: var(--font-sans); color:#6b6b6b; font-size:14px; max-width:480px; margin:0 auto; line-height:1.7; }
-  .photobook-grid{ column-count:3; column-gap:3px; border-radius:18px; overflow:hidden; box-shadow: var(--shadow); }
-  @media (max-width:760px){ .photobook-grid{ column-count:2; } }
-  .photobook-grid .pb-photo{ break-inside:avoid; margin-bottom:3px; overflow:hidden; }
+  .photobook-grid{ border-radius:18px; overflow:hidden; box-shadow: var(--shadow); }
+  .photobook-grid .pb-photo{ overflow:hidden; }
   .photobook-grid img{ width:100%; height:auto; display:block; background: var(--cream-deep); transition: transform .3s ease; }
   .photobook-grid .pb-photo:hover img{ transform: scale(1.04); }
+  .pb-wide{ margin-bottom:3px; }
+  .pb-columns{ display:grid; grid-template-columns:1fr 1fr; gap:3px; }
+  .pb-col{ display:flex; flex-direction:column; gap:3px; }
 
   .pillars{ display:grid; grid-template-columns: repeat(4,1fr); gap:16px; margin-bottom:40px; }
   @media (max-width:700px){ .pillars{ grid-template-columns: repeat(2,1fr); } }
@@ -224,24 +226,30 @@
   <div class="photobook">
     <div class="photobook-head">
       <div class="kicker">The Whole Reason</div>
-      <h2>My Family Photo Book</h2>
-      <p>The two little ones (and the dog) who started all of this. Excuse the chaos — that's kind of the point.</p>
+      <h2>My Family</h2>
+      <p>The two little ones who started all of this. Excuse the chaos — that's kind of the point.</p>
     </div>
     <div class="photobook-grid">
-      <div class="pb-photo">
-        <img src="images/family/family-4.jpg" alt="Family of four with their dog, dad holding toddler upside down">
+      <div class="pb-photo pb-wide">
+        <img src="images/family/family-4.jpg" alt="Family of four together, dad holding toddler upside down">
       </div>
-      <div class="pb-photo">
-        <img src="images/family/family-1.jpg" alt="Emily holding hands with her toddler on the couch">
-      </div>
-      <div class="pb-photo">
-        <img src="images/family/family-2.jpg" alt="Emily holding her newborn while her toddler reaches in">
-      </div>
-      <div class="pb-photo">
-        <img src="images/family/family-3.jpg" alt="Toddler sitting in the crib next to her sleeping newborn sister">
-      </div>
-      <div class="pb-photo">
-        <img src="images/family/family-5.jpg" alt="Emily kissing her newborn daughter's forehead">
+      <div class="pb-columns">
+        <div class="pb-col">
+          <div class="pb-photo">
+            <img src="images/family/family-1.jpg" alt="Emily holding hands with her toddler on the couch">
+          </div>
+          <div class="pb-photo">
+            <img src="images/family/family-3.jpg" alt="Toddler sitting in the crib next to her sleeping newborn sister">
+          </div>
+        </div>
+        <div class="pb-col">
+          <div class="pb-photo">
+            <img src="images/family/family-2.jpg" alt="Emily holding her newborn while her toddler reaches in">
+          </div>
+          <div class="pb-photo">
+            <img src="images/family/family-5.jpg" alt="Emily kissing her newborn daughter's forehead">
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -5,32 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ============================================================
      PRESALE PAGE — reusable for Halloween / Thanksgiving / Christmas / etc.
-     To run a new presale:
+     Two states:
+       A) "Coming soon" (current state) — teaser + email notify form only.
+          Use this whenever a presale is announced but not yet open.
+       B) "Open for orders" — swap the notify card for the full step-by-step
+          order builder (ask Claude — a working version of that builder is
+          saved in the project notes so it can be dropped back in).
+     To switch holidays/dates:
        1. Update the <title> and meta tags below with the holiday name.
-       2. Edit the "PRESALE CONTENT — EDIT EACH TIME" block in the <body>
-          (heading, cutoff date, pickup date, price, design options).
+       2. Edit the "PRESALE CONTENT — EDIT EACH TIME" block in the <body>.
        3. Update the PRESALE_NAME constant near the top of the <script>
-          at the bottom — this is what shows up in the Orders sheet.
+          at the bottom — this is the label that lands in the Presale
+          Interest sheet tab so it's easy to tell sales apart.
        4. Ask Claude to "turn the presale nav link on" — this adds a
           Presale link to every page's nav + footer. When the batch is
           full or the holiday's over, ask to "turn it off" to unlink it
           again (the page itself stays live at this same URL either way,
           same pattern as the retired Dream Up Your Cookies tool).
      ============================================================ -->
-<title>MidSummer Presale — Double Joy Cookies</title>
-<meta name="description" content="Limited-batch MidSummer cookie presale from Double Joy Cookies — order ahead, pick up on the date, no full custom form needed.">
+<title>Halloween 2026 Presale — Double Joy Cookies</title>
+<meta name="description" content="The next Double Joy Cookies presale is coming this Halloween season — get notified the moment it opens.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Double Joy Cookies">
-<meta property="og:title" content="MidSummer Presale — Double Joy Cookies">
-<meta property="og:description" content="Limited-batch MidSummer cookie presale from Double Joy Cookies — order ahead, pick up on the date, no full custom form needed.">
+<meta property="og:title" content="Halloween 2026 Presale — Double Joy Cookies">
+<meta property="og:description" content="The next Double Joy Cookies presale is coming this Halloween season — get notified the moment it opens.">
 <meta property="og:image" content="https://doublejoycookies.com/images/social-share.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:url" content="https://doublejoycookies.com/double_joy_presale.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MidSummer Presale — Double Joy Cookies">
-<meta name="twitter:description" content="Limited-batch MidSummer cookie presale from Double Joy Cookies — order ahead, pick up on the date, no full custom form needed.">
+<meta name="twitter:title" content="Halloween 2026 Presale — Double Joy Cookies">
+<meta name="twitter:description" content="The next Double Joy Cookies presale is coming this Halloween season — get notified the moment it opens.">
 <meta name="twitter:image" content="https://doublejoycookies.com/images/social-share.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -194,29 +200,21 @@
 
 <!-- ==================== PRESALE CONTENT — EDIT EACH TIME ==================== -->
 <div class="page-header">
-  <div class="script-tag">Limited-batch presale</div>
-  <div class="kicker">Presale</div>
-  <h1>☀️ MidSummer Cookie Presale</h1>
-  <p class="sub">One sunny batch, made ahead of time. Reserve your spot below — presale quantities are limited, so once it's full, it's full until the next one.</p>
+  <div class="script-tag">Mark your calendar</div>
+  <div class="kicker">Coming This Fall</div>
+  <h1>🎃 Halloween 2026 Presale</h1>
+  <p class="sub">The next limited-batch presale is coming this Halloween season. Spots tend to go fast once it opens — pop your email in below and I'll let you know the moment it's live.</p>
 </div>
 
 <div class="wrap">
   <div class="presale-card">
-    <div class="presale-grid">
-      <div class="presale-stat">
-        <div class="label">Order By</div>
-        <div class="value">July 25, 2026</div>
-      </div>
-      <div class="presale-stat">
-        <div class="label">Pickup Date</div>
-        <div class="value">August 1, 2026</div>
-      </div>
-      <div class="presale-stat">
-        <div class="label">Price</div>
-        <div class="value">$70/dozen (2-dozen min)</div>
-      </div>
-    </div>
-    <p class="presale-note"><strong>How this works:</strong> pick a design below, submit your reservation, and I'll send an invoice within 24–48 hours. <strong>Your spot isn't reserved until that invoice is paid in full</strong> — presale batches are first-paid, first-served, so I'd recommend paying promptly. Pickup is local (Portland, OR) on the date above only; this batch isn't available for delivery or full custom design.</p>
+    <p class="presale-note">I'm saving the full details — designs, pricing, and pickup date — for closer to the date. Get on the list now for first dibs, and I'll send you a heads-up the moment the presale opens.</p>
+    <form class="notify-form" onsubmit="return djcPresaleNotify(this)" style="display:flex; flex-wrap:wrap; gap:10px; margin-top:16px;">
+      <input type="text" class="fn-hp" name="pn_hp" tabindex="-1" autocomplete="off">
+      <input type="email" placeholder="you@email.com" required style="flex:1; min-width:200px;">
+      <button type="submit" class="cta" style="width:auto; margin:0; padding:12px 26px;">Notify Me</button>
+    </form>
+    <div class="pn-note" style="font-family: var(--font-sans); font-size:12.5px; color:#8a7f74; margin-top:10px; min-height:16px;"></div>
   </div>
 
   <div class="example-gallery">
@@ -235,77 +233,10 @@
         <div class="eg-cap">Little extras that make it special</div>
       </div>
     </div>
-    <div class="eg-note">Real MidSummer photos coming soon — these show the level of detail you can expect.</div>
+    <div class="eg-note">Real Halloween photos coming soon — these show the level of detail you can expect.</div>
   </div>
 
-  <div class="builder">
-    <div class="form-area" id="formArea">
-
-      <div class="step">
-        <div class="step-title"><span class="step-num">1</span> Your Info</div>
-        <div class="row2">
-          <div class="field" id="f-name">
-            <label>Your Name</label>
-            <input type="text" id="name" placeholder="Jane Smith">
-            <input type="text" id="orderHp" name="order_hp" class="fn-hp" tabindex="-1" autocomplete="off">
-            <div class="error-msg">Please add your name.</div>
-          </div>
-          <div class="field" id="f-email">
-            <label>Email</label>
-            <input type="email" id="email" placeholder="jane@email.com">
-            <div class="error-msg">Please add a valid email.</div>
-          </div>
-        </div>
-        <div class="field">
-          <label>Phone <span style="text-transform:none; color:#c9beae;">(optional)</span></label>
-          <input type="tel" id="phone" placeholder="(555) 123-4567">
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-title"><span class="step-num">2</span> Pick a Design</div>
-        <div class="step-help">This batch's presale designs — no full custom design for presale orders, but I can work in a color preference below.</div>
-        <div class="choice-row" id="designRow"></div>
-      </div>
-
-      <div class="step">
-        <div class="step-title"><span class="step-num">3</span> Quantity</div>
-        <div class="field" id="f-qty">
-          <label>How many dozen? <span style="text-transform:none; color:#c9beae;">(2-dozen minimum)</span></label>
-          <input type="number" id="qty" min="2" step="1" placeholder="e.g. 2">
-          <div class="error-msg">Let me know how many dozen you'd like.</div>
-        </div>
-        <label class="checkbox-row">
-          <input type="checkbox" id="giftBows">
-          <span>Tie with gift bows <span style="color:#c9beae;">(+$6/dozen)</span></span>
-        </label>
-      </div>
-
-      <div class="step">
-        <div class="step-title"><span class="step-num">4</span> Notes <span style="font-family: var(--font-sans); font-size:11px; color:#c9beae; font-weight:normal; margin-left:6px;">(optional)</span></div>
-        <div class="step-help">Color preference, allergies, anything else I should know.</div>
-        <div class="field">
-          <textarea id="notes" placeholder="e.g. Purple and black if possible, one person in the house has a nut allergy..."></textarea>
-        </div>
-        <div class="step-help" style="margin-top:14px;">Have inspiration for the color palette? Attach up to 3 photos.</div>
-        <div class="dropzone" id="dropzone">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4M12 4L7 9M12 4l5 5"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg>
-          <div>Drop photos here, or click to browse</div>
-        </div>
-        <input type="file" id="fileInput" accept="image/*" multiple style="display:none;">
-        <div class="thumbs" id="thumbs"></div>
-      </div>
-
-      <button class="cta" id="submitBtn">Reserve My Spot</button>
-    </div>
-
-    <div class="confirm" id="confirmBox">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5"><path d="M20 6L9 17l-5-5"/></svg>
-      <h2>Your spot is requested!</h2>
-      <p>Thank you for reserving a spot in this presale batch. I'll send an invoice within 24–48 hours — your spot isn't officially reserved until it's paid in full, so keep an eye on your email.</p>
-      <p>Questions in the meantime? Reach out on the <a href="double_joy_contact.html" style="color:var(--gold); text-decoration:underline;">Contact</a> page.</p>
-    </div>
-  </div>
+  <div class="presale-note" style="text-align:center;">Need something sooner? <a href="double_joy_order_form.html" style="color:var(--gold); text-decoration:underline;">Start a custom order</a> anytime — presales are just for limited holiday batches.</div>
 </div>
 <!-- ==================== END PRESALE CONTENT ==================== -->
 
@@ -320,6 +251,7 @@
     <a href="double_joy_faq.html">FAQ</a>
     <a href="double_joy_contact.html">Contact</a>
     <a href="double_joy_terms.html">Terms</a>
+    <a href="double_joy_payment.html">Payment</a>
     <a href="https://www.instagram.com/doublejoycookies" target="_blank" rel="noopener">Instagram</a>
   </div>
   <div class="fnewsletter">
@@ -342,8 +274,7 @@
 
 <script>
 /* ============= PRESALE SETTINGS — EDIT THESE EACH TIME ============= */
-const PRESALE_NAME = "☀️ Presale — MidSummer 2026";   // shows up in the Orders sheet + email so it's easy to spot
-const DESIGN_OPTIONS = ["Sunflower Set", "Watermelon Slices", "Lemonade Stand", "Surprise Me"];
+const PRESALE_NAME = "🎃 Halloween 2026";   // shows up in the Presale Interest sheet tab so it's easy to spot
 /* ===================================================================== */
 
 const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbyCCvDHXexq5_YRU1ATlpICSoEB4jg9Hkke3ub3KEOmUMLQrCvwJmCcPTt_sOcqMjY/exec";
@@ -357,76 +288,6 @@ function djcToggleNav(){
   btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 }
 
-let form = { design:null, photos:[] };
-
-function buildPills(containerId, options, stateKey){
-  const row = document.getElementById(containerId);
-  options.forEach(opt => {
-    const btn = document.createElement('div');
-    btn.className = 'pill-btn';
-    btn.textContent = opt;
-    btn.onclick = () => {
-      form[stateKey] = opt;
-      row.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    };
-    row.appendChild(btn);
-  });
-}
-buildPills('designRow', DESIGN_OPTIONS, 'design');
-
-/* ---------------- Photo upload (client-side, compressed before send) ---------------- */
-const dropzone = document.getElementById('dropzone');
-const fileInput = document.getElementById('fileInput');
-const thumbs = document.getElementById('thumbs');
-dropzone.onclick = () => fileInput.click();
-['dragover','dragenter'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.add('dragover'); }));
-['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, e => { e.preventDefault(); dropzone.classList.remove('dragover'); }));
-dropzone.addEventListener('drop', e => handleFiles(e.dataTransfer.files));
-fileInput.addEventListener('change', e => handleFiles(e.target.files));
-
-const MAX_PHOTOS = 3;
-
-function handleFiles(files){
-  const incoming = Array.from(files).filter(f => f.type.startsWith('image/'));
-  if(!incoming.length) return;
-  const remainingSlots = MAX_PHOTOS - form.photos.length;
-  if(remainingSlots <= 0) return;
-  const toProcess = incoming.slice(0, remainingSlots);
-
-  toProcess.forEach(file => {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = new Image();
-      img.onload = () => {
-        const MAX_DIM = 1600;
-        let { width, height } = img;
-        if (width > MAX_DIM || height > MAX_DIM) {
-          const scale = MAX_DIM / Math.max(width, height);
-          width = Math.round(width * scale);
-          height = Math.round(height * scale);
-        }
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
-        const dataUrl = canvas.toDataURL('image/jpeg', 0.72);
-        const base64 = dataUrl.split(',')[1] || '';
-        const id = 'thumb' + Math.random().toString(36).slice(2,8);
-        form.photos.push({ id, filename: file.name, mimeType: 'image/jpeg', data: base64 });
-        const div = document.createElement('div');
-        div.className = 'thumb';
-        div.id = id;
-        div.innerHTML = `<img src="${dataUrl}"><div class="rm">×</div>`;
-        div.querySelector('.rm').onclick = () => { div.remove(); form.photos = form.photos.filter(p=>p.id!==id); };
-        thumbs.appendChild(div);
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
 function showToast(msg){
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -435,66 +296,24 @@ function showToast(msg){
   window._t = setTimeout(()=>t.classList.remove('show'), 3400);
 }
 
-function validate(){
-  const checks = [
-    ['f-name', document.getElementById('name').value.trim().length > 0],
-    ['f-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim())],
-    ['f-qty', document.getElementById('qty').value && Number(document.getElementById('qty').value) >= 2],
-  ];
-  let allValid = true;
-  checks.forEach(([id, ok]) => {
-    document.getElementById(id).classList.toggle('error', !ok);
-    if(!ok) allValid = false;
-  });
-  return allValid;
-}
-
-function buildPayload(){
-  return {
-    type: 'order',
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value,
-    occasion: PRESALE_NAME,
-    qty: document.getElementById('qty').value + ' dozen',
-    needBy: '',
-    theme: (form.design ? `Design: ${form.design}. ` : '') + document.getElementById('notes').value,
-    names: '',
-    design: form.design || '',
-    budget: '',
-    delivery: 'Local Pickup — presale batch date',
-    giftBows: document.getElementById('giftBows').checked,
-    photos: form.photos.map(p => ({ filename: p.filename, mimeType: p.mimeType, data: p.data })),
-    handoff: null,
-  };
-}
-
-function sendToBackend(payload){
-  if(!DJC_ENDPOINT || DJC_ENDPOINT.indexOf('PASTE_') !== -1) return;
-  fetch(DJC_ENDPOINT, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify(payload)
-  }).catch(()=>{});
-}
-
-document.getElementById('submitBtn').onclick = () => {
-  if(!validate()){
-    showToast('A few details are missing — check the highlighted fields.');
-    document.querySelector('.field.error')?.scrollIntoView({behavior:'smooth', block:'center'});
-    return;
-  }
-  const hp = document.getElementById('orderHp');
+function djcPresaleNotify(form){
+  const note = form.nextElementSibling;
+  const email = form.querySelector('input[type=email]').value;
+  const hp = form.querySelector('.fn-hp');
   const isBot = (hp && hp.value) || (Date.now() - djcFooterLoadTime) < 1200;
-  if(!isBot){
-    sendToBackend(buildPayload());
+  if(!isBot && DJC_ENDPOINT && DJC_ENDPOINT.indexOf('PASTE_') === -1){
+    fetch(DJC_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ type: 'presale_interest', email: email, presale: PRESALE_NAME })
+    }).catch(()=>{});
   }
-  document.getElementById('formArea').classList.add('hidden');
-  const confirmBox = document.getElementById('confirmBox');
-  confirmBox.classList.add('show');
-  confirmBox.scrollIntoView({behavior:'smooth', block:'start'});
-};
+  form.style.display = 'none';
+  note.textContent = "🎃 You're on the list! I'll email you the moment the presale opens.";
+  note.classList.add('show');
+  return false;
+}
 
 function djcFooterSignup(form){
   const note = form.nextElementSibling;

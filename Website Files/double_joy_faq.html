@@ -247,7 +247,7 @@ function djcFooterSignup(form){
   const note = form.nextElementSibling;
   const email = form.querySelector('input[type=email]').value;
   const hp = form.querySelector('.fn-hp');
-  const isBot = (hp && hp.value) || (Date.now() - djcFooterLoadTime) < 1200;
+  const isBot = hp && hp.value;
   if(!isBot && DJC_ENDPOINT && DJC_ENDPOINT.indexOf('PASTE_') === -1){
     fetch(DJC_ENDPOINT, {
       method: 'POST',

@@ -105,8 +105,6 @@
   .cta{ display:inline-block; background: var(--berry); color: var(--cream); border:none; padding:13px 26px; border-radius:30px; font-family: var(--font-sans); font-size:13px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition: background .2s ease, transform .15s ease; }
   .cta:hover{ background: var(--sage); transform: translateY(-1px); }
   .cta.pending{ background: var(--line); color:#9a9a9a; cursor:not-allowed; pointer-events:none; }
-  .cta-alt{ display:block; background:none; border:none; margin:10px auto 0; padding:0; font-family: var(--font-sans); font-size:12px; color:#9a9a9a; text-decoration:underline; cursor:pointer; }
-  .cta-alt:hover{ color: var(--berry); }
 
   .note-band{ background: var(--cream-deep); border-radius:20px; padding:26px 30px; font-family: var(--font-sans); font-size:13px; color:#6b6b6b; line-height:1.7; margin-bottom:40px; text-align:center; }
   .note-band strong{ color: var(--ink); }
@@ -173,10 +171,14 @@
   .rm-close{ position:absolute; top:14px; right:16px; background:none; border:none; font-size:22px; line-height:1; color:#9a9a9a; cursor:pointer; padding:4px; }
   .rm-close:hover{ color: var(--ink); }
   #rmForm{ display:flex; flex-direction:column; gap:12px; }
-  #rmForm input[type=email]{ border:1px solid var(--line); border-radius:24px; padding:12px 18px; font-family: var(--font-sans); font-size:14px; color: var(--chocolate); background: var(--cream); }
-  #rmForm input[type=email]:focus{ outline:2px solid var(--gold-light); }
-  .rm-methods{ margin-bottom:6px; }
-  .rm-methods .method-card{ padding:16px 10px; }
+  #rmForm input[type=text], #rmForm input[type=email]{ border:1px solid var(--line); border-radius:24px; padding:12px 18px; font-family: var(--font-sans); font-size:14px; color: var(--chocolate); background: var(--cream); }
+  #rmForm input[type=text]:focus, #rmForm input[type=email]:focus{ outline:2px solid var(--gold-light); }
+  .rm-method-choice{ display:grid; grid-template-columns: repeat(4,1fr); gap:8px; margin: 2px 0 4px; }
+  .rm-method-opt{ position:relative; display:flex; align-items:center; justify-content:center; background: var(--cream-deep); border-radius:14px; padding:10px 4px; font-family: var(--font-sans); font-size:11.5px; font-weight:700; color: var(--ink); cursor:pointer; transition: background .15s ease; }
+  .rm-method-opt input{ position:absolute; opacity:0; }
+  .rm-method-opt:has(input:checked){ background: var(--blush); }
+  .rm-single-method{ padding:20px 16px; margin-bottom:6px; }
+  .rm-single-method .m-detail a{ color: var(--berry); text-decoration:underline; }
 </style>
 </head>
 <body>
@@ -215,8 +217,7 @@
       <h3 class="p-title">Classic Vanilla Almond Cookie</h3>
       <div class="p-price">$10</div>
       <p class="p-desc">The one-of-a-kind vanilla almond sugar cookie recipe behind every base cookie I bake — the recipe that started it all. Full ingredient list, step-by-step method, and my tips for that perfect soft-set bite.</p>
-      <a href="PASTE_STRIPE_LINK_VANILLA_ALMOND" target="_blank" rel="noopener" class="cta">Pay by Card — $10</a>
-      <button type="button" class="cta-alt" onclick="djcOpenRecipeModal('Classic Vanilla Almond Cookie','$10')">or pay by Venmo/Zelle/Cash</button>
+      <button type="button" class="cta" onclick="djcOpenRecipeModal('Classic Vanilla Almond Cookie','$10')">Get This Recipe</button>
     </div>
 
     <div class="product-card">
@@ -224,8 +225,7 @@
       <h3 class="p-title">Signature Icing</h3>
       <div class="p-price">$10</div>
       <p class="p-desc">My go-to royal icing, dialed in through hundreds of custom orders — the exact consistency, coloring, and piping tips I use for everything from simple designs to full showstoppers.</p>
-      <a href="PASTE_STRIPE_LINK_SIGNATURE_ICING" target="_blank" rel="noopener" class="cta">Pay by Card — $10</a>
-      <button type="button" class="cta-alt" onclick="djcOpenRecipeModal('Signature Icing','$10')">or pay by Venmo/Zelle/Cash</button>
+      <button type="button" class="cta" onclick="djcOpenRecipeModal('Signature Icing','$10')">Get This Recipe</button>
     </div>
 
     <div class="product-card featured">
@@ -234,13 +234,12 @@
       <h3 class="p-title">The Full Set</h3>
       <div class="p-price"><span>$20</span>$15</div>
       <p class="p-desc">Both recipes together — the cookie and the icing that make it a Double Joy original. Everything you need to bring my kitchen into yours.</p>
-      <a href="PASTE_STRIPE_LINK_FULL_SET" target="_blank" rel="noopener" class="cta">Pay by Card — $15</a>
-      <button type="button" class="cta-alt" onclick="djcOpenRecipeModal('The Full Set','$15')">or pay by Venmo/Zelle/Cash</button>
+      <button type="button" class="cta" onclick="djcOpenRecipeModal('The Full Set','$15')">Get This Recipe</button>
     </div>
   </div>
 
   <div class="note-band">
-    Pay by card for instant confirmation, or choose Venmo, Apple Pay, Zelle, or cash if you'd rather — either way I'll email your recipe PDF straight to your inbox (usually within a few hours). <strong>Have a question about a recipe?</strong> Reach out anytime through the <a href="double_joy_contact.html" style="color:var(--gold); border-bottom:1px solid var(--gold); text-decoration:none;">contact page</a>.
+    Reserve your recipe below, pay however's easiest, and I'll email your recipe PDF straight to your inbox (usually within a few hours). <strong>Have a question about a recipe?</strong> Reach out anytime through the <a href="double_joy_contact.html" style="color:var(--gold); border-bottom:1px solid var(--gold); text-decoration:none;">contact page</a>.
   </div>
 
   <!-- ================= WHAT I USE IN MY KITCHEN — Amazon storefront ================= -->
@@ -316,36 +315,55 @@
       <div class="kicker">Reserve Your Recipe</div>
       <h3 id="rmProductName">Recipe Name</h3>
       <div class="rm-price" id="rmProductPrice">$10</div>
-      <p class="rm-copy">Enter your email and I'll show you how to pay — once I confirm payment, your recipe PDF lands right in your inbox.</p>
+      <p class="rm-copy">Tell me who you are and how you'd like to pay — I'll send your recipe PDF as soon as I confirm payment.</p>
       <form id="rmForm" onsubmit="return djcSubmitRecipeOrder(event)">
         <input type="text" class="fn-hp" name="rm_hp" tabindex="-1" autocomplete="off">
+        <input type="text" id="rmName" placeholder="Your name" required>
         <input type="email" id="rmEmail" placeholder="you@email.com" required>
+        <div class="rm-method-choice">
+          <label class="rm-method-opt">
+            <input type="radio" name="rmMethod" value="Venmo" checked>
+            <span>Venmo</span>
+          </label>
+          <label class="rm-method-opt">
+            <input type="radio" name="rmMethod" value="Apple Pay">
+            <span>Apple Pay</span>
+          </label>
+          <label class="rm-method-opt">
+            <input type="radio" name="rmMethod" value="Zelle">
+            <span>Zelle</span>
+          </label>
+          <label class="rm-method-opt">
+            <input type="radio" name="rmMethod" value="Cash">
+            <span>Cash</span>
+          </label>
+        </div>
         <button type="submit" class="cta">Show Me How to Pay</button>
       </form>
     </div>
 
     <div id="rmStep2" style="display:none;">
       <div class="kicker">Almost There</div>
-      <h3>Pay However's Easiest</h3>
-      <p class="rm-copy">Send <strong id="rmPayAmount">$10</strong> using any of these — please include <strong>"<span id="rmPayNote">Recipe Name</span>"</strong> in the note so I know what it's for.</p>
-      <div class="method-grid rm-methods">
-        <a class="method-card" href="https://venmo.com/u/DoubleJoyCookies" target="_blank" rel="noopener">
-          <div class="m-name">Venmo</div>
-          <div class="m-detail">@DoubleJoyCookies</div>
-        </a>
-        <div class="method-card">
-          <div class="m-name">Apple Pay</div>
-          <div class="m-detail">(503) 713-7598</div>
-        </div>
-        <div class="method-card">
-          <div class="m-name">Zelle</div>
-          <div class="m-detail">(503) 713-7598</div>
-        </div>
-        <div class="method-card">
-          <div class="m-name">Cash</div>
-          <div class="m-detail">In person</div>
-        </div>
+      <h3>Send Your Payment</h3>
+      <p class="rm-copy">Send <strong id="rmPayAmount">$10</strong> via <strong id="rmPayMethod">Venmo</strong> — please include <strong>"<span id="rmPayNote">Recipe Name</span>"</strong> in the note so I know what it's for.</p>
+
+      <div class="method-card rm-single-method" id="rmMethodVenmo">
+        <div class="m-name">Venmo</div>
+        <div class="m-detail"><a href="https://venmo.com/u/DoubleJoyCookies" target="_blank" rel="noopener">@DoubleJoyCookies</a></div>
       </div>
+      <div class="method-card rm-single-method" id="rmMethodApplePay" style="display:none;">
+        <div class="m-name">Apple Pay</div>
+        <div class="m-detail">(503) 713-7598</div>
+      </div>
+      <div class="method-card rm-single-method" id="rmMethodZelle" style="display:none;">
+        <div class="m-name">Zelle</div>
+        <div class="m-detail">(503) 713-7598</div>
+      </div>
+      <div class="method-card rm-single-method" id="rmMethodCash" style="display:none;">
+        <div class="m-name">Cash</div>
+        <div class="m-detail">Bring it next time we're in touch, or mention it on the <a href="double_joy_contact.html">contact page</a> to arrange a drop-off.</div>
+      </div>
+
       <p class="rm-copy small">I'll email your recipe PDF to <strong id="rmConfirmEmail"></strong> as soon as I see your payment — usually within a few hours.</p>
       <button type="button" class="cta" onclick="djcCloseRecipeModal()">Got It</button>
     </div>
@@ -376,23 +394,38 @@ function djcCloseRecipeModal(evt){
   document.getElementById('recipeModalOverlay').classList.remove('open');
 }
 
+const RM_METHOD_IDS = {
+  'Venmo': 'rmMethodVenmo',
+  'Apple Pay': 'rmMethodApplePay',
+  'Zelle': 'rmMethodZelle',
+  'Cash': 'rmMethodCash'
+};
+
 function djcSubmitRecipeOrder(evt){
   evt.preventDefault();
   const form = document.getElementById('rmForm');
   const hp = form.querySelector('input[name=rm_hp]');
   const isBot = hp && hp.value;
+  const name = document.getElementById('rmName').value;
   const email = document.getElementById('rmEmail').value;
+  const methodInput = form.querySelector('input[name=rmMethod]:checked');
+  const method = methodInput ? methodInput.value : 'Venmo';
 
   if(!isBot && DJC_ENDPOINT && DJC_ENDPOINT.indexOf('PASTE_') === -1){
     fetch(DJC_ENDPOINT, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify({ type: 'recipe_order', recipe: djcCurrentRecipe, price: djcCurrentPrice, email: email })
+      body: JSON.stringify({ type: 'recipe_order', recipe: djcCurrentRecipe, price: djcCurrentPrice, name: name, email: email, method: method })
     }).catch(()=>{});
   }
 
+  Object.keys(RM_METHOD_IDS).forEach(function(key){
+    document.getElementById(RM_METHOD_IDS[key]).style.display = (key === method) ? '' : 'none';
+  });
+
   document.getElementById('rmPayAmount').textContent = djcCurrentPrice;
+  document.getElementById('rmPayMethod').textContent = method;
   document.getElementById('rmPayNote').textContent = djcCurrentRecipe;
   document.getElementById('rmConfirmEmail').textContent = email;
   document.getElementById('rmStep1').style.display = 'none';

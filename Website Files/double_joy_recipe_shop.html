@@ -25,7 +25,6 @@
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-<script type="text/javascript" src="https://payhip.com/payhip.js"></script>
 <style>
   :root{
     --cream:#FBF6EE;
@@ -110,6 +109,14 @@
   .note-band{ background: var(--cream-deep); border-radius:20px; padding:26px 30px; font-family: var(--font-sans); font-size:13px; color:#6b6b6b; line-height:1.7; margin-bottom:40px; text-align:center; }
   .note-band strong{ color: var(--ink); }
 
+  .method-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap:14px; margin-bottom:8px; }
+  @media (max-width:600px){ .method-grid{ grid-template-columns: repeat(2,1fr); } }
+  .method-card{ background: var(--cream-deep); border-radius:16px; padding:20px 14px; text-align:center; display:block; text-decoration:none; transition: background .15s ease; }
+  a.method-card:hover{ background: var(--blush); }
+  .method-card .m-icon{ width:26px; height:26px; margin:0 auto 10px; color: var(--berry); }
+  .method-card .m-detail{ font-family: var(--font-sans); font-size:11px; color:#8a8072; margin-top:3px; }
+  .method-card .m-name{ font-family: var(--font-sans); font-size:13px; font-weight:700; color: var(--ink); }
+
   /* ---- What I Use In My Kitchen ---- */
   .kitchen-section{ margin: 54px 0 48px; }
   .kitchen-head{ text-align:center; margin-bottom:26px; }
@@ -152,6 +159,22 @@
 
   .toast{ position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(20px); background: var(--berry); color: var(--cream); padding:14px 26px; border-radius:30px; font-family: var(--font-sans); font-size:13.5px; opacity:0; pointer-events:none; transition: all .3s ease; box-shadow: var(--shadow); text-align:center; max-width:90%; z-index:999; }
   .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  /* ---- Reserve & Pay modal ---- */
+  .recipe-modal-overlay{ display:none; position:fixed; inset:0; background:rgba(51,30,43,0.55); z-index:500; align-items:center; justify-content:center; padding:20px; }
+  .recipe-modal-overlay.open{ display:flex; }
+  .recipe-modal{ position:relative; background: var(--white); border-radius:22px; box-shadow: var(--shadow); padding:34px 30px; max-width:420px; width:100%; text-align:center; max-height:88vh; overflow-y:auto; }
+  .recipe-modal h3{ font-size:22px; margin:4px 0 6px; font-weight:normal; }
+  .rm-price{ font-family: var(--font-sans); font-size:20px; font-weight:700; color: var(--ink); margin-bottom:14px; }
+  .rm-copy{ font-family: var(--font-sans); font-size:13.5px; color:#6b6b6b; line-height:1.65; margin:0 0 18px; }
+  .rm-copy.small{ font-size:12.5px; margin:16px 0 18px; }
+  .rm-close{ position:absolute; top:14px; right:16px; background:none; border:none; font-size:22px; line-height:1; color:#9a9a9a; cursor:pointer; padding:4px; }
+  .rm-close:hover{ color: var(--ink); }
+  #rmForm{ display:flex; flex-direction:column; gap:12px; }
+  #rmForm input[type=email]{ border:1px solid var(--line); border-radius:24px; padding:12px 18px; font-family: var(--font-sans); font-size:14px; color: var(--chocolate); background: var(--cream); }
+  #rmForm input[type=email]:focus{ outline:2px solid var(--gold-light); }
+  .rm-methods{ margin-bottom:6px; }
+  .rm-methods .method-card{ padding:16px 10px; }
 </style>
 </head>
 <body>
@@ -190,7 +213,7 @@
       <h3 class="p-title">Classic Vanilla Almond Cookie</h3>
       <div class="p-price">$10</div>
       <p class="p-desc">The one-of-a-kind vanilla almond sugar cookie recipe behind every base cookie I bake — the recipe that started it all. Full ingredient list, step-by-step method, and my tips for that perfect soft-set bite.</p>
-      <a href="https://payhip.com/b/AQ3Ei" class="payhip-buy-button cta" data-theme="none" data-product="AQ3Ei">Buy Now</a>
+      <button type="button" class="cta" onclick="djcOpenRecipeModal('Classic Vanilla Almond Cookie','$10')">Get This Recipe</button>
     </div>
 
     <div class="product-card">
@@ -198,7 +221,7 @@
       <h3 class="p-title">Signature Icing</h3>
       <div class="p-price">$10</div>
       <p class="p-desc">My go-to royal icing, dialed in through hundreds of custom orders — the exact consistency, coloring, and piping tips I use for everything from simple designs to full showstoppers.</p>
-      <a href="https://payhip.com/b/zCVsQ" class="payhip-buy-button cta" data-theme="none" data-product="zCVsQ">Buy Now</a>
+      <button type="button" class="cta" onclick="djcOpenRecipeModal('Signature Icing','$10')">Get This Recipe</button>
     </div>
 
     <div class="product-card featured">
@@ -207,12 +230,12 @@
       <h3 class="p-title">The Full Set</h3>
       <div class="p-price"><span>$20</span>$15</div>
       <p class="p-desc">Both recipes together — the cookie and the icing that make it a Double Joy original. Everything you need to bring my kitchen into yours.</p>
-      <a href="https://payhip.com/b/zjqvw" class="payhip-buy-button cta" data-theme="none" data-product="zjqvw">Buy Now</a>
+      <button type="button" class="cta" onclick="djcOpenRecipeModal('The Full Set','$15')">Get This Recipe</button>
     </div>
   </div>
 
   <div class="note-band">
-    Recipes are delivered as instant PDF downloads through secure checkout — you'll get an email with your download link right after purchase. <strong>Have a question about a recipe?</strong> Reach out anytime through the <a href="double_joy_contact.html" style="color:var(--gold); border-bottom:1px solid var(--gold); text-decoration:none;">contact page</a>.
+    Recipes are delivered as a PDF straight to your inbox — reserve one below, send payment your favorite way, and I'll email your recipe as soon as I confirm it (usually within a few hours). <strong>Have a question about a recipe?</strong> Reach out anytime through the <a href="double_joy_contact.html" style="color:var(--gold); border-bottom:1px solid var(--gold); text-decoration:none;">contact page</a>.
   </div>
 
   <!-- ================= WHAT I USE IN MY KITCHEN — Amazon storefront ================= -->
@@ -280,11 +303,97 @@
   </a>
 </footer>
 
+<div class="recipe-modal-overlay" id="recipeModalOverlay" onclick="djcCloseRecipeModal(event)">
+  <div class="recipe-modal" onclick="event.stopPropagation()">
+    <button type="button" class="rm-close" onclick="djcCloseRecipeModal()" aria-label="Close">&times;</button>
+
+    <div id="rmStep1">
+      <div class="kicker">Reserve Your Recipe</div>
+      <h3 id="rmProductName">Recipe Name</h3>
+      <div class="rm-price" id="rmProductPrice">$10</div>
+      <p class="rm-copy">Enter your email and I'll show you how to pay — once I confirm payment, your recipe PDF lands right in your inbox.</p>
+      <form id="rmForm" onsubmit="return djcSubmitRecipeOrder(event)">
+        <input type="text" class="fn-hp" name="rm_hp" tabindex="-1" autocomplete="off">
+        <input type="email" id="rmEmail" placeholder="you@email.com" required>
+        <button type="submit" class="cta">Show Me How to Pay</button>
+      </form>
+    </div>
+
+    <div id="rmStep2" style="display:none;">
+      <div class="kicker">Almost There</div>
+      <h3>Pay However's Easiest</h3>
+      <p class="rm-copy">Send <strong id="rmPayAmount">$10</strong> using any of these — please include <strong>"<span id="rmPayNote">Recipe Name</span>"</strong> in the note so I know what it's for.</p>
+      <div class="method-grid rm-methods">
+        <a class="method-card" href="https://venmo.com/u/DoubleJoyCookies" target="_blank" rel="noopener">
+          <div class="m-name">Venmo</div>
+          <div class="m-detail">@DoubleJoyCookies</div>
+        </a>
+        <div class="method-card">
+          <div class="m-name">Apple Pay</div>
+          <div class="m-detail">(503) 713-7598</div>
+        </div>
+        <div class="method-card">
+          <div class="m-name">Zelle</div>
+          <div class="m-detail">(503) 713-7598</div>
+        </div>
+        <div class="method-card">
+          <div class="m-name">Cash</div>
+          <div class="m-detail">In person</div>
+        </div>
+      </div>
+      <p class="rm-copy small">I'll email your recipe PDF to <strong id="rmConfirmEmail"></strong> as soon as I see your payment — usually within a few hours.</p>
+      <button type="button" class="cta" onclick="djcCloseRecipeModal()">Got It</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbyCCvDHXexq5_YRU1ATlpICSoEB4jg9Hkke3ub3KEOmUMLQrCvwJmCcPTt_sOcqMjY/exec";
 const djcFooterLoadTime = Date.now();
+let djcCurrentRecipe = '';
+let djcCurrentPrice = '';
+
+function djcOpenRecipeModal(recipe, price){
+  djcCurrentRecipe = recipe;
+  djcCurrentPrice = price;
+  document.getElementById('rmProductName').textContent = recipe;
+  document.getElementById('rmProductPrice').textContent = price;
+  document.getElementById('rmStep1').style.display = '';
+  document.getElementById('rmStep2').style.display = 'none';
+  document.getElementById('rmForm').reset();
+  document.getElementById('recipeModalOverlay').classList.add('open');
+}
+
+function djcCloseRecipeModal(evt){
+  if(evt && evt.target !== document.getElementById('recipeModalOverlay')) return;
+  document.getElementById('recipeModalOverlay').classList.remove('open');
+}
+
+function djcSubmitRecipeOrder(evt){
+  evt.preventDefault();
+  const form = document.getElementById('rmForm');
+  const hp = form.querySelector('input[name=rm_hp]');
+  const isBot = hp && hp.value;
+  const email = document.getElementById('rmEmail').value;
+
+  if(!isBot && DJC_ENDPOINT && DJC_ENDPOINT.indexOf('PASTE_') === -1){
+    fetch(DJC_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ type: 'recipe_order', recipe: djcCurrentRecipe, price: djcCurrentPrice, email: email })
+    }).catch(()=>{});
+  }
+
+  document.getElementById('rmPayAmount').textContent = djcCurrentPrice;
+  document.getElementById('rmPayNote').textContent = djcCurrentRecipe;
+  document.getElementById('rmConfirmEmail').textContent = email;
+  document.getElementById('rmStep1').style.display = 'none';
+  document.getElementById('rmStep2').style.display = '';
+  return false;
+}
 
 function djcToggleNav(){
   const nav = document.getElementById('navLinks');

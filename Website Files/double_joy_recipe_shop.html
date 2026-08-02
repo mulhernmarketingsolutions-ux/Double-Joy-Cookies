@@ -105,6 +105,8 @@
   .cta{ display:inline-block; background: var(--berry); color: var(--cream); border:none; padding:13px 26px; border-radius:30px; font-family: var(--font-sans); font-size:13px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition: background .2s ease, transform .15s ease; }
   .cta:hover{ background: var(--sage); transform: translateY(-1px); }
   .cta.pending{ background: var(--line); color:#9a9a9a; cursor:not-allowed; pointer-events:none; }
+  .cta-alt{ display:block; background:none; border:none; margin:10px auto 0; padding:0; font-family: var(--font-sans); font-size:12px; color:#9a9a9a; text-decoration:underline; cursor:pointer; }
+  .cta-alt:hover{ color: var(--berry); }
 
   .note-band{ background: var(--cream-deep); border-radius:20px; padding:26px 30px; font-family: var(--font-sans); font-size:13px; color:#6b6b6b; line-height:1.7; margin-bottom:40px; text-align:center; }
   .note-band strong{ color: var(--ink); }
@@ -202,7 +204,7 @@
   <div class="script-tag">Bring my kitchen home</div>
   <div class="kicker">Recipes</div>
   <h1>Bake My Favorites Yourself</h1>
-  <p class="sub">The exact cookie and icing recipes behind every Double Joy order — written up just how I make them, ready to download the moment you buy.</p>
+  <p class="sub">The exact cookie and icing recipes behind every Double Joy order — written up just how I make them, emailed to you right after you order.</p>
 </div>
 
 <div class="wrap">
@@ -213,7 +215,8 @@
       <h3 class="p-title">Classic Vanilla Almond Cookie</h3>
       <div class="p-price">$10</div>
       <p class="p-desc">The one-of-a-kind vanilla almond sugar cookie recipe behind every base cookie I bake — the recipe that started it all. Full ingredient list, step-by-step method, and my tips for that perfect soft-set bite.</p>
-      <button type="button" class="cta" onclick="djcOpenRecipeModal('Classic Vanilla Almond Cookie','$10')">Get This Recipe</button>
+      <a href="PASTE_STRIPE_LINK_VANILLA_ALMOND" target="_blank" rel="noopener" class="cta">Pay by Card — $10</a>
+      <button type="button" class="cta-alt" onclick="djcOpenRecipeModal('Classic Vanilla Almond Cookie','$10')">or pay by Venmo/Zelle/Cash</button>
     </div>
 
     <div class="product-card">
@@ -221,7 +224,8 @@
       <h3 class="p-title">Signature Icing</h3>
       <div class="p-price">$10</div>
       <p class="p-desc">My go-to royal icing, dialed in through hundreds of custom orders — the exact consistency, coloring, and piping tips I use for everything from simple designs to full showstoppers.</p>
-      <button type="button" class="cta" onclick="djcOpenRecipeModal('Signature Icing','$10')">Get This Recipe</button>
+      <a href="PASTE_STRIPE_LINK_SIGNATURE_ICING" target="_blank" rel="noopener" class="cta">Pay by Card — $10</a>
+      <button type="button" class="cta-alt" onclick="djcOpenRecipeModal('Signature Icing','$10')">or pay by Venmo/Zelle/Cash</button>
     </div>
 
     <div class="product-card featured">
@@ -230,12 +234,13 @@
       <h3 class="p-title">The Full Set</h3>
       <div class="p-price"><span>$20</span>$15</div>
       <p class="p-desc">Both recipes together — the cookie and the icing that make it a Double Joy original. Everything you need to bring my kitchen into yours.</p>
-      <button type="button" class="cta" onclick="djcOpenRecipeModal('The Full Set','$15')">Get This Recipe</button>
+      <a href="PASTE_STRIPE_LINK_FULL_SET" target="_blank" rel="noopener" class="cta">Pay by Card — $15</a>
+      <button type="button" class="cta-alt" onclick="djcOpenRecipeModal('The Full Set','$15')">or pay by Venmo/Zelle/Cash</button>
     </div>
   </div>
 
   <div class="note-band">
-    Recipes are delivered as a PDF straight to your inbox — reserve one below, send payment your favorite way, and I'll email your recipe as soon as I confirm it (usually within a few hours). <strong>Have a question about a recipe?</strong> Reach out anytime through the <a href="double_joy_contact.html" style="color:var(--gold); border-bottom:1px solid var(--gold); text-decoration:none;">contact page</a>.
+    Pay by card for instant confirmation, or choose Venmo, Apple Pay, Zelle, or cash if you'd rather — either way I'll email your recipe PDF straight to your inbox (usually within a few hours). <strong>Have a question about a recipe?</strong> Reach out anytime through the <a href="double_joy_contact.html" style="color:var(--gold); border-bottom:1px solid var(--gold); text-decoration:none;">contact page</a>.
   </div>
 
   <!-- ================= WHAT I USE IN MY KITCHEN — Amazon storefront ================= -->

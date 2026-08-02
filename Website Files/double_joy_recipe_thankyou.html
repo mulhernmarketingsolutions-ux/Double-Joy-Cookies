@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You — Double Joy Cookies</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Thanks for your recipe order from Double Joy Cookies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+<style>
+  :root{
+    --cream:#FBF6EE;
+    --cream-deep:#F3EADC;
+    --blush:#FF99D8;
+    --sage:#CC7AAC;
+    --gold:#C9A24A;
+    --gold-light:#DDBD7E;
+    --blue:#331E2B;
+    --chocolate:#463C34;
+    --ink: var(--chocolate);
+    --berry:#331E2B;
+    --white:#FFFFFF;
+    --shadow: 0 12px 30px rgba(90,71,58,0.12);
+    --font-head: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Quicksand', Helvetica, Arial, sans-serif;
+    --font-script: 'Dancing Script', cursive;
+  }
+  *{box-sizing:border-box;}
+  html{ overflow-x:hidden; max-width:100%; }
+  body{ margin:0; font-family: var(--font-head); background: var(--cream);
+    background-image: url("images/bg-pattern.svg");
+    background-repeat: repeat;
+    background-size: 240px 240px; color: var(--ink);
+    overflow-x:hidden; max-width:100%; }
+  a{ color: inherit; }
+
+  .nav-bar{ position:fixed; top:0; left:0; right:0; z-index:200; background:transparent; transition: background .35s ease, box-shadow .35s ease; }
+  .nav-bar.scrolled{ background: var(--blue); box-shadow: var(--shadow); }
+  .site-nav{ max-width:1180px; margin:0 auto; padding: 16px 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family: var(--font-sans); }
+
+  .thankyou-wrap{ max-width:560px; margin:0 auto; padding: 150px 24px 100px; text-align:center; }
+  .ty-icon{ font-size:48px; margin-bottom:14px; }
+  .kicker{ letter-spacing: 3px; text-transform: uppercase; font-size: 12px; color: var(--gold); font-family: var(--font-sans); margin-bottom: 12px; }
+  h1{ font-size: 36px; margin: 0 0 16px; font-weight: normal; letter-spacing: 0.5px; }
+  .sub{ font-family: var(--font-sans); color:#6b6b6b; font-size:15px; line-height:1.7; margin: 0 0 30px; }
+  .ty-card{ background: var(--white); border-radius:20px; padding:28px 26px; box-shadow: var(--shadow); font-family: var(--font-sans); font-size:13.5px; color:#6b6b6b; line-height:1.7; margin-bottom:32px; text-align:left; }
+  .ty-card strong{ color: var(--ink); }
+  .cta{ display:inline-block; background: var(--berry); color: var(--cream); border:none; padding:14px 28px; border-radius:30px; font-family: var(--font-sans); font-size:13px; letter-spacing:1px; text-transform:uppercase; cursor:pointer; text-decoration:none; transition: background .2s ease, transform .15s ease; }
+  .cta:hover{ background: var(--sage); transform: translateY(-1px); }
+
+  footer{ background: var(--berry); color: var(--cream); padding: 30px 24px; text-align:center; margin-top:40px; }
+  footer .flinks{ display:flex; gap:24px; justify-content:center; flex-wrap:wrap; font-family: var(--font-sans); font-size:13px; }
+  footer .flinks a{ color: var(--cream); text-decoration:none; opacity:0.85; }
+  footer .flinks a:hover{ opacity:1; }
+  .sac-credit{ display:inline-flex; align-items:center; gap:8px; margin-top:14px; max-width:100%; text-decoration:none; color: var(--cream); opacity:0.6; font-family: var(--font-sans); font-size:11.5px; line-height:1.5; white-space:nowrap; transition: opacity .2s ease; }
+  .sac-credit:hover{ opacity:0.9; }
+  .sac-credit img{ height:1.7em; width:auto; display:block; flex-shrink:0; }
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+<nav class="site-nav">
+  <a href="index.html" aria-label="Double Joy Cookies — Home"><img src="images/double-joy-logo.png" alt="Double Joy Cookies" style="height:32px; display:block; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.22));"></a>
+</nav>
+</div>
+
+<div class="thankyou-wrap">
+  <div class="ty-icon">🎉</div>
+  <div class="kicker">Payment Confirmed</div>
+  <h1>Thank You for Your Order!</h1>
+  <p class="sub">Your payment went through — your recipe PDF is on its way to your inbox.</p>
+  <div class="ty-card">
+    I personally send out each recipe PDF, so it's not instant — but you'll usually have it within a few hours. <strong>Don't see it after a day?</strong> Check spam first, then reach out through the contact page and I'll resend it right away.
+  </div>
+  <a href="double_joy_recipe_shop.html" class="cta">Back to Recipes</a>
+</div>
+
+<footer>
+  <div class="flinks">
+    <a href="index.html">Home</a>
+    <a href="double_joy_recipe_shop.html">Recipes</a>
+    <a href="double_joy_contact.html">Contact</a>
+  </div>
+  <a href="https://soughtafter.design" target="_blank" rel="noopener" class="sac-credit">
+    <img src="images/sought-after-mark.png" alt="Sought After Co.">
+    <span>Website by Sought After Co.</span>
+  </a>
+</footer>
+
+</body>
+</html>

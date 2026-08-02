@@ -29,15 +29,15 @@
   :root{
     --cream:#FBF6EE;
     --cream-deep:#F3EADC;
-    --blush:#E9C7BD;
-    --sage:#D9A28E;
+    --blush:#FF99D8;
+    --sage:#CC7AAC;
     --taupe:#C2B098;
     --gold:#C9A24A;
     --gold-light:#DDBD7E;
-    --blue:#C98177;
+    --blue:#331E2B;
     --chocolate:#463C34;
     --ink: var(--chocolate);
-    --berry:#6E3A34;
+    --berry:#331E2B;
     --rose: var(--blush);
     --line:#E5DDD3;
     --white:#FFFFFF;
@@ -103,6 +103,13 @@
   .cta:hover{ background: var(--sage); transform: translateY(-1px); }
   .cta.secondary{ background: transparent; color: var(--ink); border: 1.5px solid var(--blush); }
   .cta.secondary:hover{ background: var(--blush); color: var(--ink); }
+
+  /* ---- Fun banner ---- */
+  .fun-banner{ background: var(--blush); overflow:hidden; padding:16px 0; -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
+  .fun-banner-track{ display:flex; width:max-content; animation: fun-banner-scroll 24s linear infinite; }
+  .fun-banner-track .fb-item{ font-family: var(--font-script); font-size:21px; color: var(--berry); white-space:nowrap; padding:0 32px; }
+  @keyframes fun-banner-scroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce){ .fun-banner-track{ animation:none; } }
 
   /* ---- Section shell ---- */
   section{ padding: 56px 0; }
@@ -192,11 +199,24 @@
   <img src="images/double-joy-logo.png" alt="Double Joy Cookies" style="width:280px; max-width:80%; margin:0 auto 18px; display:block; filter: drop-shadow(0 8px 18px rgba(90,58,52,0.18));">
   <div class="script-tag">Baked with love (and a little chaos)</div>
   <div class="kicker">Custom Cookies</div>
-  <h1>Made to Celebrate<br>Life's Sweetest Moments</h1>
+  <h1>Thoughtfully Designed<br>for Every Occasion</h1>
   <p class="sub">Every set is made to order and hand-decorated in my kitchen — designed around your celebration, from the first sketch to the final sprinkle.</p>
   <div class="hero-ctas">
     <a href="double_joy_order_form.html" class="cta">Start a Custom Order</a>
     <a href="double_joy_pricing.html" class="cta secondary">See Pricing</a>
+  </div>
+</div>
+
+<div class="fun-banner">
+  <div class="fun-banner-track">
+    <span class="fb-item">🍪&nbsp; Life happens. Cookies help.</span>
+    <span class="fb-item">🍪&nbsp; Life happens. Cookies help.</span>
+    <span class="fb-item">🍪&nbsp; Life happens. Cookies help.</span>
+    <span class="fb-item">🍪&nbsp; Life happens. Cookies help.</span>
+    <span class="fb-item">🍪&nbsp; Life happens. Cookies help.</span>
+    <span class="fb-item">🍪&nbsp; Life happens. Cookies help.</span>
+    <span class="fb-item">🍪&nbsp; Life happens. Cookies help.</span>
+    <span class="fb-item">🍪&nbsp; Life happens. Cookies help.</span>
   </div>
 </div>
 

@@ -20,7 +20,7 @@
 <meta name="twitter:image" content="https://doublejoycookies.com/images/social-share.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@500;600&family=Baloo+2:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@500;600&family=Baloo+2:wght@600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
@@ -80,8 +80,10 @@
   .nav-bar.scrolled .nav-links a{ color: var(--white); }
   .nav-bar.scrolled .nav-links a:hover, .nav-bar.scrolled .nav-links a.current{ border-bottom-color: var(--white); }
   .nav-right{ display:flex; align-items:center; gap:16px; order:3; }
-  .nav-cta{ display:inline-block; text-decoration:none; font-family: var(--font-sans); font-size:13px; letter-spacing:0.3px; transition: all .15s ease; background: var(--white); color: var(--ink); border-radius:20px; padding:7px 18px; font-weight:700; box-shadow: 0 2px 8px rgba(70,60,52,0.15); }
-  .nav-cta:hover{ background: var(--blush); }
+  .nav-cta{ display:inline-block; text-decoration:none; font-family: var(--font-sans); font-size:13px; letter-spacing:0.3px; transition: all .3s ease; background: var(--blush); color: var(--berry); border-radius:20px; padding:7px 18px; font-weight:700; box-shadow: 0 2px 8px rgba(70,60,52,0.15); }
+  .nav-cta:hover{ background: var(--white); }
+  .nav-bar.scrolled .nav-cta{ background: var(--white); color: var(--ink); }
+  .nav-bar.scrolled .nav-cta:hover{ background: var(--blush); color: var(--berry); }
   .nav-toggle{ display:none; flex-direction:column; justify-content:center; gap:5px; width:34px; height:34px; background:none; border:none; cursor:pointer; padding:0; flex-shrink:0; }
   .nav-toggle span{ display:block; width:24px; height:2px; background: var(--chocolate); border-radius:2px; transition: all .2s ease; }
   .nav-bar.scrolled .nav-toggle span{ background: var(--white); }
@@ -110,11 +112,12 @@
   .cta.secondary:hover{ background: var(--blush); color: var(--ink); }
 
   /* ---- Fun banner ---- */
-  .fun-banner{ background: var(--blush); padding:30px 24px; text-align:center; overflow:hidden; }
-  .fb-write{ display:inline-block; font-family: var(--font-script); font-size:30px; color: var(--berry); white-space:nowrap; clip-path: inset(0 100% 0 0); transition: clip-path 1.6s cubic-bezier(.4,0,.2,1); }
-  .fun-banner.write .fb-write{ clip-path: inset(0 0 0 0); }
-  @media (max-width:600px){ .fb-write{ font-size:22px; white-space:normal; } }
-  @media (prefers-reduced-motion: reduce){ .fb-write{ clip-path:none; transition:none; } }
+  .fun-banner{ padding:34px 24px 42px; text-align:center; }
+  .fb-write{ display:inline-block; font-family:'Caveat', cursive; font-weight:700; font-size:42px; color: var(--berry); }
+  .fb-write .fb-ch{ display:inline-block; opacity:0; transform: translateY(10px); transition: opacity .5s ease, transform .5s ease; }
+  .fun-banner.write .fb-write .fb-ch{ opacity:1; transform:translateY(0); }
+  @media (max-width:600px){ .fb-write{ font-size:30px; } }
+  @media (prefers-reduced-motion: reduce){ .fb-write .fb-ch{ opacity:1; transform:none; transition:none; } }
 
   /* ---- Section shell ---- */
   section{ padding: 56px 0; }
@@ -213,7 +216,7 @@
 </div>
 
 <div class="fun-banner" id="funBanner">
-  <span class="fb-write">🍪&nbsp; Life happens. Cookies help.</span>
+  <span class="fb-write" id="fbWrite">Life happens. Cookies help.</span>
 </div>
 
 <section>
@@ -331,16 +334,34 @@ function djcToggleNav(){
 
 (function(){
   const fb = document.getElementById('funBanner');
-  if(!fb || !('IntersectionObserver' in window)) return;
-  const obs = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        fb.classList.add('write');
-        obs.unobserve(fb);
-      }
-    });
-  }, { threshold:0.4 });
-  obs.observe(fb);
+  const writeEl = document.getElementById('fbWrite');
+  if(!fb || !writeEl) return;
+  const text = writeEl.textContent;
+  writeEl.textContent = '';
+  let i = 0;
+  text.split('').forEach(function(ch){
+    if(ch === ' '){
+      writeEl.appendChild(document.createTextNode(' '));
+    } else {
+      const span = document.createElement('span');
+      span.className = 'fb-ch';
+      span.textContent = ch;
+      span.style.transitionDelay = (i * 55) + 'ms';
+      writeEl.appendChild(span);
+      i++;
+    }
+  });
+  const reveal = function(){ fb.classList.add('write'); };
+  if('IntersectionObserver' in window){
+    const obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ reveal(); obs.unobserve(fb); }
+      });
+    }, { threshold:0.4 });
+    obs.observe(fb);
+  } else {
+    reveal();
+  }
 })();
 
 function showToast(msg){

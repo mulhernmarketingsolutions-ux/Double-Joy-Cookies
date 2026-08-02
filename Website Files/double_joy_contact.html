@@ -42,7 +42,8 @@
   a{ color: inherit; }
   .wrap{ max-width:840px; margin:0 auto; padding: 0 24px 80px; }
 
-  .nav-bar{ background: var(--blue); }
+  .nav-bar{ position:fixed; top:0; left:0; right:0; z-index:200; background:transparent; transition: background .35s ease, box-shadow .35s ease; }
+  .nav-bar.scrolled{ background: var(--blue); box-shadow: var(--shadow); }
   .site-nav{ max-width:1180px; margin:0 auto; padding: 16px 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family: var(--font-sans); }
   .nav-logo{ font-family: var(--font-head); font-size: 18px; color: var(--ink); text-decoration:none; letter-spacing:0.5px; }
   .brand-lockup{ display:inline-block; font-family:'Baloo 2', var(--font-sans); line-height:0.82; text-align:left; position:relative; }
@@ -60,23 +61,29 @@
   .brand-lockup.hero-logo{ font-size:60px; margin:0 auto 20px; }
   .site-nav > a:first-child{ margin-right:auto; }
   .nav-links{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; order:2; }
-  .nav-links a{ color: var(--white); opacity:0.85; text-decoration:none; font-size:13px; letter-spacing:0.3px; padding-bottom:3px; border-bottom: 1px solid transparent; transition: all .15s ease; }
-  .nav-links a:hover, .nav-links a.current{ opacity:1; border-bottom-color: var(--white); }
+  .nav-links a{ color: var(--chocolate); opacity:0.85; text-decoration:none; font-size:13px; letter-spacing:0.3px; padding-bottom:3px; border-bottom: 1px solid transparent; transition: color .3s ease, border-color .3s ease; }
+  .nav-links a:hover, .nav-links a.current{ opacity:1; border-bottom-color: var(--chocolate); }
+  .nav-bar.scrolled .nav-links a{ color: var(--white); }
+  .nav-bar.scrolled .nav-links a:hover, .nav-bar.scrolled .nav-links a.current{ border-bottom-color: var(--white); }
   .nav-right{ display:flex; align-items:center; gap:16px; order:3; }
-  .nav-cta{ display:inline-block; text-decoration:none; font-family: var(--font-sans); font-size:13px; letter-spacing:0.3px; transition: all .15s ease; background: var(--white); color: var(--ink); border-radius:20px; padding:7px 18px; font-weight:700; }
-  .nav-cta:hover{ background: var(--blush); }
+  .nav-cta{ display:inline-block; text-decoration:none; font-family: var(--font-sans); font-size:13px; letter-spacing:0.3px; transition: all .3s ease; background: var(--blush); color: var(--berry); border-radius:20px; padding:7px 18px; font-weight:700; box-shadow: 0 2px 8px rgba(70,60,52,0.15); }
+  .nav-cta:hover{ background: var(--white); }
+  .nav-bar.scrolled .nav-cta{ background: var(--white); color: var(--ink); }
+  .nav-bar.scrolled .nav-cta:hover{ background: var(--blush); color: var(--berry); }
   .nav-toggle{ display:none; flex-direction:column; justify-content:center; gap:5px; width:34px; height:34px; background:none; border:none; cursor:pointer; padding:0; flex-shrink:0; }
-  .nav-toggle span{ display:block; width:24px; height:2px; background: var(--white); border-radius:2px; transition: all .2s ease; }
+  .nav-toggle span{ display:block; width:24px; height:2px; background: var(--chocolate); border-radius:2px; transition: all .2s ease; }
+  .nav-bar.scrolled .nav-toggle span{ background: var(--white); }
   .nav-toggle.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
   .nav-toggle.active span:nth-child(2){ opacity:0; }
   .nav-toggle.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
   @media (max-width:780px){
     .nav-toggle{ display:flex; }
-    .nav-links{ display:none; flex-basis:100%; order:4; flex-direction:column; align-items:flex-start; gap:16px; padding:18px 0 6px; }
-    .nav-links.open{ display:flex; }
+    .nav-links{ display:none; flex-basis:100%; order:4; flex-direction:column; align-items:flex-start; gap:16px; padding:18px 12px; }
+    .nav-links.open{ display:flex; background: var(--cream); border-radius:0 0 18px 18px; box-shadow: var(--shadow); }
+    .nav-links.open a{ color: var(--chocolate); }
   }
 
-  .page-header{ text-align:center; padding: 56px 24px 40px; }
+  .page-header{ text-align:center; padding: 96px 24px 40px; }
   .script-tag{ font-family: var(--font-script); font-size: 24px; color: var(--chocolate); margin-bottom: 6px; }
   .kicker{ letter-spacing: 3px; text-transform: uppercase; font-size: 12px; color: var(--gold); font-family: var(--font-sans); margin-bottom: 12px; }
   h1{ font-size: 42px; margin: 0 0 16px; font-weight: normal; letter-spacing: 0.5px; }
@@ -137,7 +144,7 @@
 
 <div class="nav-bar">
 <nav class="site-nav">
-  <a href="index.html" aria-label="Double Joy Cookies — Home"><img src="images/double-joy-logo-light.png" alt="Double Joy Cookies" style="height:32px; display:block; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.22));"></a>
+  <a href="index.html" aria-label="Double Joy Cookies — Home"><img id="navLogoImg" src="images/double-joy-logo.png" alt="Double Joy Cookies" style="height:32px; display:block; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.22));"></a>
   <div class="nav-links" id="navLinks">
     <a href="index.html">Home</a>
     <a href="double_joy_about.html">About</a>
@@ -237,6 +244,23 @@ function djcToggleNav(){
   btn.classList.toggle('active', isOpen);
   btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 }
+
+(function(){
+  const navBar = document.querySelector('.nav-bar');
+  const logoImg = document.getElementById('navLogoImg');
+  if(!navBar || !logoImg) return;
+  const onScroll = function(){
+    if(window.scrollY > 40){
+      navBar.classList.add('scrolled');
+      logoImg.src = 'images/double-joy-logo-white.png';
+    } else {
+      navBar.classList.remove('scrolled');
+      logoImg.src = 'images/double-joy-logo.png';
+    }
+  };
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+})();
 
 function showToast(msg){
   const t = document.getElementById('toast');

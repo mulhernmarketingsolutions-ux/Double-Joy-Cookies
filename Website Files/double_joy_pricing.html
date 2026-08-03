@@ -43,7 +43,7 @@
   .wrap{ max-width:960px; margin:0 auto; padding: 0 24px 80px; }
 
   .nav-bar{ position:fixed; top:0; left:0; right:0; z-index:200; background:transparent; transition: background .35s ease, box-shadow .35s ease; }
-  .nav-bar.scrolled{ background: var(--blue); box-shadow: var(--shadow); }
+  .nav-bar.scrolled{ background: var(--blush); box-shadow: var(--shadow); }
   .site-nav{ max-width:1180px; margin:0 auto; padding: 16px 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family: var(--font-sans); }
   .nav-logo{ font-family: var(--font-head); font-size: 18px; color: var(--ink); text-decoration:none; letter-spacing:0.5px; }
   .brand-lockup{ display:inline-block; font-family:'Baloo 2', var(--font-sans); line-height:0.82; text-align:left; position:relative; }
@@ -62,16 +62,16 @@
   .nav-links{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; order:2; }
   .nav-links a{ color: var(--chocolate); opacity:0.85; text-decoration:none; font-size:13px; letter-spacing:0.3px; padding-bottom:3px; border-bottom: 1px solid transparent; transition: color .3s ease, border-color .3s ease; }
   .nav-links a:hover, .nav-links a.current{ opacity:1; border-bottom-color: var(--chocolate); }
-  .nav-bar.scrolled .nav-links a{ color: var(--white); }
-  .nav-bar.scrolled .nav-links a:hover, .nav-bar.scrolled .nav-links a.current{ border-bottom-color: var(--white); }
+  .nav-bar.scrolled .nav-links a{ color: var(--berry); }
+  .nav-bar.scrolled .nav-links a:hover, .nav-bar.scrolled .nav-links a.current{ border-bottom-color: var(--berry); }
   .nav-right{ display:flex; align-items:center; gap:16px; order:3; }
   .nav-cta{ display:inline-block; text-decoration:none; font-family: var(--font-sans); font-size:13px; letter-spacing:0.3px; transition: all .3s ease; background: var(--blush); color: var(--berry); border-radius:20px; padding:7px 18px; font-weight:700; box-shadow: 0 2px 8px rgba(70,60,52,0.15); }
   .nav-cta:hover{ background: var(--white); }
-  .nav-bar.scrolled .nav-cta{ background: var(--white); color: var(--ink); }
-  .nav-bar.scrolled .nav-cta:hover{ background: var(--blush); color: var(--berry); }
+  .nav-bar.scrolled .nav-cta{ background: var(--berry); color: var(--cream); }
+  .nav-bar.scrolled .nav-cta:hover{ background: var(--white); color: var(--berry); }
   .nav-toggle{ display:none; flex-direction:column; justify-content:center; gap:5px; width:34px; height:34px; background:none; border:none; cursor:pointer; padding:0; flex-shrink:0; }
   .nav-toggle span{ display:block; width:24px; height:2px; background: var(--chocolate); border-radius:2px; transition: all .2s ease; }
-  .nav-bar.scrolled .nav-toggle span{ background: var(--white); }
+  .nav-bar.scrolled .nav-toggle span{ background: var(--berry); }
   .nav-toggle.active span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
   .nav-toggle.active span:nth-child(2){ opacity:0; }
   .nav-toggle.active span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
@@ -384,7 +384,7 @@ function djcToggleNav(){
   const onScroll = function(){
     if(window.scrollY > 40){
       navBar.classList.add('scrolled');
-      logoImg.src = 'images/double-joy-logo-white.png';
+      logoImg.src = 'images/double-joy-logo-dark.png';
     } else {
       navBar.classList.remove('scrolled');
       logoImg.src = 'images/double-joy-logo.png';

@@ -136,9 +136,30 @@
   input:focus, textarea:focus{ outline:none; border-color: var(--sage); }
   input[type=date]{ -webkit-appearance:none; appearance:none; }
   textarea{ resize:vertical; min-height:80px; }
-  .field.error input, .field.error textarea, .field.error .qty-stepper{ border-color: var(--error); }
+  .field.error input, .field.error textarea, .field.error .qty-stepper, .field.error .needby-trigger{ border-color: var(--error); }
   .error-msg{ display:none; font-family: var(--font-sans); font-size:11.5px; color: var(--error); margin-top:5px; }
   .field.error .error-msg{ display:block; }
+
+  .needby-field{ position:relative; }
+  .needby-trigger{ width:100%; text-align:left; border:1.5px solid var(--line); border-radius:10px; padding:12px 14px; font-family: var(--font-sans); font-size:16px; background: var(--cream) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23463C34" stroke-width="1.4"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>') no-repeat right 14px center / 18px 18px; color: var(--ink); box-sizing:border-box; cursor:pointer; }
+  .needby-trigger.placeholder{ color:#9a9a9a; }
+  .needby-trigger:focus{ outline:none; border-color: var(--sage); }
+  .needby-cal{ display:none; position:absolute; z-index:50; top:calc(100% + 8px); left:0; background: var(--white); border-radius:16px; box-shadow: var(--shadow); padding:16px; width:280px; max-width:88vw; }
+  .needby-cal.open{ display:block; }
+  .needby-cal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; font-family: var(--font-sans); font-weight:700; font-size:13px; color: var(--ink); }
+  .needby-cal-nav{ background: var(--cream); border:none; width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:15px; color: var(--berry); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .needby-cal-nav:hover:not(:disabled){ background: var(--blush); }
+  .needby-cal-nav:disabled{ opacity:0.3; cursor:not-allowed; }
+  .needby-cal-grid{ display:grid; grid-template-columns: repeat(7,1fr); gap:2px; }
+  .needby-cal-dow{ font-family: var(--font-sans); font-size:10px; text-transform:uppercase; letter-spacing:0.3px; color:#9a9a9a; text-align:center; padding-bottom:6px; }
+  .needby-cal-day{ aspect-ratio:1; border:none; background:none; border-radius:50%; font-family: var(--font-sans); font-size:12.5px; color: var(--ink); cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .needby-cal-day.blank{ visibility:hidden; cursor:default; }
+  .needby-cal-day:hover:not(:disabled):not(.blank){ background: var(--cream-deep); }
+  .needby-cal-day.selected{ background: var(--berry); color: var(--cream); }
+  .needby-cal-day.today:not(.selected){ box-shadow: inset 0 0 0 1.5px var(--gold-light); }
+  .needby-cal-day:disabled{ color:#d8d0c4; text-decoration: line-through; cursor:not-allowed; }
+  .needby-cal-legend{ margin-top:10px; padding-top:10px; border-top:1px solid var(--line); font-family: var(--font-sans); font-size:10.5px; color:#9a9a9a; display:flex; align-items:center; gap:6px; line-height:1.4; }
+  .needby-cal-dot{ width:14px; height:14px; border-radius:50%; background: var(--cream-deep); flex-shrink:0; border:1px solid var(--line); }
 
   .qty-stepper{ display:flex; align-items:center; justify-content:space-between; gap:10px; border:1.5px solid var(--line); border-radius:30px; padding:6px; background: var(--cream); }
   .qty-btn{ width:38px; height:38px; border-radius:50%; border:none; background: var(--blush); color: var(--berry); font-size:20px; font-weight:700; font-family: var(--font-sans); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; transition: background .15s ease, transform .1s ease; line-height:1; }
@@ -324,11 +345,23 @@
           </div>
           <div class="field" id="f-needBy">
             <label>Need Them By</label>
-            <input type="date" id="needBy">
+            <div class="needby-field" id="needByField">
+              <input type="hidden" id="needBy">
+              <button type="button" class="needby-trigger placeholder" id="needByTrigger">Select a date</button>
+              <div class="needby-cal" id="needByCal">
+                <div class="needby-cal-head">
+                  <button type="button" class="needby-cal-nav" id="needByPrev" aria-label="Previous month">‹</button>
+                  <span id="needByCalLabel"></span>
+                  <button type="button" class="needby-cal-nav" id="needByNext" aria-label="Next month">›</button>
+                </div>
+                <div class="needby-cal-grid" id="needByCalGrid"></div>
+                <div class="needby-cal-legend"><span class="needby-cal-dot"></span> Grayed-out dates fall inside the 2-week notice window</div>
+              </div>
+            </div>
             <div class="error-msg">Please choose a date at least 2 weeks out.</div>
           </div>
         </div>
-        <p class="step-help" style="margin-left:0;">Custom orders typically need at least 2–3 weeks' notice, so the calendar won't let you pick a date sooner than 2 weeks out. Need something faster than that? Reach out directly on the <a href="double_joy_contact.html" style="color:var(--gold);">Contact</a> page and I'll see what's possible (a $20/dozen rush fee applies, subject to availability).</p>
+        <p class="step-help" style="margin-left:0;">Custom orders typically need at least 2–3 weeks' notice, so the calendar grays out anything sooner than 2 weeks out. Need something faster than that? Reach out directly on the <a href="double_joy_contact.html" style="color:var(--gold);">Contact</a> page and I'll see what's possible (a $20/dozen rush fee applies, subject to availability).</p>
       </div>
 
       <div class="step">
@@ -453,32 +486,109 @@ const DELIVERIES = ['Local Pickup (Portland, OR)'];
 const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbypdIQnGgZmasUL9IMtr7JxYj-bGALDzSl9W744KVn-VTzKgN75zN13pxMfMo2XHs3n/exec";
 const djcFooterLoadTime = Date.now();
 
-/* Fastest turnaround stated site-wide is 2 weeks (rush fee applies) — the
-   calendar won't let anyone pick a date sooner than that. Stored globally so
-   validate() can also double-check it directly: some mobile browsers don't
-   reliably block manual selection of dates before the native `min`. */
+/* Fastest turnaround stated site-wide is 2 weeks (rush fee applies). Native
+   <input type=date> can't reliably gray out individual days — especially on
+   iOS Safari, where the `min` attribute isn't enforced in the picker UI at
+   all — so this is a fully custom calendar instead: every date inside the
+   2-week window is rendered disabled/struck-through and simply can't be
+   clicked, rather than relying on a browser behavior that only sometimes
+   works. Stored globally so validate() can also double-check it directly. */
 let DJC_EARLIEST_NEEDBY = '';
 (function(){
-  const needByInput = document.getElementById('needBy');
-  if(!needByInput) return;
-  const earliest = new Date();
-  earliest.setDate(earliest.getDate() + 14);
-  const y = earliest.getFullYear();
-  const m = String(earliest.getMonth() + 1).padStart(2, '0');
-  const d = String(earliest.getDate()).padStart(2, '0');
-  DJC_EARLIEST_NEEDBY = `${y}-${m}-${d}`;
-  needByInput.min = DJC_EARLIEST_NEEDBY;
+  const wrap = document.getElementById('needByField');
+  const hiddenInput = document.getElementById('needBy');
+  const trigger = document.getElementById('needByTrigger');
+  const cal = document.getElementById('needByCal');
+  const calLabel = document.getElementById('needByCalLabel');
+  const calGrid = document.getElementById('needByCalGrid');
+  const prevBtn = document.getElementById('needByPrev');
+  const nextBtn = document.getElementById('needByNext');
+  if(!wrap || !hiddenInput || !trigger || !cal) return;
 
-  /* Some mobile browsers (iOS Safari in particular) don't reliably enforce
-     the native `min` attribute in the date picker UI, so the user can still
-     scroll/tap a date before it. Catch it the instant it's picked (not just
-     at submit) and snap it forward to the earliest valid date. */
-  needByInput.addEventListener('change', function(){
-    if(needByInput.value && needByInput.value < DJC_EARLIEST_NEEDBY){
-      needByInput.value = DJC_EARLIEST_NEEDBY;
-      if(typeof showToast === 'function') showToast("Orders need at least 2 weeks' notice — I moved this to the earliest available date.");
+  const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const DOW = ['S','M','T','W','T','F','S'];
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const earliest = new Date(today);
+  earliest.setDate(earliest.getDate() + 14);
+
+  function fmtISO(d){
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function fmtPretty(d){
+    return d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+  }
+  DJC_EARLIEST_NEEDBY = fmtISO(earliest);
+
+  let viewYear = earliest.getFullYear();
+  let viewMonth = earliest.getMonth();
+  let selectedISO = '';
+
+  function renderCalendar(){
+    calLabel.textContent = MONTH_NAMES[viewMonth] + ' ' + viewYear;
+    calGrid.innerHTML = '';
+    DOW.forEach(function(label){
+      const el = document.createElement('div');
+      el.className = 'needby-cal-dow';
+      el.textContent = label;
+      calGrid.appendChild(el);
+    });
+    const firstOfMonth = new Date(viewYear, viewMonth, 1);
+    const startDow = firstOfMonth.getDay();
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    for(let i = 0; i < startDow; i++){
+      const blank = document.createElement('div');
+      blank.className = 'needby-cal-day blank';
+      calGrid.appendChild(blank);
     }
+    for(let day = 1; day <= daysInMonth; day++){
+      const thisDate = new Date(viewYear, viewMonth, day);
+      const iso = fmtISO(thisDate);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'needby-cal-day';
+      btn.textContent = String(day);
+      if(thisDate < earliest){
+        btn.disabled = true;
+      } else {
+        btn.addEventListener('click', function(){
+          selectedISO = iso;
+          hiddenInput.value = iso;
+          trigger.textContent = fmtPretty(thisDate);
+          trigger.classList.remove('placeholder');
+          cal.classList.remove('open');
+          hiddenInput.dispatchEvent(new Event('change'));
+          renderCalendar();
+        });
+      }
+      if(iso === fmtISO(today)) btn.classList.add('today');
+      if(iso === selectedISO) btn.classList.add('selected');
+      calGrid.appendChild(btn);
+    }
+    prevBtn.disabled = (viewYear === earliest.getFullYear() && viewMonth === earliest.getMonth());
+  }
+
+  trigger.addEventListener('click', function(e){
+    e.stopPropagation();
+    cal.classList.toggle('open');
+    if(cal.classList.contains('open')) renderCalendar();
   });
+  document.addEventListener('click', function(e){
+    if(!wrap.contains(e.target)) cal.classList.remove('open');
+  });
+  prevBtn.addEventListener('click', function(){
+    viewMonth--;
+    if(viewMonth < 0){ viewMonth = 11; viewYear--; }
+    renderCalendar();
+  });
+  nextBtn.addEventListener('click', function(){
+    viewMonth++;
+    if(viewMonth > 11){ viewMonth = 0; viewYear++; }
+    renderCalendar();
+  });
+
+  renderCalendar();
 })();
 
 /* Cute dozen stepper for quantity — replaces free-typed number input so
@@ -701,10 +811,16 @@ if(params.has('shape')){
 }
 
 /* ---------------- Live summary + submit ---------------- */
+function djcFormatNeedBy(iso){
+  if(!iso) return '';
+  const parts = iso.split('-');
+  const d = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+  return d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric', year:'numeric' });
+}
 function updateSummary(){
   setSum('sumOccasion', form.occasion);
   setSum('sumQty', document.getElementById('qty').value ? document.getElementById('qty').value + ' cookies' : null);
-  setSum('sumNeedBy', document.getElementById('needBy').value);
+  setSum('sumNeedBy', djcFormatNeedBy(document.getElementById('needBy').value));
   setSum('sumDesign', form.design);
   setSum('sumBudget', form.budget);
   setSum('sumDelivery', form.delivery);
@@ -750,7 +866,7 @@ Phone: ${document.getElementById('phone').value}
 
 Occasion: ${occasion || ''}
 Quantity: ${document.getElementById('qty').value}
-Need By: ${document.getElementById('needBy').value}
+Need By: ${djcFormatNeedBy(document.getElementById('needBy').value)}
 
 Theme: ${document.getElementById('theme').value}
 Names/Wording: ${document.getElementById('names').value}

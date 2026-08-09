@@ -144,7 +144,7 @@
   .needby-trigger{ width:100%; text-align:left; border:1.5px solid var(--line); border-radius:10px; padding:12px 14px; font-family: var(--font-sans); font-size:16px; background: var(--cream) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23463C34" stroke-width="1.4"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>') no-repeat right 14px center / 18px 18px; color: var(--ink); box-sizing:border-box; cursor:pointer; }
   .needby-trigger.placeholder{ color:#9a9a9a; }
   .needby-trigger:focus{ outline:none; border-color: var(--sage); }
-  .needby-cal{ display:none; position:absolute; z-index:50; top:calc(100% + 8px); left:0; background: var(--white); border-radius:16px; box-shadow: var(--shadow); padding:16px; width:280px; max-width:88vw; }
+  .needby-cal{ display:none; position:fixed; z-index:250; background: var(--white); border-radius:16px; box-shadow: var(--shadow); padding:16px; width:280px; max-width:88vw; }
   .needby-cal.open{ display:block; }
   .needby-cal-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; font-family: var(--font-sans); font-weight:700; font-size:13px; color: var(--ink); }
   .needby-cal-nav{ background: var(--cream); border:none; width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:15px; color: var(--berry); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
@@ -557,7 +557,7 @@ let DJC_EARLIEST_NEEDBY = '';
           hiddenInput.value = iso;
           trigger.textContent = fmtPretty(thisDate);
           trigger.classList.remove('placeholder');
-          cal.classList.remove('open');
+          closeCal();
           hiddenInput.dispatchEvent(new Event('change'));
           renderCalendar();
         });
@@ -569,13 +569,47 @@ let DJC_EARLIEST_NEEDBY = '';
     prevBtn.disabled = (viewYear === earliest.getFullYear() && viewMonth === earliest.getMonth());
   }
 
+  /* The calendar is position:fixed so it can escape the .field/.step
+     containers' `overflow:hidden` (which was clipping it invisibly —
+     this is why it never appeared to open, most noticeably on mobile
+     where those containers are more cramped). Position is computed from
+     the trigger's actual on-screen location every time it opens. */
+  function positionCal(){
+    const rect = trigger.getBoundingClientRect();
+    const calWidth = Math.min(280, window.innerWidth - 24);
+    let left = rect.left;
+    if(left + calWidth > window.innerWidth - 12) left = window.innerWidth - calWidth - 12;
+    if(left < 12) left = 12;
+    let top = rect.bottom + 8;
+    const estCalHeight = 340;
+    if(top + estCalHeight > window.innerHeight && rect.top - estCalHeight > 8){
+      top = rect.top - estCalHeight - 8;
+    }
+    cal.style.left = left + 'px';
+    cal.style.top = top + 'px';
+    cal.style.width = calWidth + 'px';
+  }
+
+  function closeCal(){
+    cal.classList.remove('open');
+    window.removeEventListener('scroll', closeCal, true);
+    window.removeEventListener('resize', positionCal);
+  }
+
   trigger.addEventListener('click', function(e){
     e.stopPropagation();
-    cal.classList.toggle('open');
-    if(cal.classList.contains('open')) renderCalendar();
+    if(cal.classList.contains('open')){
+      closeCal();
+      return;
+    }
+    positionCal();
+    cal.classList.add('open');
+    renderCalendar();
+    window.addEventListener('scroll', closeCal, true);
+    window.addEventListener('resize', positionCal);
   });
   document.addEventListener('click', function(e){
-    if(!wrap.contains(e.target)) cal.classList.remove('open');
+    if(!wrap.contains(e.target) && !cal.contains(e.target)) closeCal();
   });
   prevBtn.addEventListener('click', function(){
     viewMonth--;

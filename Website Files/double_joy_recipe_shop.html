@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shop — Double Joy Cookies</title>
-<meta name="description" content="Recipe PDFs and the kitchen tools Emily actually uses, from Double Joy Cookies.">
+<title>Shop My Kitchen — Double Joy Cookies</title>
+<meta name="description" content="My cookie recipe (more on the way), a free royal icing recipe with my tips, and the kitchen tools I actually use.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Double Joy Cookies">
-<meta property="og:title" content="Shop — Double Joy Cookies">
-<meta property="og:description" content="Recipe PDFs and the kitchen tools Emily actually uses, from Double Joy Cookies.">
+<meta property="og:title" content="Shop My Kitchen — Double Joy Cookies">
+<meta property="og:description" content="My cookie recipe (more on the way), a free royal icing recipe with my tips, and the kitchen tools I actually use.">
 <meta property="og:image" content="https://doublejoycookies.com/images/social-share.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:url" content="https://doublejoycookies.com/double_joy_recipe_shop.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Shop — Double Joy Cookies">
-<meta name="twitter:description" content="Recipe PDFs and the kitchen tools Emily actually uses, from Double Joy Cookies.">
+<meta name="twitter:title" content="Shop My Kitchen — Double Joy Cookies">
+<meta name="twitter:description" content="My cookie recipe (more on the way), a free royal icing recipe with my tips, and the kitchen tools I actually use.">
 <meta name="twitter:image" content="https://doublejoycookies.com/images/social-share.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,8 +90,17 @@
   h1{ font-size: 42px; margin: 0 0 16px; font-weight: normal; letter-spacing: 0.5px; }
   .sub{ font-family: var(--font-sans); color:#6b6b6b; font-size:15px; max-width:520px; margin:0 auto; line-height:1.6; }
 
-  .shop-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:22px; margin-bottom:48px; }
-  @media (max-width:860px){ .shop-grid{ grid-template-columns: 1fr; max-width:420px; margin-left:auto; margin-right:auto; } }
+  .shop-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:22px; margin-bottom:48px; max-width:640px; margin-left:auto; margin-right:auto; }
+  @media (max-width:700px){ .shop-grid{ grid-template-columns: 1fr; max-width:420px; } }
+
+  .icing-section{ text-align:center; margin: 0 0 54px; }
+  .icing-head{ margin-bottom:22px; }
+  .icing-head h2{ font-size:28px; margin:0 0 8px; font-weight:normal; }
+  .icing-head p{ font-family: var(--font-sans); color:#6b6b6b; font-size:13.5px; max-width:480px; margin:0 auto; line-height:1.7; }
+  .icing-card{ display:block; max-width:420px; margin:0 auto; background: var(--white); border-radius:20px; padding:12px; box-shadow: var(--shadow); transition: transform .15s ease; }
+  .icing-card:hover{ transform: translateY(-2px); }
+  .icing-card img{ width:100%; display:block; border-radius:12px; }
+  .icing-note{ font-family: var(--font-sans); font-size:11.5px; color:#9a9a9a; margin-top:12px; }
 
   .product-card{ background: var(--white); border-radius:20px; padding:32px 26px; text-align:center; box-shadow: var(--shadow); display:flex; flex-direction:column; position:relative; }
   .product-card.featured{ border: 2px solid var(--gold-light); }
@@ -204,9 +213,9 @@
 
 <div class="page-header">
   <div class="script-tag">Bring my kitchen home</div>
-  <div class="kicker">Shop</div>
-  <h1>Bake My Favorites Yourself</h1>
-  <p class="sub">The exact cookie and icing recipes behind every Double Joy order — written up just how I make them, emailed to you right after you order.</p>
+  <div class="kicker">Recipes &amp; Favorites</div>
+  <h1>Shop My Kitchen</h1>
+  <p class="sub">My signature cookie recipe (with more flavors on the way), a free royal icing recipe with my tips, and the kitchen tools I reach for on every order.</p>
 </div>
 
 <div class="wrap">
@@ -222,24 +231,28 @@
 
     <div class="product-card">
       <svg class="p-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 3c-3 3-5 6-5 9a5 5 0 0010 0c0-3-2-6-5-9z"/><path d="M9 14a3 3 0 003 3"/></svg>
-      <h3 class="p-title">Signature Icing</h3>
-      <div class="p-price">$10</div>
-      <p class="p-desc">My go-to royal icing, dialed in through hundreds of custom orders — the exact consistency, coloring, and piping tips I use for everything from simple designs to full showstoppers.</p>
-      <button type="button" class="cta" onclick="djcOpenRecipeModal('Signature Icing','$10')">Get This Recipe</button>
-    </div>
-
-    <div class="product-card featured">
-      <div class="badge">Save $5</div>
-      <svg class="p-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a4 4 0 018 0v2"/></svg>
-      <h3 class="p-title">The Full Set</h3>
-      <div class="p-price"><span>$20</span>$15</div>
-      <p class="p-desc">Both recipes together — the cookie and the icing that make it a Double Joy original. Everything you need to bring my kitchen into yours.</p>
-      <button type="button" class="cta" onclick="djcOpenRecipeModal('The Full Set','$15')">Get This Recipe</button>
+      <h3 class="p-title">Chocolate Sugar Cookie</h3>
+      <div class="p-price">Coming Soon</div>
+      <p class="p-desc">A rich chocolate twist on my classic base — next up in the recipe lineup. Want to know the moment it's live? Join the list below.</p>
+      <button type="button" class="cta pending">Coming Soon</button>
     </div>
   </div>
 
   <div class="note-band">
-    Reserve your recipe below, pay however's easiest, and I'll email your recipe PDF straight to your inbox (usually within a few hours). <strong>Have a question about a recipe?</strong> Reach out anytime through the <a href="double_joy_contact.html" style="color:var(--gold); border-bottom:1px solid var(--gold); text-decoration:none;">contact page</a>.
+    Reserve the cookie recipe below, pay however's easiest, and I'll email your recipe PDF straight to your inbox (usually within a few hours). Want the icing recipe too? <strong>It's free</strong> — scroll down for that one. <strong>Have a question?</strong> Reach out anytime through the <a href="double_joy_contact.html" style="color:var(--gold); border-bottom:1px solid var(--gold); text-decoration:none;">contact page</a>.
+  </div>
+
+  <!-- ================= FREE ROYAL ICING RECIPE ================= -->
+  <div class="icing-section">
+    <div class="icing-head">
+      <div class="kicker">Free Recipe</div>
+      <h2>My Royal Icing Recipe</h2>
+      <p>The exact icing I use on every order, plus my tips for keeping it silky and bleed-proof — no purchase needed.</p>
+    </div>
+    <a class="icing-card" href="images/royal-icing-recipe.png" target="_blank" rel="noopener">
+      <img src="images/royal-icing-recipe.png" alt="Double Joy Cookies Royal Icing Recipe — ingredients, directions, and Emily's tips">
+    </a>
+    <div class="icing-note">Tap the image to view it full-size or save it to your phone.</div>
   </div>
 
   <!-- ================= WHAT I USE IN MY KITCHEN — Amazon storefront ================= -->
@@ -247,7 +260,7 @@
   <div class="kitchen-section">
     <div class="kitchen-head">
       <div class="kicker">Kitchen Finds</div>
-      <h2>Shop My Kitchen</h2>
+      <h2>Tools I Use</h2>
       <p>A few of my go-to tools and supplies — everything else I use lives on my Amazon shop.</p>
     </div>
     <div class="kitchen-grid">

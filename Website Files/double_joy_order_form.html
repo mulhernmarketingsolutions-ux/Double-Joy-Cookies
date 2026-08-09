@@ -298,9 +298,9 @@
         <div class="step-title"><span class="step-num">3</span> How Many &amp; By When</div>
         <div class="row2">
           <div class="field" id="f-qty">
-            <label>Approximate Quantity</label>
-            <input type="number" id="qty" min="6" step="1" placeholder="e.g. 24">
-            <div class="error-msg">Let me know roughly how many cookies.</div>
+            <label>Quantity <span style="text-transform:none; color:#c9beae;">(by the dozen)</span></label>
+            <input type="number" id="qty" min="24" step="12" placeholder="24" value="24">
+            <div class="error-msg">Orders start at 2 dozen (24) and go up by the dozen.</div>
           </div>
           <div class="field" id="f-needBy">
             <label>Need Them By</label>
@@ -660,7 +660,7 @@ function validate(){
   const checks = [
     ['f-name', document.getElementById('name').value.trim().length > 0],
     ['f-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim())],
-    ['f-qty', document.getElementById('qty').value && Number(document.getElementById('qty').value) > 0],
+    ['f-qty', document.getElementById('qty').value && Number(document.getElementById('qty').value) >= 24 && Number(document.getElementById('qty').value) % 12 === 0],
     ['f-needBy', document.getElementById('needBy').value.length > 0],
   ];
   let allValid = true;

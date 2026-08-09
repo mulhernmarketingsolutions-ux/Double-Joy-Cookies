@@ -110,7 +110,9 @@
   @media (max-width:760px){ .sp-tiles{ grid-template-columns: 1fr; } }
   .sp-tile{ background: var(--white); padding:30px 22px; text-align:center; display:flex; flex-direction:column; align-items:center; }
   .sp-icon{ width:44px; height:44px; margin:2px auto 14px; color: var(--sage); }
-  .sp-thumb{ width:64px; height:64px; border-radius:14px; object-fit:cover; object-position:top; margin:0 auto 14px; box-shadow: 0 4px 10px rgba(90,71,58,0.18); }
+  .sp-thumb-wrap{ width:64px; height:64px; border-radius:14px; overflow:hidden; margin:0 auto 14px; box-shadow: 0 4px 10px rgba(90,71,58,0.18); flex-shrink:0; }
+  .sp-thumb-wrap picture{ display:block; width:100%; height:100%; }
+  .sp-thumb-wrap img{ width:100%; height:100%; object-fit:cover; object-position:top; display:block; }
   .sp-title{ font-size:18px; margin:0 0 6px; font-weight:normal; }
   .sp-price{ font-family: var(--font-sans); font-size:19px; font-weight:700; color: var(--ink); margin-bottom:12px; }
   .sp-price.free{ color:#3B6D11; }
@@ -128,7 +130,9 @@
   @media (max-width:600px){ .sp-kitchen-grid{ grid-template-columns:1fr; } }
   .sp-kitchen-item{ background: var(--white); border-radius:16px; padding:20px 18px; text-align:center; display:flex; flex-direction:column; align-items:center; box-shadow: 0 4px 12px rgba(90,71,58,0.08); }
   .sp-kitchen-item .ki-icon{ width:30px; height:30px; color: var(--sage); margin-bottom:10px; }
-  .sp-kitchen-item .ki-thumb{ width:48px; height:48px; border-radius:10px; object-fit:cover; margin-bottom:10px; box-shadow: 0 3px 8px rgba(90,71,58,0.16); }
+  .sp-kitchen-item .ki-thumb-wrap{ width:48px; height:48px; border-radius:10px; overflow:hidden; margin-bottom:10px; box-shadow: 0 3px 8px rgba(90,71,58,0.16); flex-shrink:0; }
+  .sp-kitchen-item .ki-thumb-wrap picture{ display:block; width:100%; height:100%; }
+  .sp-kitchen-item .ki-thumb-wrap img{ width:100%; height:100%; object-fit:cover; display:block; }
   .sp-kitchen-item h3{ font-size:14.5px; margin:0 0 6px; font-weight:normal; }
   .sp-kitchen-item p{ font-family: var(--font-sans); font-size:11.5px; color:#7a7a7a; line-height:1.55; margin:0 0 14px; flex-grow:1; }
   .sp-kitchen-cta{ text-align:center; }
@@ -217,7 +221,7 @@
 
     <div class="sp-tiles" id="recipeGrid">
       <div class="sp-tile">
-        <img class="sp-thumb" src="images/cookie-recipe-photo-sq.jpg" alt="" aria-hidden="true">
+        <div class="sp-thumb-wrap"><picture><source srcset="images/cookie-recipe-photo-sq.webp" type="image/webp"><img src="images/cookie-recipe-photo-sq.jpg" alt="" aria-hidden="true" loading="lazy"></picture></div>
         <h3 class="sp-title">Classic Vanilla Almond Cookie</h3>
         <div class="sp-price">$10</div>
         <p class="sp-desc">The recipe behind every base cookie I bake — the one that started it all. Full ingredients, method, and my tips for that perfect soft-set bite.</p>
@@ -233,11 +237,11 @@
       </div>
 
       <div class="sp-tile">
-        <img class="sp-thumb" src="images/royal-icing-recipe.png" alt="" aria-hidden="true">
+        <div class="sp-thumb-wrap"><picture><source srcset="images/royal-icing-thumb.webp" type="image/webp"><img src="images/royal-icing-thumb.jpg" alt="" aria-hidden="true" loading="lazy"></picture></div>
         <h3 class="sp-title">My Royal Icing Recipe</h3>
         <div class="sp-price free">Free</div>
         <p class="sp-desc">The exact icing I use on every order, plus my tips for keeping it silky and bleed-proof — no purchase needed.</p>
-        <a class="cta outline" href="images/royal-icing-recipe.png" target="_blank" rel="noopener">View Recipe</a>
+        <a class="cta outline" href="images/royal-icing-recipe.jpg" target="_blank" rel="noopener">View Recipe</a>
       </div>
     </div>
 
@@ -254,13 +258,13 @@
       </div>
       <div class="sp-kitchen-grid">
         <div class="sp-kitchen-item">
-          <img class="ki-thumb" src="images/colour-mill-product-sq.jpg" alt="">
+          <div class="ki-thumb-wrap"><picture><source srcset="images/colour-mill-product-sq.webp" type="image/webp"><img src="images/colour-mill-product-sq.jpg" alt="" loading="lazy"></picture></div>
           <h3>Colour Mill Water-Based Color</h3>
           <p>My go-to for rich, true-to-shade icing colors that don't thin out the consistency.</p>
           <a href="https://www.amazon.com/dp/B0D54GS9PK?linkCode=ssc&tag=doublejoycook-20&creativeASIN=B0D54GS9PK&asc_item-id=amzn1.ideas.3C70TNLLLNM60&ref_=aip_sf_list_spv_ofs_mixed_d_asin&th=1" target="_blank" rel="noopener sponsored" class="cta outline">Shop This →</a>
         </div>
         <div class="sp-kitchen-item">
-          <img class="ki-thumb" src="images/stand-mixer-product-sq.jpg" alt="">
+          <div class="ki-thumb-wrap"><picture><source srcset="images/stand-mixer-product-sq.webp" type="image/webp"><img src="images/stand-mixer-product-sq.jpg" alt="" loading="lazy"></picture></div>
           <h3>My Stand Mixer</h3>
           <p>The mixer I reach for every single batch — from cookie dough to royal icing.</p>
           <a href="https://www.amazon.com/dp/B0FB41T2YN?linkCode=ssc&tag=doublejoycook-20&creativeASIN=B0FB41T2YN&asc_item-id=amzn1.ideas.3C70TNLLLNM60&ref_=aip_sf_list_spv_ons_d_asin&th=1" target="_blank" rel="noopener sponsored" class="cta outline">Shop This →</a>

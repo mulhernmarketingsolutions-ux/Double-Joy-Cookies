@@ -131,14 +131,26 @@
   .field:last-child{ margin-bottom:0; }
   input[type=text], input[type=email], input[type=tel], input[type=number], input[type=date], textarea{
     width:100%; max-width:100%; min-width:0; border:1.5px solid var(--line); border-radius:10px; padding:12px 14px;
-    font-family: var(--font-sans); font-size:14.5px; background: var(--cream); color: var(--ink); box-sizing:border-box;
+    font-family: var(--font-sans); font-size:16px; background: var(--cream); color: var(--ink); box-sizing:border-box;
   }
   input:focus, textarea:focus{ outline:none; border-color: var(--sage); }
   input[type=date]{ -webkit-appearance:none; appearance:none; }
   textarea{ resize:vertical; min-height:80px; }
-  .field.error input, .field.error textarea{ border-color: var(--error); }
+  .field.error input, .field.error textarea, .field.error .qty-stepper{ border-color: var(--error); }
   .error-msg{ display:none; font-family: var(--font-sans); font-size:11.5px; color: var(--error); margin-top:5px; }
   .field.error .error-msg{ display:block; }
+
+  .qty-stepper{ display:flex; align-items:center; justify-content:space-between; gap:10px; border:1.5px solid var(--line); border-radius:30px; padding:6px; background: var(--cream); }
+  .qty-btn{ width:38px; height:38px; border-radius:50%; border:none; background: var(--blush); color: var(--berry); font-size:20px; font-weight:700; font-family: var(--font-sans); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; transition: background .15s ease, transform .1s ease; line-height:1; }
+  .qty-btn:hover:not(:disabled){ background: var(--sage); color: var(--white); }
+  .qty-btn:active:not(:disabled){ transform: scale(0.92); }
+  .qty-btn:disabled{ opacity:0.35; cursor:not-allowed; }
+  .qty-display{ flex:1; text-align:center; display:flex; flex-direction:column; align-items:center; line-height:1.25; transition: transform .18s cubic-bezier(0.34,1.56,0.64,1); }
+  .qty-display.bump{ animation: qtyBump .32s cubic-bezier(0.34,1.56,0.64,1); }
+  @keyframes qtyBump{ 0%{ transform: scale(0.85); } 60%{ transform: scale(1.08); } 100%{ transform: scale(1); } }
+  .qty-dozen{ font-family: var(--font-head); font-size:17px; color: var(--ink); }
+  .qty-dozen .cookie{ margin-right:4px; }
+  .qty-count{ font-family: var(--font-sans); font-size:11.5px; color:#9a9a9a; }
 
   .row2{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; min-width:0; }
   @media (max-width:520px){ .row2{ grid-template-columns:1fr; } }
@@ -299,7 +311,15 @@
         <div class="row2">
           <div class="field" id="f-qty">
             <label>Quantity <span style="text-transform:none; color:#c9beae;">(by the dozen)</span></label>
-            <input type="number" id="qty" min="24" step="12" placeholder="24" value="24">
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" id="qtyMinus" aria-label="Fewer dozen">−</button>
+              <div class="qty-display" id="qtyDisplay">
+                <span class="qty-dozen"><span class="cookie">🍪</span>2 Dozen</span>
+                <span class="qty-count">(24 cookies)</span>
+              </div>
+              <button type="button" class="qty-btn" id="qtyPlus" aria-label="More dozen">+</button>
+            </div>
+            <input type="hidden" id="qty" value="24">
             <div class="error-msg">Orders start at 2 dozen (24) and go up by the dozen.</div>
           </div>
           <div class="field" id="f-needBy">
@@ -434,7 +454,10 @@ const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbypdIQnGgZmasUL9IM
 const djcFooterLoadTime = Date.now();
 
 /* Fastest turnaround stated site-wide is 2 weeks (rush fee applies) — the
-   calendar below won't let anyone pick a date sooner than that. */
+   calendar won't let anyone pick a date sooner than that. Stored globally so
+   validate() can also double-check it directly: some mobile browsers don't
+   reliably block manual selection of dates before the native `min`. */
+let DJC_EARLIEST_NEEDBY = '';
 (function(){
   const needByInput = document.getElementById('needBy');
   if(!needByInput) return;
@@ -443,8 +466,30 @@ const djcFooterLoadTime = Date.now();
   const y = earliest.getFullYear();
   const m = String(earliest.getMonth() + 1).padStart(2, '0');
   const d = String(earliest.getDate()).padStart(2, '0');
-  needByInput.min = `${y}-${m}-${d}`;
+  DJC_EARLIEST_NEEDBY = `${y}-${m}-${d}`;
+  needByInput.min = DJC_EARLIEST_NEEDBY;
 })();
+
+/* Cute dozen stepper for quantity — replaces free-typed number input so
+   mobile keyboards can't be used to bypass the 2-dozen minimum. */
+let djcQtyDozens = 2;
+function djcRenderQty(){
+  const total = djcQtyDozens * 12;
+  const display = document.getElementById('qtyDisplay');
+  display.innerHTML = `<span class="qty-dozen"><span class="cookie">🍪</span>${djcQtyDozens} Dozen</span><span class="qty-count">(${total} cookies)</span>`;
+  document.getElementById('qty').value = total;
+  document.getElementById('qtyMinus').disabled = djcQtyDozens <= 2;
+  display.classList.remove('bump');
+  void display.offsetWidth;
+  display.classList.add('bump');
+  updateSummary();
+}
+document.getElementById('qtyMinus').addEventListener('click', function(){
+  if(djcQtyDozens > 2){ djcQtyDozens--; djcRenderQty(); }
+});
+document.getElementById('qtyPlus').addEventListener('click', function(){
+  djcQtyDozens++; djcRenderQty();
+});
 
 function djcToggleNav(){
   const nav = document.getElementById('navLinks');
@@ -640,7 +685,7 @@ if(params.has('shape')){
     note.textContent = 'Estimate only, based on icing style — I\'ll confirm your final price.';
     document.getElementById('recapList').after(note);
   }
-  if(design.qty){ document.getElementById('qty').value = design.qty; }
+  if(design.qty){ djcQtyDozens = Math.max(2, Math.round(Number(design.qty) / 12)); djcRenderQty(); }
   if(params.get('notes')){ document.getElementById('theme').value = decodeURIComponent(params.get('notes')); }
 }
 
@@ -674,7 +719,7 @@ function validate(){
     ['f-name', document.getElementById('name').value.trim().length > 0],
     ['f-email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim())],
     ['f-qty', document.getElementById('qty').value && Number(document.getElementById('qty').value) >= 24 && Number(document.getElementById('qty').value) % 12 === 0],
-    ['f-needBy', document.getElementById('needBy').value.length > 0],
+    ['f-needBy', document.getElementById('needBy').value.length > 0 && (!DJC_EARLIEST_NEEDBY || document.getElementById('needBy').value >= DJC_EARLIEST_NEEDBY)],
   ];
   let allValid = true;
   checks.forEach(([id, ok]) => {

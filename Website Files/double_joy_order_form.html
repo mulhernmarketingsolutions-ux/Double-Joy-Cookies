@@ -305,10 +305,10 @@
           <div class="field" id="f-needBy">
             <label>Need Them By</label>
             <input type="date" id="needBy">
-            <div class="error-msg">Please choose a date.</div>
+            <div class="error-msg">Please choose a date at least 2 weeks out.</div>
           </div>
         </div>
-        <p class="step-help" style="margin-left:0;">Custom orders typically need at least 2–3 weeks' notice — I'll confirm availability when I follow up. Orders with less than 2 weeks' notice may include a $20/dozen rush fee, if I'm able to accept them at all.</p>
+        <p class="step-help" style="margin-left:0;">Custom orders typically need at least 2–3 weeks' notice, so the calendar won't let you pick a date sooner than 2 weeks out. Need something faster than that? Reach out directly on the <a href="double_joy_contact.html" style="color:var(--gold);">Contact</a> page and I'll see what's possible (a $20/dozen rush fee applies, subject to availability).</p>
       </div>
 
       <div class="step">
@@ -432,6 +432,19 @@ const DELIVERIES = ['Local Pickup (Portland, OR)'];
 /* Paste the Apps Script Web App URL here once it's deployed (see Double_Joy_Cookies_Notes.md) */
 const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbypdIQnGgZmasUL9IMtr7JxYj-bGALDzSl9W744KVn-VTzKgN75zN13pxMfMo2XHs3n/exec";
 const djcFooterLoadTime = Date.now();
+
+/* Fastest turnaround stated site-wide is 2 weeks (rush fee applies) — the
+   calendar below won't let anyone pick a date sooner than that. */
+(function(){
+  const needByInput = document.getElementById('needBy');
+  if(!needByInput) return;
+  const earliest = new Date();
+  earliest.setDate(earliest.getDate() + 14);
+  const y = earliest.getFullYear();
+  const m = String(earliest.getMonth() + 1).padStart(2, '0');
+  const d = String(earliest.getDate()).padStart(2, '0');
+  needByInput.min = `${y}-${m}-${d}`;
+})();
 
 function djcToggleNav(){
   const nav = document.getElementById('navLinks');

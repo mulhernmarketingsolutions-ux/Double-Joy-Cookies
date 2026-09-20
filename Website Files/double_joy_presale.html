@@ -4,39 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ============================================================
-     PRESALE PAGE — reusable for Halloween / Thanksgiving / Christmas / etc.
-     Two states:
-       A) "Coming soon" (current state) — teaser + email notify form only.
-          Use this whenever a presale is announced but not yet open.
-       B) "Open for orders" — swap the notify card for the full step-by-step
-          order builder (ask Claude — a working version of that builder is
-          saved in the project notes so it can be dropped back in).
-     To switch holidays/dates:
-       1. Update the <title> and meta tags below with the holiday name.
-       2. Edit the "PRESALE CONTENT — EDIT EACH TIME" block in the <body>.
-       3. Update the PRESALE_NAME constant near the top of the <script>
-          at the bottom — this is the label that lands in the Presale
-          Interest sheet tab so it's easy to tell sales apart.
-       4. Ask Claude to "turn the presale nav link on" — this adds a
-          Presale link to every page's nav + footer. When the batch is
-          full or the holiday's over, ask to "turn it off" to unlink it
-          again (the page itself stays live at this same URL either way,
-          same pattern as the retired Dream Up Your Cookies tool).
+     HOLIDAY SHOP PAGE — reusable for Halloween / Thanksgiving / Christmas / etc.
+     Current state: OPEN FOR ORDERS (Halloween 2026). The buy button links to a
+     Stripe Payment Link. Checkout is handled entirely by
+     Stripe; orders and pickup notes show up in Emily's Stripe dashboard.
+     To run a new holiday:
+       1. Update <title> + meta tags with the holiday name.
+       2. Edit the "HOLIDAY CONTENT — EDIT EACH TIME" block in the <body>:
+          headline, design cards (photo, name, one-liner), price stats.
+       3. Create a new Payment Link in Stripe and swap its URL into the
+          buy button (search for buy.stripe.com).
+       4. Update the PRESALE_NAME constant in the <script> at the bottom
+          (label for the "notify me" email list on the Presale Interest tab).
      ============================================================ -->
-<title>Halloween 2026 Presale — Double Joy Cookies</title>
-<meta name="description" content="The next Double Joy Cookies presale is coming this Halloween season — get notified the moment it opens.">
+<title>Halloween 2026 Cookies — Double Joy Cookies</title>
+<meta name="description" content="Limited-edition, hand-decorated Halloween sugar cookies from Double Joy Cookies. $6 per cookie, 12-cookie minimum, local pickup in the Portland, OR area.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Double Joy Cookies">
-<meta property="og:title" content="Halloween 2026 Presale — Double Joy Cookies">
-<meta property="og:description" content="The next Double Joy Cookies presale is coming this Halloween season — get notified the moment it opens.">
+<meta property="og:title" content="Halloween 2026 Cookies — Double Joy Cookies">
+<meta property="og:description" content="Limited-edition, hand-decorated Halloween sugar cookies from Double Joy Cookies. $6 per cookie, 12-cookie minimum, local pickup in the Portland, OR area.">
 <meta property="og:image" content="https://doublejoycookies.com/images/social-share.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:url" content="https://doublejoycookies.com/double_joy_presale.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Halloween 2026 Presale — Double Joy Cookies">
-<meta name="twitter:description" content="The next Double Joy Cookies presale is coming this Halloween season — get notified the moment it opens.">
+<meta name="twitter:title" content="Halloween 2026 Cookies — Double Joy Cookies">
+<meta name="twitter:description" content="Limited-edition, hand-decorated Halloween sugar cookies from Double Joy Cookies. $6 per cookie, 12-cookie minimum, local pickup in the Portland, OR area.">
 <meta name="twitter:image" content="https://doublejoycookies.com/images/social-share.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -182,6 +176,32 @@
   .sac-credit:hover{ opacity:0.9; }
   .sac-credit img{ height:1.7em; width:auto; display:block; flex-shrink:0; }
   .sac-credit span{ min-width:0; }
+
+  /* ---- Holiday shop ---- */
+  .hero-photo{ border-radius:20px; overflow:hidden; box-shadow: var(--shadow); margin-bottom:28px; background: var(--white); }
+  .hero-photo img{ width:100%; display:block; aspect-ratio: 4/3; object-fit:cover; object-position: 50% 45%; }
+  .buy-card{ text-align:center; }
+  .buy-cta{ display:block; width:100%; text-align:center; text-decoration:none; padding:16px 20px; }
+  .secure-note{ font-family: var(--font-sans); font-size:12px; color:#8a7f74; margin-top:12px; }
+  .design-section{ margin-bottom:30px; }
+  .design-section .eg-label{ font-family: var(--font-sans); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color: var(--gold); text-align:center; margin-bottom:6px; }
+  .design-section h2{ font-size:24px; font-weight:normal; text-align:center; margin:0 0 18px; }
+  .design-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+  @media (max-width:760px){ .design-grid{ grid-template-columns: repeat(2,1fr); } }
+  @media (max-width:440px){ .design-grid{ grid-template-columns:1fr; } }
+  .design-card{ background: var(--white); border-radius:18px; overflow:hidden; box-shadow: var(--shadow); }
+  .design-card img{ width:100%; aspect-ratio:1/1; object-fit:cover; display:block; }
+  .design-card .dc-body{ padding:14px 16px 18px; }
+  .design-card .dc-name{ font-size:17px; margin:0 0 4px; }
+  .design-card .dc-desc{ font-family: var(--font-sans); font-size:12.5px; color:#6b6b6b; line-height:1.55; margin:0; }
+  .design-card.dc-note{ display:flex; align-items:center; justify-content:center; text-align:center; background: var(--cream-deep); box-shadow:none; }
+  .design-card.dc-note .dc-body{ padding:22px; }
+  .how-steps{ display:grid; grid-template-columns: repeat(3,1fr); gap:16px; margin-bottom:28px; }
+  @media (max-width:640px){ .how-steps{ grid-template-columns:1fr; } }
+  .how-step{ background: var(--white); border-radius:16px; padding:20px 18px; box-shadow: var(--shadow); text-align:center; }
+  .how-step .step-num{ margin:0 auto 10px; }
+  .how-step h3{ font-size:16px; font-weight:normal; margin:0 0 6px; }
+  .how-step p{ font-family: var(--font-sans); font-size:12.5px; color:#6b6b6b; line-height:1.6; margin:0; }
 </style>
 </head>
 <body>
@@ -205,18 +225,69 @@
 </nav>
 </div>
 
-<!-- ==================== PRESALE CONTENT — EDIT EACH TIME ==================== -->
+<!-- ==================== HOLIDAY CONTENT — EDIT EACH TIME ==================== -->
 <div class="page-header">
-  <div class="script-tag">Mark your calendar</div>
-  <div class="kicker">Coming This Fall</div>
-  <h1>🎃 Halloween 2026 Presale</h1>
-  <p class="sub">The next limited-batch presale is coming this Halloween season. Spots tend to go fast once it opens — pop your email in below and I'll let you know the moment it's live.</p>
+  <div class="script-tag">Limited-edition</div>
+  <div class="kicker">Halloween 2026</div>
+  <h1>🎃 The Halloween Cookie Collection</h1>
+  <p class="sub">Five hand-decorated designs, made in small batches by Emily. Order by the dozen, pay securely online, and pick up locally.</p>
 </div>
 
 <div class="wrap">
+  <div class="hero-photo">
+    <img src="images/presale/halloween-tray.jpg" alt="A tray of hand-decorated Halloween sugar cookies: black cats in pumpkins, ghosts, ghost cats, and a dino with a pumpkin">
+  </div>
+
+  <div class="presale-card buy-card">
+    <div class="presale-grid">
+      <div class="presale-stat"><div class="label">Price</div><div class="value">$6 per cookie</div></div>
+      <div class="presale-stat"><div class="label">Minimum</div><div class="value">1 dozen (12)</div></div>
+      <div class="presale-stat"><div class="label">Pickup</div><div class="value">Local · Portland, OR</div></div>
+    </div>
+    <p class="presale-note">Each dozen is <strong>$72</strong> and comes as an assorted mix of this season's designs. Choose 1 to 10 dozen at checkout. Have a favorite? Add a note at checkout and I'll do my best to make extra.</p>
+    <a class="cta buy-cta" href="https://buy.stripe.com/cNi3cv3ChfdRdIDg2P8IU00">Order Halloween Cookies · $72 / dozen</a>
+    <div class="secure-note">🔒 Secure checkout by Stripe. Pay by card, Apple Pay, and more.</div>
+  </div>
+
+  <div class="design-section">
+    <div class="eg-label">Meet the collection</div>
+    <h2>Five Little Spooks</h2>
+    <div class="design-grid">
+      <div class="design-card">
+        <img src="images/presale/halloween-cat-pumpkin.jpg" alt="Black cat with pink ears peeking out of a pumpkin, decorated sugar cookie" loading="lazy">
+        <div class="dc-body"><h3 class="dc-name">Pumpkin Purrfect</h3><p class="dc-desc">A little black cat with pink ears, cuddled up in a plump pumpkin.</p></div>
+      </div>
+      <div class="design-card">
+        <img src="images/presale/halloween-ghost-balloon.jpg" alt="Smiling ghost holding a jack-o-lantern balloon, decorated sugar cookie" loading="lazy">
+        <div class="dc-body"><h3 class="dc-name">Boo-loon</h3><p class="dc-desc">A smiley ghost floating along with a jack-o-lantern balloon.</p></div>
+      </div>
+      <div class="design-card">
+        <img src="images/presale/halloween-ghost-latte.jpg" alt="Ghost cat holding a tiny pumpkin spice latte, decorated sugar cookie" loading="lazy">
+        <div class="dc-body"><h3 class="dc-name">Pumpkin Spice &amp; Everything Nice</h3><p class="dc-desc">A ghost kitty with her fall must-have: a tiny pumpkin spice latte.</p></div>
+      </div>
+      <div class="design-card">
+        <img src="images/presale/halloween-ghost-candy.jpg" alt="Ghost cat holding a bucket of candy, decorated sugar cookie" loading="lazy">
+        <div class="dc-body"><h3 class="dc-name">Trick or Treat Yourself</h3><p class="dc-desc">A ghost kitty with a bucket full of candy. Sweet on sweet.</p></div>
+      </div>
+      <div class="design-card">
+        <img src="images/presale/halloween-dino-pumpkin.jpg" alt="Green dinosaur hugging a pumpkin, decorated sugar cookie" loading="lazy">
+        <div class="dc-body"><h3 class="dc-name">Pumpkin Rex</h3><p class="dc-desc">A sweet green dino hugging his very own pumpkin.</p></div>
+      </div>
+      <div class="design-card dc-note">
+        <div class="dc-body"><h3 class="dc-name">Every dozen is a mix</h3><p class="dc-desc">You'll get a little of everything, hand-piped and baked fresh.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="how-steps">
+    <div class="how-step"><div class="step-num">1</div><h3>Pick your dozens</h3><p>Choose how many dozen and your preferred pickup date at checkout.</p></div>
+    <div class="how-step"><div class="step-num">2</div><h3>Pay securely</h3><p>Checkout runs on Stripe, so your card details never touch this site.</p></div>
+    <div class="how-step"><div class="step-num">3</div><h3>I'll confirm pickup</h3><p>Within 24 to 48 hours I'll reach out to lock in your pickup date and time.</p></div>
+  </div>
+
   <div class="presale-card">
-    <p class="presale-note">I'm saving the full details — designs, pricing, and pickup date — for closer to the date. Get on the list now for first dibs, and I'll send you a heads-up the moment the presale opens.</p>
-    <form class="notify-form" onsubmit="return djcPresaleNotify(this)" style="display:flex; flex-wrap:wrap; gap:10px; margin-top:16px;">
+    <p class="presale-note" style="text-align:center;">Want a heads-up before the next holiday batch? Pop your email in and I'll let you know the moment it opens.</p>
+    <form class="notify-form" onsubmit="return djcPresaleNotify(this)" style="display:flex; flex-wrap:wrap; gap:10px; margin-top:12px;">
       <input type="text" class="fn-hp" name="pn_hp" tabindex="-1" autocomplete="off">
       <input type="email" placeholder="you@email.com" required style="flex:1; min-width:200px;">
       <button type="submit" class="cta" style="width:auto; margin:0; padding:12px 26px;">Notify Me</button>
@@ -224,28 +295,9 @@
     <div class="pn-note" style="font-family: var(--font-sans); font-size:12.5px; color:#8a7f74; margin-top:10px; min-height:16px;"></div>
   </div>
 
-  <div class="example-gallery">
-    <div class="eg-label">A peek at the detail</div>
-    <div class="example-grid">
-      <div class="example-photo">
-        <img src="images/presale/presale-baseball.jpg" alt="Hand-decorated baseball themed sugar cookies">
-        <div class="eg-cap">Hand-piped detail, every batch</div>
-      </div>
-      <div class="example-photo">
-        <img src="images/presale/presale-zoo.jpg" alt="Hand-decorated safari animal sugar cookies">
-        <div class="eg-cap">Clean lines, soft colors</div>
-      </div>
-      <div class="example-photo">
-        <img src="images/presale/presale-strawberry.jpg" alt="Hand-decorated strawberry themed sugar cookies">
-        <div class="eg-cap">Little extras that make it special</div>
-      </div>
-    </div>
-    <div class="eg-note">Real Halloween photos coming soon — these show the level of detail you can expect.</div>
-  </div>
-
-  <div class="presale-note" style="text-align:center;">Need something sooner? <a href="double_joy_order_form.html" style="color:var(--gold); text-decoration:underline;">Start a custom order</a> anytime — presales are just for limited holiday batches.</div>
+  <div class="presale-note" style="text-align:center;">Need something custom? <a href="double_joy_order_form.html" style="color:var(--gold); text-decoration:underline;">Start a custom order</a> anytime. Allergen info, cancellations, and other details are in the <a href="double_joy_terms.html" style="color:var(--gold); text-decoration:underline;">Terms &amp; Policies</a>.</div>
 </div>
-<!-- ==================== END PRESALE CONTENT ==================== -->
+<!-- ==================== END HOLIDAY CONTENT ==================== -->
 
 <footer>
   <div class="flinks">

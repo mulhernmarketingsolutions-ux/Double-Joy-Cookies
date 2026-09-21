@@ -3,6 +3,7 @@
    - To change the promo: edit the text/link below.
    - To turn it off early: empty this file (or delete the <script src="holiday-banner.js"> tags). */
 (function () {
+  var ORDERS_OPEN = new Date('2026-09-30T15:00:00Z');
   var ORDERS_CLOSE = new Date('2026-10-24T07:00:00Z');
   if (new Date() >= ORDERS_CLOSE) return;
   if (/double_joy_presale/.test(location.pathname)) return;   // already on the shop page
@@ -22,7 +23,8 @@
   bar.className = 'holiday-bar';
   bar.setAttribute('role', 'region');
   bar.setAttribute('aria-label', 'Halloween announcement');
-  bar.innerHTML = '🎃 Halloween cookies are open! $7 each, order by Oct 23. <a href="double_joy_presale.html">Shop now</a>' +
+  var soon = new Date() < ORDERS_OPEN;
+  bar.innerHTML = (soon ? '🎃 Halloween cookies open Sept 30! <a href="double_joy_presale.html">Get notified</a>' : '🎃 Halloween cookies are open! $7 each, order by Oct 23. <a href="double_joy_presale.html">Shop now</a>') +
     '<button type="button" class="hb-x" aria-label="Dismiss">×</button>';
   nav.insertBefore(bar, nav.firstChild);
 

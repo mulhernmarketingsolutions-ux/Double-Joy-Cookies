@@ -232,7 +232,11 @@
   .thanks-banner.show{ display:block; }
   .thanks-banner h2{ font-size:26px; font-weight:normal; margin:0 0 10px; }
   .thanks-banner p{ font-family: var(--font-sans); font-size:14.5px; color:#6b6b6b; line-height:1.65; max-width:460px; margin:0 auto; }
-  .closed-note{ display:none; }
+  .closed-note, .soon-note{ display:none; }
+  body.soon .soon-note{ display:block; }
+  body.soon .order-bar, body.soon .stepper{ display:none !important; }
+  .preview-note{ display:none; background:#FFF3F9; border:1.5px dashed var(--blush); border-radius:12px; padding:10px 14px; font-family: var(--font-sans); font-size:13px; color: var(--berry); margin-bottom:14px; }
+  body.preview .preview-note{ display:block; }
   body.closed .closed-note{ display:block; }
   body.closed .order-bar, body.closed .stepper{ display:none !important; }
 </style>
@@ -277,12 +281,14 @@
   </div>
 
   <div class="presale-card buy-card">
+    <div class="preview-note"><strong>Preview mode.</strong> Orders aren't open to the public yet. Orders you place here are real and will be charged.</div>
     <div class="presale-grid">
       <div class="presale-stat"><div class="label">Cookies</div><div class="value">$7 each</div></div>
       <div class="presale-stat"><div class="label">Mini packs</div><div class="value">$11 · 4 minis</div></div>
       <div class="presale-stat"><div class="label">Order by</div><div class="value">Fri, Oct 23</div></div>
     </div>
-    <p class="presale-note">No minimum. Order one, order a dozen, mix and match any designs. Choose your quantities below, then check out. At checkout you'll pick your pickup window.</p>
+    <p class="presale-note">No minimum. Order one, order a dozen, mix and match any designs. Choose your quantities below, then check out. At checkout you'll pick your pickup window and can add a name to your cookies.</p>
+    <p class="presale-note soon-note"><strong>Halloween orders open Wednesday, Sept 30!</strong> Take a peek at the cookies below, and sign up at the bottom of the page to get an email the moment orders open.</p>
     <p class="presale-note closed-note"><strong>Halloween orders are now closed. Thank you!</strong> Sign up below to hear about the next batch.</p>
   </div>
 
@@ -302,9 +308,11 @@
     <h3 style="font-size:18px; font-weight:normal; margin:0 0 10px; text-align:center;">Pickup &amp; details</h3>
     <ul class="info-list">
       <li><strong>Pickup:</strong> Friday, Oct 30 from 5 to 9pm, or Saturday, Oct 31 from 8am to 12pm. You'll choose one at checkout. Pickup is from a table outside Emily's house in the Portland, OR area, and she'll email you the details.</li>
+      <li><strong>Name on your cookies?</strong> Add it at checkout (optional).</li>
       <li><strong>Allergies or notes:</strong> Add them at checkout, and see the <a href="double_joy_terms.html" style="color:var(--gold); text-decoration:underline;">Terms &amp; Policies</a> for allergen info.</li>
       <li><strong>Order by:</strong> Friday, Oct 23, or sooner if we sell out.</li>
     </ul>
+    <div class="spell-warn">✏️ <strong>Please check your spelling!</strong> Names are piped exactly as you type them at checkout, so please double-check before you pay.</div>
   </div>
 
   <div class="how-steps">
@@ -314,7 +322,7 @@
   </div>
 
   <div class="presale-card">
-    <p class="presale-note" style="text-align:center;">Want a heads-up before the next holiday batch? Pop your email in and I'll let you know the moment it opens.</p>
+    <p class="presale-note" style="text-align:center;">Want a heads-up when orders open, or before the next holiday batch? Pop your email in and I'll let you know the moment it opens.</p>
     <form class="notify-form" onsubmit="return djcPresaleNotify(this)" style="display:flex; flex-wrap:wrap; gap:10px; margin-top:12px;">
       <input type="text" class="fn-hp" name="pn_hp" tabindex="-1" autocomplete="off">
       <input type="email" placeholder="you@email.com" required style="flex:1; min-width:200px;">
@@ -371,7 +379,9 @@ const PRESALE_NAME = "🎃 Halloween 2026";   // shows up in the Presale Interes
 /* ===================================================================== */
 
 const DJC_CHECKOUT = "https://doublejoy-checkout.mulhernmarketingsolutions.workers.dev/";  // Cloudflare Worker that creates the Stripe Checkout Session
+const ORDERS_OPEN  = new Date('2026-09-30T15:00:00Z');   // 8am Pacific, Wed Sept 30
 const ORDERS_CLOSE = new Date('2026-10-24T07:00:00Z');   // end of Oct 23, Pacific
+const DJC_PREVIEW = (new URLSearchParams(location.search).get('preview') || '');   // private early-access link
 // id must match the catalog in the checkout Worker
 const DESIGNS = [
   { id:'purrfect-pumpkin', name:'Purrfect Pumpkin', price:7, img:'images/presale/halloween-cat-pumpkin.jpg', alt:'Black cat with pink ears peeking out of a pumpkin, decorated sugar cookie', desc:'A little black cat with pink ears, cuddled up in a plump pumpkin.' },
@@ -431,7 +441,7 @@ async function djcCheckout(){
   if(DJC_CHECKOUT.indexOf('PASTE_') !== -1){ showToast('Checkout is not connected yet.'); return; }
   btn.disabled = true; btn.textContent = 'One moment…';
   try{
-    const res = await fetch(DJC_CHECKOUT, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ items }) });
+    const res = await fetch(DJC_CHECKOUT, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ items, preview: DJC_PREVIEW }) });
     const data = await res.json();
     if(data && data.url){ window.location.href = data.url; return; }
     showToast((data && data.error) || 'Something went wrong. Please try again.');
@@ -444,6 +454,7 @@ async function djcCheckout(){
 (function(){
   djcBuildCards();
   if(new Date() >= ORDERS_CLOSE){ document.body.classList.add('closed'); }
+  else if(new Date() < ORDERS_OPEN){ document.body.classList.add(DJC_PREVIEW ? 'preview' : 'soon'); }
   if(/[?&]ordered=1/.test(location.search)){
     document.getElementById('thanksBanner').classList.add('show');
     window.scrollTo(0,0);

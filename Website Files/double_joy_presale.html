@@ -5,24 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- ============================================================
      HOLIDAY SHOP PAGE — reusable for Halloween / Thanksgiving / Christmas / etc.
-     Current state: OPEN FOR ORDERS (Halloween 2026). The buy button links to a
-     Stripe Payment Link. Checkout is handled entirely by
-     Stripe; orders and pickup notes show up in Emily's Stripe dashboard.
+     Current state: OPEN FOR ORDERS (Halloween 2026). Customers pick quantities per
+     design; the page sends the cart to the checkout Worker (DJC_CHECKOUT in the
+     script), which returns a Stripe Checkout URL. Prices live in that Worker
+     (stripe-setup/checkout-worker.js), not on this page.
      To run a new holiday:
        1. Update <title> + meta tags with the holiday name.
        2. Edit the "HOLIDAY CONTENT — EDIT EACH TIME" block in the <body>:
           headline, design cards (photo, name, one-liner), price stats.
-       3. Create a new Payment Link in Stripe and swap its URL into the
-          buy button (search for buy.stripe.com).
+       3. Update the catalog in the checkout Worker and the DESIGNS list in the script.
        4. Update the PRESALE_NAME constant in the <script> at the bottom
           (label for the "notify me" email list on the Presale Interest tab).
      ============================================================ -->
 <title>Halloween 2026 Cookies — Double Joy Cookies</title>
-<meta name="description" content="Limited-edition, hand-decorated Halloween sugar cookies from Double Joy Cookies. $6 per cookie, 12-cookie minimum, local pickup in the Portland, OR area.">
+<meta name="description" content="Limited-edition, hand-decorated Halloween sugar cookies from Double Joy Cookies. $7 each, mix and match your favorites, pickup Oct 30 or 31 in Portland, OR.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Double Joy Cookies">
 <meta property="og:title" content="Halloween 2026 Cookies — Double Joy Cookies">
-<meta property="og:description" content="Limited-edition, hand-decorated Halloween sugar cookies from Double Joy Cookies. $6 per cookie, 12-cookie minimum, local pickup in the Portland, OR area.">
+<meta property="og:description" content="Limited-edition, hand-decorated Halloween sugar cookies from Double Joy Cookies. $7 each, mix and match your favorites, pickup Oct 30 or 31 in Portland, OR.">
 <meta property="og:image" content="https://doublejoycookies.com/images/social-share.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -30,7 +30,7 @@
 <meta property="og:url" content="https://doublejoycookies.com/double_joy_presale.html">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Halloween 2026 Cookies — Double Joy Cookies">
-<meta name="twitter:description" content="Limited-edition, hand-decorated Halloween sugar cookies from Double Joy Cookies. $6 per cookie, 12-cookie minimum, local pickup in the Portland, OR area.">
+<meta name="twitter:description" content="Limited-edition, hand-decorated Halloween sugar cookies from Double Joy Cookies. $7 each, mix and match your favorites, pickup Oct 30 or 31 in Portland, OR.">
 <meta name="twitter:image" content="https://doublejoycookies.com/images/social-share.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -202,6 +202,39 @@
   .how-step .step-num{ margin:0 auto 10px; }
   .how-step h3{ font-size:16px; font-weight:normal; margin:0 0 6px; }
   .how-step p{ font-family: var(--font-sans); font-size:12.5px; color:#6b6b6b; line-height:1.6; margin:0; }
+
+  /* ---- Halloween picker ---- */
+  .pick-card{ background: var(--white); border-radius:18px; overflow:hidden; box-shadow: var(--shadow); display:flex; flex-direction:column; }
+  .pick-card img, .pick-card .mini-tile{ width:100%; aspect-ratio:1/1; object-fit:cover; display:block; }
+  .mini-tile{ background: linear-gradient(135deg, var(--cream-deep), #F8DCEB); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; font-family: var(--font-sans); color: var(--berry); padding:14px; }
+  .mini-tile .mt-big{ font-family: var(--font-script); font-size:30px; line-height:1.1; }
+  .mini-tile .mt-small{ font-size:12px; letter-spacing:1px; text-transform:uppercase; margin-top:6px; opacity:.75; }
+  .pick-card .dc-body{ padding:14px 16px 6px; flex:1; }
+  .pick-card .dc-name{ font-size:17px; margin:0 0 4px; }
+  .pick-card .dc-desc{ font-family: var(--font-sans); font-size:12.5px; color:#6b6b6b; line-height:1.55; margin:0; }
+  .pick-card .dc-price{ font-family: var(--font-sans); font-weight:700; font-size:14px; color: var(--berry); margin-top:8px; }
+  .stepper{ display:flex; align-items:center; justify-content:center; gap:14px; padding:12px 16px 16px; }
+  .stepper button{ width:38px; height:38px; border-radius:50%; border:1.5px solid var(--line); background: var(--cream); color: var(--berry); font-size:20px; line-height:1; cursor:pointer; font-family: var(--font-sans); transition: all .15s ease; }
+  .stepper button:hover:not(:disabled){ background: var(--blush); border-color: var(--blush); }
+  .stepper button:disabled{ opacity:.35; cursor:default; }
+  .stepper .qty{ min-width:34px; text-align:center; font-family: var(--font-sans); font-weight:700; font-size:18px; }
+  .pick-card.has-qty{ outline:2.5px solid var(--blush); }
+  .info-list{ font-family: var(--font-sans); font-size:13.5px; color:#6b6b6b; line-height:1.75; margin:0; padding-left:20px; }
+  .info-list strong{ color: var(--ink); }
+  .spell-warn{ background:#FFF3F9; border:1.5px solid var(--blush); border-radius:12px; padding:12px 16px; font-family: var(--font-sans); font-size:13px; color: var(--berry); line-height:1.6; margin-top:14px; text-align:left; }
+  .order-bar{ position:fixed; left:0; right:0; bottom:0; z-index:150; background: var(--berry); color: var(--cream); padding:12px 20px; display:none; align-items:center; justify-content:center; gap:18px; flex-wrap:wrap; box-shadow: 0 -8px 24px rgba(51,30,43,0.25); font-family: var(--font-sans); }
+  .order-bar.show{ display:flex; }
+  .order-bar .ob-sum{ font-size:14px; }
+  .order-bar .ob-sum strong{ font-size:17px; }
+  .order-bar button{ background: var(--blush); color: var(--berry); border:none; border-radius:26px; padding:12px 26px; font-family: var(--font-sans); font-size:13px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; cursor:pointer; }
+  .order-bar button:disabled{ opacity:.6; cursor:wait; }
+  .thanks-banner{ display:none; background: var(--white); border-radius:20px; box-shadow: var(--shadow); padding:32px 28px; text-align:center; margin-bottom:28px; }
+  .thanks-banner.show{ display:block; }
+  .thanks-banner h2{ font-size:26px; font-weight:normal; margin:0 0 10px; }
+  .thanks-banner p{ font-family: var(--font-sans); font-size:14.5px; color:#6b6b6b; line-height:1.65; max-width:460px; margin:0 auto; }
+  .closed-note{ display:none; }
+  body.closed .closed-note{ display:block; }
+  body.closed .order-bar, body.closed .stepper{ display:none !important; }
 </style>
 </head>
 <body>
@@ -230,59 +263,56 @@
   <div class="script-tag">Limited-edition</div>
   <div class="kicker">Halloween 2026</div>
   <h1>🎃 The Halloween Cookie Collection</h1>
-  <p class="sub">Five hand-decorated designs, made in small batches by Emily. Order by the dozen, pay securely online, and pick up locally.</p>
+  <p class="sub">Hand-decorated in small batches by Emily. Pick your favorites, mix and match as many as you like, pay securely online, and pick up locally.</p>
 </div>
 
 <div class="wrap">
+  <div class="thanks-banner" id="thanksBanner">
+    <h2>🎃 Thank you! Your order is in.</h2>
+    <p>You'll get a confirmation email from Double Joy Cookies shortly. Emily will send pickup details for the table outside her house before your pickup window. Questions? Just reply to that email.</p>
+  </div>
+
   <div class="hero-photo">
     <img src="images/presale/halloween-tray.jpg" alt="A tray of hand-decorated Halloween sugar cookies: black cats in pumpkins, ghosts, ghost cats, and a dino with a pumpkin">
   </div>
 
   <div class="presale-card buy-card">
     <div class="presale-grid">
-      <div class="presale-stat"><div class="label">Price</div><div class="value">$6 per cookie</div></div>
-      <div class="presale-stat"><div class="label">Minimum</div><div class="value">1 dozen (12)</div></div>
-      <div class="presale-stat"><div class="label">Pickup</div><div class="value">Local · Portland, OR</div></div>
+      <div class="presale-stat"><div class="label">Cookies</div><div class="value">$7 each</div></div>
+      <div class="presale-stat"><div class="label">Mini packs</div><div class="value">$11 · 4 minis</div></div>
+      <div class="presale-stat"><div class="label">Order by</div><div class="value">Fri, Oct 23</div></div>
     </div>
-    <p class="presale-note">Each dozen is <strong>$72</strong> and comes as an assorted mix of this season's designs. Choose 1 to 10 dozen at checkout. Have a favorite? Add a note at checkout and I'll do my best to make extra.</p>
-    <a class="cta buy-cta" href="https://buy.stripe.com/cNi3cv3ChfdRdIDg2P8IU00">Order Halloween Cookies · $72 / dozen</a>
-    <div class="secure-note">🔒 Secure checkout by Stripe. Pay by card, Apple Pay, and more.</div>
+    <p class="presale-note">No minimum. Order one, order a dozen, mix and match any designs. Choose your quantities below, then check out. At checkout you'll pick your pickup window and can add a name to your cookies.</p>
+    <p class="presale-note closed-note"><strong>Halloween orders are now closed. Thank you!</strong> Sign up below to hear about the next batch.</p>
   </div>
 
   <div class="design-section">
-    <div class="eg-label">Meet the collection</div>
+    <div class="eg-label">Choose your cookies</div>
     <h2>Five Little Frights</h2>
-    <div class="design-grid">
-      <div class="design-card">
-        <img src="images/presale/halloween-cat-pumpkin.jpg" alt="Black cat with pink ears peeking out of a pumpkin, decorated sugar cookie" loading="lazy">
-        <div class="dc-body"><h3 class="dc-name">Pumpkin Purrfect</h3><p class="dc-desc">A little black cat with pink ears, cuddled up in a plump pumpkin.</p></div>
-      </div>
-      <div class="design-card">
-        <img src="images/presale/halloween-ghost-balloon.jpg" alt="Smiling ghost holding a jack-o-lantern balloon, decorated sugar cookie" loading="lazy">
-        <div class="dc-body"><h3 class="dc-name">Boo-loon</h3><p class="dc-desc">A smiley ghost floating along with a jack-o-lantern balloon.</p></div>
-      </div>
-      <div class="design-card">
-        <img src="images/presale/halloween-ghost-latte.jpg" alt="Ghost cat holding a tiny pumpkin spice latte, decorated sugar cookie" loading="lazy">
-        <div class="dc-body"><h3 class="dc-name">Pumpkin Spice &amp; Everything Nice</h3><p class="dc-desc">A ghost kitty with her fall must-have: a tiny pumpkin spice latte.</p></div>
-      </div>
-      <div class="design-card">
-        <img src="images/presale/halloween-ghost-candy.jpg" alt="Ghost cat holding a bucket of candy, decorated sugar cookie" loading="lazy">
-        <div class="dc-body"><h3 class="dc-name">Trick or Treat Yourself</h3><p class="dc-desc">A ghost kitty with a bucket full of candy. Sweet on sweet.</p></div>
-      </div>
-      <div class="design-card">
-        <img src="images/presale/halloween-dino-pumpkin.jpg" alt="Green dinosaur hugging a pumpkin, decorated sugar cookie" loading="lazy">
-        <div class="dc-body"><h3 class="dc-name">Pumpkin Rex</h3><p class="dc-desc">A sweet green dino hugging his very own pumpkin.</p></div>
-      </div>
-      <div class="design-card dc-note">
-        <div class="dc-body"><h3 class="dc-name">Every dozen is a mix</h3><p class="dc-desc">You'll get a little of everything, hand-piped and baked fresh.</p></div>
-      </div>
-    </div>
+    <div class="design-grid" id="singlesGrid"></div>
+  </div>
+
+  <div class="design-section">
+    <div class="eg-label">Little extras</div>
+    <h2>Mini Packs</h2>
+    <div class="design-grid" id="minisGrid"></div>
+  </div>
+
+  <div class="presale-card">
+    <h3 style="font-size:18px; font-weight:normal; margin:0 0 10px; text-align:center;">Pickup &amp; details</h3>
+    <ul class="info-list">
+      <li><strong>Pickup:</strong> Friday, Oct 30 from 5 to 9pm, or Saturday, Oct 31 from 8am to 12pm. You'll choose one at checkout. Pickup is from a table outside Emily's house in the Portland, OR area, and she'll email you the details.</li>
+      <li><strong>Name on your cookies?</strong> Add it at checkout (optional).</li>
+      <li><strong>Allergies or notes:</strong> Add them at checkout, and see the <a href="double_joy_terms.html" style="color:var(--gold); text-decoration:underline;">Terms &amp; Policies</a> for allergen info.</li>
+      <li><strong>Order by:</strong> Friday, Oct 23, or sooner if we sell out.</li>
+    </ul>
+    <div class="spell-warn">✏️ <strong>Please check your spelling!</strong> Names are piped exactly as you type them at checkout, so please double-check before you pay.</div>
   </div>
 
   <div class="how-steps">
-    <div class="how-step"><div class="step-num">1</div><h3>Pick your dozens</h3><p>Choose how many dozen and your preferred pickup date at checkout.</p></div>
+    <div class="how-step"><div class="step-num">1</div><h3>Pick your cookies</h3><p>Tap + on your favorites. Mix and match any designs, no minimum.</p></div>
     <div class="how-step"><div class="step-num">2</div><h3>Pay securely</h3><p>Checkout runs on Stripe, so your card details never touch this site.</p></div>
-    <div class="how-step"><div class="step-num">3</div><h3>I'll confirm pickup</h3><p>Within 24 to 48 hours I'll reach out to lock in your pickup date and time.</p></div>
+    <div class="how-step"><div class="step-num">3</div><h3>Pick up &amp; enjoy</h3><p>Grab your cookies from the table outside Emily's house on Oct 30 or 31.</p></div>
   </div>
 
   <div class="presale-card">
@@ -296,6 +326,12 @@
   </div>
 
   <div class="presale-note" style="text-align:center;">Need something custom? <a href="double_joy_order_form.html" style="color:var(--gold); text-decoration:underline;">Start a custom order</a> anytime. Allergen info, cancellations, and other details are in the <a href="double_joy_terms.html" style="color:var(--gold); text-decoration:underline;">Terms &amp; Policies</a>.</div>
+  <div style="height:70px;"></div>
+</div>
+
+<div class="order-bar" id="orderBar">
+  <div class="ob-sum"><span id="obCount">0 items</span> · <strong id="obTotal">$0</strong></div>
+  <button type="button" id="obBtn" onclick="djcCheckout()">Checkout</button>
 </div>
 <!-- ==================== END HOLIDAY CONTENT ==================== -->
 
@@ -335,6 +371,88 @@
 /* ============= PRESALE SETTINGS — EDIT THESE EACH TIME ============= */
 const PRESALE_NAME = "🎃 Halloween 2026";   // shows up in the Presale Interest sheet tab so it's easy to spot
 /* ===================================================================== */
+
+const DJC_CHECKOUT = "PASTE_CHECKOUT_WORKER_URL";  // Cloudflare Worker that creates the Stripe Checkout Session
+const ORDERS_CLOSE = new Date('2026-10-24T07:00:00Z');   // end of Oct 23, Pacific
+// id must match the catalog in the checkout Worker
+const DESIGNS = [
+  { id:'purrfect-pumpkin', name:'Purrfect Pumpkin', price:7, img:'images/presale/halloween-cat-pumpkin.jpg', alt:'Black cat with pink ears peeking out of a pumpkin, decorated sugar cookie', desc:'A little black cat with pink ears, cuddled up in a plump pumpkin.' },
+  { id:'boo-loon', name:'Boo-loon', price:7, img:'images/presale/halloween-ghost-balloon.jpg', alt:'Smiling ghost holding a jack-o-lantern balloon, decorated sugar cookie', desc:'A smiley ghost floating along with a jack-o-lantern balloon.' },
+  { id:'pumpkin-rex', name:'Pumpkin Rex', price:7, img:'images/presale/halloween-dino-pumpkin.jpg', alt:'Green dinosaur hugging a pumpkin, decorated sugar cookie', desc:'A sweet green dino hugging his very own pumpkin.' },
+  { id:'ghost-cat-basket', name:'Ghost Cat Treat Basket', price:7, img:'images/presale/halloween-ghost-candy.jpg', alt:'Ghost with cat ears holding a trick-or-treat basket, decorated sugar cookie', desc:'A ghost kitty with a basket full of Halloween candy.' },
+  { id:'ghost-basket', name:'Ghost Treat Basket', price:7, img:'images/presale/halloween-tray.jpg', alt:'Halloween cookie tray', desc:'A sweet ghost holding a trick-or-treat basket. (Photo coming soon!)' }
+];
+const MINIS = [
+  { id:'bag-of-boos', name:'Bag of Boos', price:11, big:'Boos', desc:'4 mini ghost cookies.' },
+  { id:'boo-bag', name:'Boo! Bag', price:11, big:'B · O · O', desc:'4 mini cookies that spell BOO.' },
+  { id:'trick-or-treat-mini', name:'Trick or Treat Mini', price:11, big:'Trick or Treat', desc:'4 mini Halloween cookies.' }
+];
+const djcQty = {};
+
+function djcBuildCards(){
+  const build = (list, gridId, isMini) => {
+    const grid = document.getElementById(gridId);
+    grid.innerHTML = list.map(d => `
+      <div class="pick-card" id="card-${d.id}">
+        ${isMini
+          ? `<div class="mini-tile"><div class="mt-big">${d.big}</div><div class="mt-small">4 mini cookies</div></div>`
+          : `<img src="${d.img}" alt="${d.alt}" loading="lazy">`}
+        <div class="dc-body"><h3 class="dc-name">${d.name}</h3><p class="dc-desc">${d.desc}</p><div class="dc-price">$${d.price}${isMini ? ' per pack' : ' each'}</div></div>
+        <div class="stepper">
+          <button type="button" aria-label="Fewer ${d.name}" onclick="djcStep('${d.id}',-1)" id="minus-${d.id}" disabled>−</button>
+          <span class="qty" id="qty-${d.id}">0</span>
+          <button type="button" aria-label="More ${d.name}" onclick="djcStep('${d.id}',1)">+</button>
+        </div>
+      </div>`).join('');
+  };
+  build(DESIGNS, 'singlesGrid', false);
+  build(MINIS, 'minisGrid', true);
+}
+
+function djcStep(id, delta){
+  const n = Math.max(0, Math.min(99, (djcQty[id]||0) + delta));
+  djcQty[id] = n;
+  document.getElementById('qty-'+id).textContent = n;
+  document.getElementById('minus-'+id).disabled = n === 0;
+  document.getElementById('card-'+id).classList.toggle('has-qty', n > 0);
+  djcUpdateBar();
+}
+
+function djcUpdateBar(){
+  let items = 0, total = 0;
+  DESIGNS.concat(MINIS).forEach(d => { const q = djcQty[d.id]||0; items += q; total += q * d.price; });
+  document.getElementById('obCount').textContent = items + (items === 1 ? ' item' : ' items');
+  document.getElementById('obTotal').textContent = '$' + total;
+  document.getElementById('orderBar').classList.toggle('show', items > 0);
+}
+
+async function djcCheckout(){
+  const btn = document.getElementById('obBtn');
+  const items = DESIGNS.concat(MINIS).filter(d => (djcQty[d.id]||0) > 0).map(d => ({ id:d.id, qty:djcQty[d.id] }));
+  if(!items.length){ showToast('Pick at least one cookie first 🍪'); return; }
+  if(DJC_CHECKOUT.indexOf('PASTE_') !== -1){ showToast('Checkout is not connected yet.'); return; }
+  btn.disabled = true; btn.textContent = 'One moment…';
+  try{
+    const res = await fetch(DJC_CHECKOUT, { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ items }) });
+    const data = await res.json();
+    if(data && data.url){ window.location.href = data.url; return; }
+    showToast((data && data.error) || 'Something went wrong. Please try again.');
+  }catch(e){
+    showToast('Could not reach checkout. Please try again.');
+  }
+  btn.disabled = false; btn.textContent = 'Checkout';
+}
+
+(function(){
+  djcBuildCards();
+  if(new Date() >= ORDERS_CLOSE){ document.body.classList.add('closed'); }
+  if(/[?&]ordered=1/.test(location.search)){
+    document.getElementById('thanksBanner').classList.add('show');
+    window.scrollTo(0,0);
+  }
+  // Coming back with the browser Back button after Stripe: reset the button
+  window.addEventListener('pageshow', function(e){ if(e.persisted){ const b=document.getElementById('obBtn'); b.disabled=false; b.textContent='Checkout'; } });
+})();
 
 const DJC_ENDPOINT = "https://script.google.com/macros/s/AKfycbypdIQnGgZmasUL9IMtr7JxYj-bGALDzSl9W744KVn-VTzKgN75zN13pxMfMo2XHs3n/exec";
 const djcFooterLoadTime = Date.now();

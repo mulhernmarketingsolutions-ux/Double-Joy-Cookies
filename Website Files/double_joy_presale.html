@@ -234,6 +234,7 @@
   .pz-input{ width:100%; margin-top:8px; border:1.5px solid var(--line); border-radius:10px; padding:8px 10px; font-family: var(--font-sans); font-size:13px; color: var(--ink); resize:vertical; min-height:38px; box-sizing:border-box; }
   .pz-input:focus{ outline:none; border-color: var(--blush); }
   .pz-hint{ font-family: var(--font-sans); font-size:11px; color:#8a7f74; margin-top:5px; line-height:1.5; }
+  .pz-fee{ color:#8a7f74; font-weight:normal; }
   .info-list{ font-family: var(--font-sans); font-size:13.5px; color:#6b6b6b; line-height:1.75; margin:0; padding-left:20px; }
   .info-list strong{ color: var(--ink); }
   .spell-warn{ background:#FFF3F9; border:1.5px solid var(--blush); border-radius:12px; padding:12px 16px; font-family: var(--font-sans); font-size:13px; color: var(--berry); line-height:1.6; margin-top:14px; text-align:left; }
@@ -420,6 +421,7 @@ const MINIS = [
   { id:'boo-bag', name:'Boo! Bag', price:11, img:'images/presale/halloween-mini-boobag.jpg', alt:'Mini cookies spelling BOO in a gift bag', desc:'4 mini cookies that spell BOO.' },
   { id:'trick-or-treat-mini', name:'Trick or Treat Mini', price:11, img:'images/presale/halloween-mini-trick.jpg', alt:'Assorted mini Halloween cookies in a gift bag', desc:'4 mini Halloween cookies.' }
 ];
+const PERSONALIZE_FEE = 0.5; // per cookie, singles only — keep in sync with the Worker's NAME_FEE_CENTS
 const djcQty = {};
 
 function djcBuildCards(){
@@ -435,11 +437,12 @@ function djcBuildCards(){
           <button type="button" aria-label="More ${d.name}" onclick="djcStep('${d.id}',1)">+</button>
         </div>
         ${VARIANTS[d.id] ? djcVariantHtml(d.id) : ''}
+        ${isMini ? '' : `
         <div class="pz-wrap">
-          <label class="pz-toggle"><input type="checkbox" id="pzchk-${d.id}" onchange="djcTogglePersonalize('${d.id}')"> Add a name on this cookie?</label>
+          <label class="pz-toggle"><input type="checkbox" id="pzchk-${d.id}" onchange="djcTogglePersonalize('${d.id}')"> Add a name on this cookie? <span class="pz-fee">+$${PERSONALIZE_FEE.toFixed(2)} each</span></label>
           <textarea id="pzname-${d.id}" class="pz-input" placeholder="e.g. Hailey, Julia" style="display:none;" maxlength="300" rows="1" oninput="djcAutoGrow(this)"></textarea>
-          <div class="pz-hint" id="pzhint-${d.id}" style="display:none;">One name per cookie, separated by commas. Please double-check spelling!</div>
-        </div>
+          <div class="pz-hint" id="pzhint-${d.id}" style="display:none;">One name per cookie, separated by commas. Adds $${PERSONALIZE_FEE.toFixed(2)} per cookie. Please double-check spelling!</div>
+        </div>`}
       </div>`).join('');
   };
   build(DESIGNS, 'singlesGrid', false);
@@ -499,6 +502,7 @@ function djcTogglePersonalize(id){
   box.style.display = on ? 'block' : 'none';
   hint.style.display = on ? 'block' : 'none';
   if(on){ box.focus(); } else { box.value = ''; }
+  djcUpdateBar();
 }
 
 function djcAutoGrow(el){
@@ -508,9 +512,15 @@ function djcAutoGrow(el){
 
 function djcUpdateBar(){
   let items = 0, total = 0;
-  DESIGNS.concat(MINIS).forEach(d => { const q = djcQty[d.id]||0; items += q; total += q * d.price; });
+  DESIGNS.concat(MINIS).forEach(d => {
+    const q = djcQty[d.id]||0;
+    items += q;
+    total += q * d.price;
+    const chk = document.getElementById('pzchk-'+d.id);
+    if(chk && chk.checked){ total += q * PERSONALIZE_FEE; }
+  });
   document.getElementById('obCount').textContent = items + (items === 1 ? ' item' : ' items');
-  document.getElementById('obTotal').textContent = '$' + total;
+  document.getElementById('obTotal').textContent = '$' + total.toFixed(2).replace(/\.00$/, '');
   document.getElementById('orderBar').classList.toggle('show', items > 0);
 }
 

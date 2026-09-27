@@ -219,6 +219,21 @@
   .stepper button:disabled{ opacity:.35; cursor:default; }
   .stepper .qty{ min-width:34px; text-align:center; font-family: var(--font-sans); font-weight:700; font-size:18px; }
   .pick-card.has-qty{ outline:2.5px solid var(--blush); }
+  .pz-wrap{ padding:0 16px 14px; display:none; }
+  .pick-card.has-qty .pz-wrap{ display:block; }
+  .variant-wrap{ padding:0 16px 6px; display:none; }
+  .pick-card.has-qty .variant-wrap{ display:block; }
+  .variant-label{ font-family: var(--font-sans); font-size:12.5px; font-weight:700; color: var(--berry); margin-bottom:6px; }
+  .variant-label .req-star{ color: var(--gold); }
+  .variant-opts{ display:flex; gap:10px; }
+  .variant-opt{ flex:1; display:flex; align-items:center; justify-content:center; gap:6px; border:1.5px solid var(--line); border-radius:10px; padding:8px 6px; font-family: var(--font-sans); font-size:12.5px; color: var(--ink); cursor:pointer; text-align:center; }
+  .variant-opt input{ accent-color: var(--berry); cursor:pointer; }
+  .variant-opt.checked{ border-color: var(--blush); background: var(--cream); font-weight:700; }
+  .pz-toggle{ display:flex; align-items:center; gap:8px; font-family: var(--font-sans); font-size:12.5px; color: var(--berry); cursor:pointer; user-select:none; }
+  .pz-toggle input{ width:16px; height:16px; accent-color: var(--berry); cursor:pointer; }
+  .pz-input{ width:100%; margin-top:8px; border:1.5px solid var(--line); border-radius:10px; padding:8px 10px; font-family: var(--font-sans); font-size:13px; color: var(--ink); resize:vertical; min-height:38px; box-sizing:border-box; }
+  .pz-input:focus{ outline:none; border-color: var(--blush); }
+  .pz-hint{ font-family: var(--font-sans); font-size:11px; color:#8a7f74; margin-top:5px; line-height:1.5; }
   .info-list{ font-family: var(--font-sans); font-size:13.5px; color:#6b6b6b; line-height:1.75; margin:0; padding-left:20px; }
   .info-list strong{ color: var(--ink); }
   .spell-warn{ background:#FFF3F9; border:1.5px solid var(--blush); border-radius:12px; padding:12px 16px; font-family: var(--font-sans); font-size:13px; color: var(--berry); line-height:1.6; margin-top:14px; text-align:left; }
@@ -387,13 +402,23 @@ const DESIGNS = [
   { id:'purrfect-pumpkin', name:'Purrfect Pumpkin', price:7, img:'images/presale/halloween-cat-pumpkin.jpg', alt:'Black cat with pink ears peeking out of a pumpkin, decorated sugar cookie', desc:'A little black cat with pink ears, cuddled up in a plump pumpkin.' },
   { id:'boo-loon', name:'Boo-loon', price:7, img:'images/presale/halloween-ghost-balloon.jpg', alt:'Smiling ghost holding a jack-o-lantern balloon, decorated sugar cookie', desc:'A smiley ghost floating along with a jack-o-lantern balloon.' },
   { id:'pumpkin-rex', name:'Pumpkin Rex', price:7, img:'images/presale/halloween-dino-pumpkin.jpg', alt:'Green dinosaur hugging a pumpkin, decorated sugar cookie', desc:'A sweet green dino hugging his very own pumpkin.' },
-  { id:'ghost-cat-basket', name:'Ghost Cat Treat Basket', price:7, img:'images/presale/halloween-ghost-candy.jpg', alt:'Ghost with cat ears holding a trick-or-treat basket, decorated sugar cookie', desc:'A ghost kitty with a basket full of Halloween candy.' },
-  { id:'ghost-basket', name:'Ghost Treat Basket', price:7, img:'images/presale/halloween-tray.jpg', alt:'Halloween cookie tray', desc:'A sweet ghost holding a trick-or-treat basket. (Photo coming soon!)' }
+  { id:'ghost-basket', name:'Ghost Trick-or-Treat Basket', price:7, img:'images/presale/halloween-ghost-basket.jpg', alt:'Ghost holding a trick-or-treat basket, decorated sugar cookie', desc:'A sweet ghost with a trick-or-treat basket. Pick cat ears or no ears below.' }
 ];
+
+// Some designs need a required style choice before checkout. Each option can swap the card photo.
+const VARIANTS = {
+  'ghost-basket': {
+    label: 'Style',
+    options: [
+      { value:'no-ears', label:'No ears', img:'images/presale/halloween-ghost-basket.jpg' },
+      { value:'cat-ears', label:'Cat ears', img:'images/presale/halloween-ghost-candy.jpg' }
+    ]
+  }
+};
 const MINIS = [
-  { id:'bag-of-boos', name:'Bag of Boos', price:11, big:'Boos', desc:'4 mini ghost cookies.' },
-  { id:'boo-bag', name:'Boo! Bag', price:11, big:'B · O · O', desc:'4 mini cookies that spell BOO.' },
-  { id:'trick-or-treat-mini', name:'Trick or Treat Mini', price:11, big:'Trick or Treat', desc:'4 mini Halloween cookies.' }
+  { id:'bag-of-boos', name:'Bag of Boos', price:11, img:'images/presale/halloween-mini-boos.jpg', alt:'Four mini ghost cookies in a gift bag', desc:'4 mini ghost cookies.' },
+  { id:'boo-bag', name:'Boo! Bag', price:11, img:'images/presale/halloween-mini-boobag.jpg', alt:'Mini cookies spelling BOO in a gift bag', desc:'4 mini cookies that spell BOO.' },
+  { id:'trick-or-treat-mini', name:'Trick or Treat Mini', price:11, img:'images/presale/halloween-mini-trick.jpg', alt:'Assorted mini Halloween cookies in a gift bag', desc:'4 mini Halloween cookies.' }
 ];
 const djcQty = {};
 
@@ -402,19 +427,44 @@ function djcBuildCards(){
     const grid = document.getElementById(gridId);
     grid.innerHTML = list.map(d => `
       <div class="pick-card" id="card-${d.id}">
-        ${isMini
-          ? `<div class="mini-tile"><div class="mt-big">${d.big}</div><div class="mt-small">4 mini cookies</div></div>`
-          : `<img src="${d.img}" alt="${d.alt}" loading="lazy">`}
+        <img src="${d.img}" alt="${d.alt}" loading="lazy" id="img-${d.id}">
         <div class="dc-body"><h3 class="dc-name">${d.name}</h3><p class="dc-desc">${d.desc}</p><div class="dc-price">$${d.price}${isMini ? ' per pack' : ' each'}</div></div>
         <div class="stepper">
           <button type="button" aria-label="Fewer ${d.name}" onclick="djcStep('${d.id}',-1)" id="minus-${d.id}" disabled>−</button>
           <span class="qty" id="qty-${d.id}">0</span>
           <button type="button" aria-label="More ${d.name}" onclick="djcStep('${d.id}',1)">+</button>
         </div>
+        ${VARIANTS[d.id] ? djcVariantHtml(d.id) : ''}
+        <div class="pz-wrap">
+          <label class="pz-toggle"><input type="checkbox" id="pzchk-${d.id}" onchange="djcTogglePersonalize('${d.id}')"> Add a name on this cookie?</label>
+          <textarea id="pzname-${d.id}" class="pz-input" placeholder="e.g. Hailey, Julia" style="display:none;" maxlength="300" rows="1" oninput="djcAutoGrow(this)"></textarea>
+          <div class="pz-hint" id="pzhint-${d.id}" style="display:none;">One name per cookie, separated by commas. Please double-check spelling!</div>
+        </div>
       </div>`).join('');
   };
   build(DESIGNS, 'singlesGrid', false);
   build(MINIS, 'minisGrid', true);
+}
+
+function djcVariantHtml(id){
+  const v = VARIANTS[id];
+  const opts = v.options.map(o => `
+        <label class="variant-opt" id="vopt-${id}-${o.value}">
+          <input type="radio" name="variant-${id}" value="${o.value}" onchange="djcVariantChange('${id}')"> ${o.label}
+        </label>`).join('');
+  return `<div class="variant-wrap"><div class="variant-label">${v.label} <span class="req-star">*required</span></div><div class="variant-opts">${opts}</div></div>`;
+}
+
+function djcVariantChange(id){
+  const v = VARIANTS[id];
+  const checked = document.querySelector('input[name="variant-' + id + '"]:checked');
+  v.options.forEach(o => {
+    document.getElementById('vopt-' + id + '-' + o.value).classList.toggle('checked', !!checked && checked.value === o.value);
+  });
+  if(checked){
+    const opt = v.options.find(o => o.value === checked.value);
+    if(opt){ document.getElementById('img-' + id).src = opt.img; }
+  }
 }
 
 function djcStep(id, delta){
@@ -423,7 +473,37 @@ function djcStep(id, delta){
   document.getElementById('qty-'+id).textContent = n;
   document.getElementById('minus-'+id).disabled = n === 0;
   document.getElementById('card-'+id).classList.toggle('has-qty', n > 0);
+  if(n === 0){
+    const chk = document.getElementById('pzchk-'+id);
+    const box = document.getElementById('pzname-'+id);
+    const hint = document.getElementById('pzhint-'+id);
+    if(chk){ chk.checked = false; }
+    if(box){ box.style.display = 'none'; box.value = ''; }
+    if(hint){ hint.style.display = 'none'; }
+    if(VARIANTS[id]){
+      const checked = document.querySelector('input[name="variant-' + id + '"]:checked');
+      if(checked){ checked.checked = false; }
+      djcVariantChange(id);
+      const v = VARIANTS[id];
+      document.getElementById('img-' + id).src = v.options[0].img;
+    }
+  }
   djcUpdateBar();
+}
+
+function djcTogglePersonalize(id){
+  const chk = document.getElementById('pzchk-'+id);
+  const box = document.getElementById('pzname-'+id);
+  const hint = document.getElementById('pzhint-'+id);
+  const on = chk && chk.checked;
+  box.style.display = on ? 'block' : 'none';
+  hint.style.display = on ? 'block' : 'none';
+  if(on){ box.focus(); } else { box.value = ''; }
+}
+
+function djcAutoGrow(el){
+  el.style.height = 'auto';
+  el.style.height = el.scrollHeight + 'px';
 }
 
 function djcUpdateBar(){
@@ -436,7 +516,22 @@ function djcUpdateBar(){
 
 async function djcCheckout(){
   const btn = document.getElementById('obBtn');
-  const items = DESIGNS.concat(MINIS).filter(d => (djcQty[d.id]||0) > 0).map(d => ({ id:d.id, qty:djcQty[d.id] }));
+  const picked = DESIGNS.concat(MINIS).filter(d => (djcQty[d.id]||0) > 0);
+  for(const d of picked){
+    if(VARIANTS[d.id]){
+      const checked = document.querySelector('input[name="variant-' + d.id + '"]:checked');
+      if(!checked){ showToast('Please pick ' + VARIANTS[d.id].label.toLowerCase() + ' for the ' + d.name + ' first.'); return; }
+    }
+  }
+  const items = picked.map(d => {
+    const chk = document.getElementById('pzchk-'+d.id);
+    const nameEl = document.getElementById('pzname-'+d.id);
+    const names = (chk && chk.checked && nameEl) ? nameEl.value.trim().slice(0,300) : '';
+    const variantEl = VARIANTS[d.id] ? document.querySelector('input[name="variant-' + d.id + '"]:checked') : null;
+    const out = { id:d.id, qty:djcQty[d.id], names };
+    if(variantEl){ out.variant = variantEl.value; }
+    return out;
+  });
   if(!items.length){ showToast('Pick at least one cookie first 🍪'); return; }
   if(DJC_CHECKOUT.indexOf('PASTE_') !== -1){ showToast('Checkout is not connected yet.'); return; }
   btn.disabled = true; btn.textContent = 'One moment…';

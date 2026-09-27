@@ -3,7 +3,7 @@
    - To change the promo: edit the text/link below.
    - To turn it off early: empty this file (or delete the <script src="holiday-banner.js"> tags). */
 (function () {
-  var ORDERS_OPEN = new Date('2026-09-30T15:00:00Z');
+  var ORDERS_OPEN = new Date('2026-01-01T00:00:00Z'); // open now (John turned on live orders Sept 27)
   var ORDERS_CLOSE = new Date('2026-10-24T07:00:00Z');
   if (new Date() >= ORDERS_CLOSE) return;
   if (/double_joy_presale/.test(location.pathname)) return;   // already on the shop page

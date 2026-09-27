@@ -219,8 +219,7 @@
   .stepper button:disabled{ opacity:.35; cursor:default; }
   .stepper .qty{ min-width:34px; text-align:center; font-family: var(--font-sans); font-weight:700; font-size:18px; }
   .pick-card.has-qty{ outline:2.5px solid var(--blush); }
-  .pz-wrap{ padding:0 16px 14px; display:none; }
-  .pick-card.has-qty .pz-wrap{ display:block; }
+  .pz-wrap{ padding:0 16px 14px; }
   .variant-wrap{ padding:0 16px 6px; display:none; }
   .pick-card.has-qty .variant-wrap{ display:block; }
   .variant-label{ font-family: var(--font-sans); font-size:12.5px; font-weight:700; color: var(--berry); margin-bottom:6px; }
@@ -431,18 +430,18 @@ function djcBuildCards(){
       <div class="pick-card" id="card-${d.id}">
         <img src="${d.img}" alt="${d.alt}" loading="lazy" id="img-${d.id}">
         <div class="dc-body"><h3 class="dc-name">${d.name}</h3><p class="dc-desc">${d.desc}</p><div class="dc-price">$${d.price}${isMini ? ' per pack' : ' each'}</div></div>
+        ${isMini ? '' : `
+        <div class="pz-wrap">
+          <label class="pz-toggle"><input type="checkbox" id="pzchk-${d.id}" onchange="djcTogglePersonalize('${d.id}')"> Add a name for $${PERSONALIZE_FEE.toFixed(2)}</label>
+          <textarea id="pzname-${d.id}" class="pz-input" placeholder="e.g. Hailey, Julia" style="display:none;" maxlength="300" rows="1" oninput="djcAutoGrow(this)"></textarea>
+          <div class="pz-hint" id="pzhint-${d.id}" style="display:none;">One name per cookie, separated by commas. Adds $${PERSONALIZE_FEE.toFixed(2)} per cookie — checking this adds one to your bag. Please double-check spelling!</div>
+        </div>`}
         <div class="stepper">
           <button type="button" aria-label="Fewer ${d.name}" onclick="djcStep('${d.id}',-1)" id="minus-${d.id}" disabled>−</button>
           <span class="qty" id="qty-${d.id}">0</span>
           <button type="button" aria-label="More ${d.name}" onclick="djcStep('${d.id}',1)">+</button>
         </div>
         ${VARIANTS[d.id] ? djcVariantHtml(d.id) : ''}
-        ${isMini ? '' : `
-        <div class="pz-wrap">
-          <label class="pz-toggle"><input type="checkbox" id="pzchk-${d.id}" onchange="djcTogglePersonalize('${d.id}')"> Add a name on this cookie? <span class="pz-fee">+$${PERSONALIZE_FEE.toFixed(2)} each</span></label>
-          <textarea id="pzname-${d.id}" class="pz-input" placeholder="e.g. Hailey, Julia" style="display:none;" maxlength="300" rows="1" oninput="djcAutoGrow(this)"></textarea>
-          <div class="pz-hint" id="pzhint-${d.id}" style="display:none;">One name per cookie, separated by commas. Adds $${PERSONALIZE_FEE.toFixed(2)} per cookie. Please double-check spelling!</div>
-        </div>`}
       </div>`).join('');
   };
   build(DESIGNS, 'singlesGrid', false);
@@ -501,8 +500,13 @@ function djcTogglePersonalize(id){
   const on = chk && chk.checked;
   box.style.display = on ? 'block' : 'none';
   hint.style.display = on ? 'block' : 'none';
-  if(on){ box.focus(); } else { box.value = ''; }
-  djcUpdateBar();
+  if(on){
+    box.focus();
+    djcStep(id, 1); // checking the box adds a cookie to the bag; djcStep() also calls djcUpdateBar()
+  } else {
+    box.value = '';
+    djcUpdateBar();
+  }
 }
 
 function djcAutoGrow(el){

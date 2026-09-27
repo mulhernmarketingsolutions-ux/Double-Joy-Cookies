@@ -6,7 +6,7 @@
   var ORDERS_OPEN = new Date('2026-01-01T00:00:00Z'); // open now (John turned on live orders Sept 27)
   var ORDERS_CLOSE = new Date('2026-10-24T07:00:00Z');
   if (new Date() >= ORDERS_CLOSE) return;
-  if (/double_joy_presale/.test(location.pathname)) return;   // already on the shop page
+  if (/seasonal-sale/.test(location.pathname)) return;   // already on the shop page
   var nav = document.querySelector('.nav-bar');
   if (!nav) return;
 
@@ -24,7 +24,7 @@
   bar.setAttribute('role', 'region');
   bar.setAttribute('aria-label', 'Halloween announcement');
   var soon = new Date() < ORDERS_OPEN;
-  bar.innerHTML = (soon ? '🎃 Halloween cookies open Sept 30! <a href="double_joy_presale.html">Get notified</a>' : '🎃 Halloween cookies are open! $7 each, order by Oct 23. <a href="double_joy_presale.html">Shop now</a>') +
+  bar.innerHTML = (soon ? '🎃 Halloween cookies open Sept 30! <a href="seasonal-sale.html">Get notified</a>' : '🎃 Halloween cookies are open! $7 each, order by Oct 23. <a href="seasonal-sale.html">Shop now</a>') +
     '<button type="button" class="hb-x" aria-label="Dismiss">×</button>';
   nav.insertBefore(bar, nav.firstChild);
 

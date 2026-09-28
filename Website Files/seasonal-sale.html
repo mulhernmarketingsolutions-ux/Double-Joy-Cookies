@@ -219,8 +219,9 @@
   .stepper button:disabled{ opacity:.35; cursor:default; }
   .stepper .qty{ min-width:34px; text-align:center; font-family: var(--font-sans); font-weight:700; font-size:18px; }
   .pick-card.has-qty{ outline:2.5px solid var(--blush); }
-  .pick-badge{ position:absolute; top:10px; left:10px; z-index:2; background: var(--blush); color: var(--berry); font-family: var(--font-sans); font-size:11px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; padding:6px 13px; border-radius:20px; box-shadow: 0 4px 10px rgba(255,153,216,0.55); }
-  .pick-card.pick-featured{ border:3px solid var(--blush); box-shadow: 0 6px 18px rgba(255,153,216,0.45); }
+  .pick-badge{ position:absolute; top:12px; left:12px; z-index:2; background:#FF1E8E; color:#fff; font-family: var(--font-sans); font-size:12.5px; font-weight:800; letter-spacing:0.6px; text-transform:uppercase; padding:7px 15px; border-radius:20px; box-shadow: 0 4px 14px rgba(255,30,142,0.65); transform: rotate(-4deg); animation: pickBadgePulse 2.2s ease-in-out infinite; }
+  @keyframes pickBadgePulse{ 0%,100%{ transform: rotate(-4deg) scale(1); } 50%{ transform: rotate(-4deg) scale(1.08); } }
+  .pick-card.pick-featured{ border:4px solid #FF1E8E; box-shadow: 0 8px 26px rgba(255,30,142,0.55); }
   .pz-wrap{ padding:0 16px 14px; display:none; }
   .pick-card.has-qty .pz-wrap{ display:block; }
   .pz-subrow{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-family: var(--font-sans); font-size:12.5px; font-weight:700; color: var(--berry); margin-bottom:2px; }
@@ -406,7 +407,7 @@ const DESIGNS = [
 ];
 
 const MINIS = [
-  { id:'bag-of-boos', name:'Bag of Boos', price:11, img:'images/presale/halloween-mini-boos.jpg', alt:'Four mini ghost cookies in a gift bag', desc:'4 mini ghost cookies, now on our new chocolate sugar cookie base.', badge:'New Flavor' },
+  { id:'bag-of-boos', name:'Bag of Boos', price:11, img:'images/presale/halloween-mini-boos.jpg', alt:'Four mini ghost cookies in a gift bag', desc:'4 mini ghost cookies, now on our new chocolate sugar cookie base.', badge:'✨ New Flavor' },
   { id:'boo-bag', name:'Boo! Bag', price:11, img:'images/presale/halloween-mini-trick.jpg', alt:'Mini cookies spelling BOO in a gift bag', desc:'4 mini cookies that spell BOO.' },
   { id:'trick-or-treat-mini', name:'Trick or Treat Mini', price:11, img:'images/presale/halloween-mini-boobag.jpg', alt:'Assorted mini Halloween cookies in a gift bag', desc:'4 mini Halloween cookies.' }
 ];

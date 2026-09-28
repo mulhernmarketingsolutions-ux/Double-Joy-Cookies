@@ -204,7 +204,7 @@
   .how-step p{ font-family: var(--font-sans); font-size:12.5px; color:#6b6b6b; line-height:1.6; margin:0; }
 
   /* ---- Halloween picker ---- */
-  .pick-card{ background: var(--white); border-radius:18px; overflow:hidden; box-shadow: var(--shadow); display:flex; flex-direction:column; }
+  .pick-card{ position:relative; background: var(--white); border-radius:18px; overflow:hidden; box-shadow: var(--shadow); display:flex; flex-direction:column; }
   .pick-card img, .pick-card .mini-tile{ width:100%; aspect-ratio:1/1; object-fit:cover; display:block; }
   .mini-tile{ background: linear-gradient(135deg, var(--cream-deep), #F8DCEB); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; font-family: var(--font-sans); color: var(--berry); padding:14px; }
   .mini-tile .mt-big{ font-family: var(--font-script); font-size:30px; line-height:1.1; }
@@ -219,6 +219,7 @@
   .stepper button:disabled{ opacity:.35; cursor:default; }
   .stepper .qty{ min-width:34px; text-align:center; font-family: var(--font-sans); font-weight:700; font-size:18px; }
   .pick-card.has-qty{ outline:2.5px solid var(--blush); }
+  .pick-badge{ position:absolute; top:10px; left:10px; z-index:2; background: var(--gold); color: var(--white); font-family: var(--font-sans); font-size:10.5px; font-weight:700; letter-spacing:0.8px; text-transform:uppercase; padding:5px 12px; border-radius:20px; box-shadow: 0 4px 10px rgba(201,162,74,0.35); }
   .pz-wrap{ padding:0 16px 14px; display:none; }
   .pick-card.has-qty .pz-wrap{ display:block; }
   .pz-subrow{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-family: var(--font-sans); font-size:12.5px; font-weight:700; color: var(--berry); margin-bottom:2px; }
@@ -404,7 +405,7 @@ const DESIGNS = [
 ];
 
 const MINIS = [
-  { id:'bag-of-boos', name:'Bag of Boos', price:11, img:'images/presale/halloween-mini-boos.jpg', alt:'Four mini ghost cookies in a gift bag', desc:'4 mini ghost cookies.' },
+  { id:'bag-of-boos', name:'Bag of Boos', price:11, img:'images/presale/halloween-mini-boos.jpg', alt:'Four mini ghost cookies in a gift bag', desc:'4 mini ghost cookies, now on our new chocolate sugar cookie base.', badge:'New Flavor' },
   { id:'boo-bag', name:'Boo! Bag', price:11, img:'images/presale/halloween-mini-trick.jpg', alt:'Mini cookies spelling BOO in a gift bag', desc:'4 mini cookies that spell BOO.' },
   { id:'trick-or-treat-mini', name:'Trick or Treat Mini', price:11, img:'images/presale/halloween-mini-boobag.jpg', alt:'Assorted mini Halloween cookies in a gift bag', desc:'4 mini Halloween cookies.' }
 ];
@@ -418,6 +419,7 @@ function djcBuildCards(){
     grid.innerHTML = list.map(d => `
       <div class="pick-card" id="card-${d.id}">
         <img src="${d.img}" alt="${d.alt}" loading="lazy" id="img-${d.id}">
+        ${d.badge ? `<div class="pick-badge">${d.badge}</div>` : ''}
         <div class="dc-body"><h3 class="dc-name">${d.name}</h3><p class="dc-desc">${d.desc}</p><div class="dc-price">$${d.price}${isMini ? ' per pack' : ' each'}</div></div>
         <div class="stepper">
           <button type="button" aria-label="Fewer ${d.name}" onclick="djcStep('${d.id}',-1)" id="minus-${d.id}" disabled>−</button>

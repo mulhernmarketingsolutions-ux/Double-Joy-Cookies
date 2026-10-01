@@ -97,6 +97,8 @@
   .presale-stat .value{ font-family: var(--font-sans); font-size:15px; font-weight:700; color: var(--ink); }
   .presale-note{ font-family: var(--font-sans); font-size:13px; color:#6b6b6b; line-height:1.75; }
   .presale-note strong{ color: var(--ink); }
+  .pickup-map{ max-width:320px; margin:0 auto 18px; }
+  .pickup-map svg{ display:block; width:100%; height:auto; }
 
   .example-gallery{ margin-bottom:28px; }
   .example-gallery .eg-label{ font-family: var(--font-sans); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color: var(--gold); text-align:center; margin-bottom:12px; }
@@ -321,6 +323,27 @@
 
   <div class="presale-card">
     <h3 style="font-size:18px; font-weight:normal; margin:0 0 10px; text-align:center;">Pickup &amp; details</h3>
+    <div class="pickup-map">
+      <svg viewBox="0 0 300 130" width="100%" height="130" role="img" aria-label="Illustrated map marking the Tigard, Oregon pickup area">
+        <rect x="1" y="1" width="298" height="128" rx="16" fill="var(--cream)" stroke="var(--line)" stroke-width="2"/>
+        <path d="M10 95 Q 70 60 150 85 T 290 65" stroke="var(--blush)" stroke-width="2.5" fill="none" stroke-dasharray="6 7" stroke-linecap="round" opacity="0.55"/>
+        <path d="M25 30 Q 90 20 140 42 T 275 35" stroke="var(--taupe)" stroke-width="2.5" fill="none" stroke-dasharray="6 7" stroke-linecap="round" opacity="0.45"/>
+        <circle cx="55" cy="88" r="3" fill="var(--gold-light)"/>
+        <circle cx="215" cy="48" r="3" fill="var(--gold-light)"/>
+        <circle cx="255" cy="92" r="3" fill="var(--gold-light)"/>
+        <g transform="translate(150,58)">
+          <path d="M0 -34 C18 -34 30 -21 30 -5 C30 16 0 42 0 42 C0 42 -30 16 -30 -5 C-30 -21 -18 -34 0 -34 Z" fill="var(--blush)"/>
+          <circle cx="0" cy="-6" r="18" fill="var(--cream)"/>
+          <circle cx="0" cy="-6" r="13" fill="var(--gold)"/>
+          <circle cx="-4" cy="-10" r="1.8" fill="var(--chocolate)"/>
+          <circle cx="5" cy="-9" r="1.8" fill="var(--chocolate)"/>
+          <circle cx="0" cy="-2" r="1.8" fill="var(--chocolate)"/>
+          <circle cx="6" cy="-1" r="1.5" fill="var(--chocolate)"/>
+          <circle cx="-6" cy="-1" r="1.5" fill="var(--chocolate)"/>
+        </g>
+        <text x="150" y="117" text-anchor="middle" font-family="Quicksand, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="var(--ink)">📍 Pickup is near Tigard, OR</text>
+      </svg>
+    </div>
     <ul class="info-list">
       <li><strong>Pickup:</strong> Thursday, Oct 29 from 5 to 9pm, Friday, Oct 30 from 5 to 9pm, or Saturday, Oct 31 from 8am to 12pm. You'll choose one at checkout. Pickup is from a table outside Emily's house in the 97234 area of Tigard, OR — the exact address is in your confirmation email once you order.</li>
       <li><strong>Want a name on a cookie?</strong> Use the small counter under that design to choose how many get a name — $0.50 per cookie. Mix and match: some named, some plain, all in one order.</li>
